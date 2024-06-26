@@ -76,5 +76,5 @@ class Label(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     label = db.Column(db.String(15), nullable=False)
 
-    pinId = db.Column(db.Integer, ForeignKey(add_prefix_for_prod(add_prefix_for_prod("pins.id")))
+    pinId = db.Column(db.Integer, ForeignKey(add_prefix_for_prod("pins.id")))
     pin = relationship("Pin", back_populates="labels")
