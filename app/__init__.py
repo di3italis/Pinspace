@@ -1,3 +1,4 @@
+# __init__.py
 import os
 from flask import Flask, render_template, request, session, redirect
 from flask_cors import CORS
@@ -7,6 +8,7 @@ from flask_login import LoginManager
 from .models import db, User
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
+
 # from .seeds import seed_commands
 from .config import Config
 
