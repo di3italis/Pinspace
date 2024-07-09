@@ -34,7 +34,7 @@ class Board(db.Model):
     description = db.Column(db.String(500), nullable=False)
 
     ownerId = db.Column(db.Integer, ForeignKey(add_prefix_for_prod("users.id")))
-    owner = relationship("User", back_populates="pins")
+    owner = relationship("User", back_populates="boards")
 
     boardPins = relationship("BoardPin", back_populates="board")
 
