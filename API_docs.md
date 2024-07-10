@@ -13,7 +13,7 @@
 
     __tablename__ = 'users'
 
-| Column Name    | Data Type | Constraints      | 
+| Column Name    | Data Type | Constraints      |
 | -------------- | --------- | ---------------- |
 | id             | INTEGER   | PK               |
 | firstName      | STRING    | not null         |
@@ -22,92 +22,92 @@
 | email          | STRING    | unique, not null |
 | hashed_password| STRING    | not null         |
 | profile_image  | STRING    |                  |
-| createdAt      | DATE      | not null         |             
-| updatedAt      | DATE      | not null         |             
-| -------------- | --------- | ---------------- | 
-| RELATIONSHIPS  | F.MODEL   | BACK_POPULATES   |             
-| pins           | Pin       | owner            |             
-| boards         | Board     | owner            |             
+| createdAt      | DATE      | not null         |
+| updatedAt      | DATE      | not null         |
+| -------------- | --------- | ---------------- |
+| RELATIONSHIPS  | F.MODEL   | BACK_POPULATES   |
+| pins           | Pin       | owner            |
+| boards         | Board     | owner            |
 
 ### Pin Model
 
     __tablename__ = 'pins'
 
-| Column Name    | Data Type | Constraints      | 
-| -------------- | --------- | -------------    | 
-| id             | INTEGER   | PK               |             
-| img            | STRING    | not null         |             
-| imgPreview     | STRING    | not null         |             
-| title          | STRING    | not null         |         
-| description    | STRING    | not null         |           
-| ownerID        | INTEGER   | FK, not null     |           
-| createdAt      | DATE      | not null         |             
-| updatedAt      | DATE      | not null         |             
-| -------------- | --------- | ---------------- | 
-| RELATIONSHIPS  | F.MODEL   | BACK_POPULATES   |             
-| owner          | User      | pins             |             
-| comments       | Comment   | pin              |             
-| labels         | Label     | pin              |             
+| Column Name    | Data Type | Constraints      |
+| -------------- | --------- | -------------    |
+| id             | INTEGER   | PK               |
+| img            | STRING    | not null         |
+| imgPreview     | STRING    | not null         |
+| title          | STRING    | not null         |
+| description    | STRING    | not null         |
+| ownerID        | INTEGER   | FK, not null     |
+| createdAt      | DATE      | not null         |
+| updatedAt      | DATE      | not null         |
+| -------------- | --------- | ---------------- |
+| RELATIONSHIPS  | F.MODEL   | BACK_POPULATES   |
+| owner          | User      | pins             |
+| comments       | Comment   | pin              |
+| labels         | Label     | pin              |
 
 ### Board Model
 
     __tablename__ = 'boards'
 
-| Column Name    | Data Type | Constraints      | 
-| -------------- | --------- | -------------    | 
-| id             | INTEGER   | PK               |             
-| description    | STRING    | not null         |             
-| ownerID        | INTEGER   | FK, not null     |           
-| createdAt      | DATE      | not null         |             
-| updatedAt      | DATE      | not null         |             
-| -------------- | --------- | ---------------- | 
-| RELATIONSHIPS  | F.MODEL   | BACK_POPULATES   |             
-| owner          | User      | pins             |             
-| boardPins      | BoardPin  | board            |             
+| Column Name    | Data Type | Constraints      |
+| -------------- | --------- | -------------    |
+| id             | INTEGER   | PK               |
+| description    | STRING    | not null         |
+| ownerID        | INTEGER   | FK, not null     |
+| createdAt      | DATE      | not null         |
+| updatedAt      | DATE      | not null         |
+| -------------- | --------- | ---------------- |
+| RELATIONSHIPS  | F.MODEL   | BACK_POPULATES   |
+| owner          | User      | pins             |
+| boardPins      | BoardPin  | board            |
 
 ### BoardPin Model
 
     __tablename__ = 'boardsPins'
 
-| Column Name    | Data Type | Constraints      | 
-| -------------- | --------- | -------------    | 
-| id             | INTEGER   | PK               |             
-| pinID          | INTEGER   | not null         |             
-| boardID        | INTEGER   | FK, not null     |           
-| createdAt      | DATE      | not null         |             
-| updatedAt      | DATE      | not null         |             
-| -------------- | --------- | ---------------- | 
-| RELATIONSHIPS  | F.MODEL   | BACK_POPULATES   |             
+| Column Name    | Data Type | Constraints      |
+| -------------- | --------- | -------------    |
+| id             | INTEGER   | PK               |
+| pinID          | INTEGER   | not null         |
+| boardID        | INTEGER   | FK, not null     |
+| createdAt      | DATE      | not null         |
+| updatedAt      | DATE      | not null         |
+| -------------- | --------- | ---------------- |
+| RELATIONSHIPS  | F.MODEL   | BACK_POPULATES   |
 | board          | Board     | boardPins        |
 
 ### Comment Model
 
     __tablename__ = 'comments'
 
-| Column Name    | Data Type | Constraints      | 
-| -------------- | --------- | -------------    | 
-| id             | INTEGER   | PK               |             
-| comment        | STRING    | not null         |             
-| pinID          | INTEGER   | FK, not null     |           
-| createdAt      | DATE      | not null         |             
-| updatedAt      | DATE      | not null         |             
-| -------------- | --------- | ---------------- | 
-| RELATIONSHIPS  | F.MODEL   | BACK_POPULATES   |             
+| Column Name    | Data Type | Constraints      |
+| -------------- | --------- | -------------    |
+| id             | INTEGER   | PK               |
+| comment        | STRING    | not null         |
+| pinID          | INTEGER   | FK, not null     |
+| createdAt      | DATE      | not null         |
+| updatedAt      | DATE      | not null         |
+| -------------- | --------- | ---------------- |
+| RELATIONSHIPS  | F.MODEL   | BACK_POPULATES   |
 | pin            | Pin       | comments         |
 
 ### Label Model
 
     __tablename__ = 'labels'
 
-| Column Name    | Data Type | Constraints      | 
-| -------------- | --------- | -------------    | 
-| id             | INTEGER   | PK               |             
-| label          | STRING    | not null         |             
-| pinID          | INTEGER   | FK, not null     |           
-| createdAt      | DATE      | not null         |             
-| updatedAt      | DATE      | not null         |             
-| -------------- | --------- | ---------------- | 
-| RELATIONSHIPS  | F.MODEL   | BACK_POPULATES   |             
+| Column Name    | Data Type | Constraints      |
+| -------------- | --------- | -------------    |
+| id             | INTEGER   | PK               |
+| label          | STRING    | not null         |
+| pinID          | INTEGER   | FK, not null     |
+| createdAt      | DATE      | not null         |
+| updatedAt      | DATE      | not null         |
+| -------------- | --------- | ---------------- |
+| RELATIONSHIPS  | F.MODEL   | BACK_POPULATES   |
 | pin            | Pin       | labels           |
 </details>
 
@@ -165,7 +165,7 @@ correct role(s) or permission(s).
 
 Returns the information about the current user that is logged in.
 
-- Require Authentication: true
+- Require Authentication: false
 - Request
 
   - Method: GET
@@ -1699,4 +1699,3 @@ Delete an existing image for a Review.
         ```
 
     </details>
-

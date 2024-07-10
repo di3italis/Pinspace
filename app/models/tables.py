@@ -23,6 +23,18 @@ class Pin(db.Model):
 
     comments = relationship("Comment", back_populates="pin")
     labels = relationship("Label", back_populates="pin")
+    def to_dict(self):
+        '''dict of Pin'''
+        return {
+            'id': self.id,
+            'image': self.image,
+            'title': self.title,
+            'description': self.description,
+            'owner': self.owner.to_dict() if self.owner else self.owner,
+            'comments': self.comments.to_dict() if self.comments else self.comments,
+            'labels': self.labels.to_dict() if self.labels else self.labels
+        }
+
 
 class Board(db.Model):
     '''Describes boards table'''
@@ -66,6 +78,13 @@ class Comment(db.Model):
 
     pinId = db.Column(db.Integer, ForeignKey(add_prefix_for_prod("pins.id")))
     pin = relationship("Pin", back_populates="comments")
+    def to_dict(self):
+        '''dict of Comment'''
+        return {
+            'id': self.id,
+            'comment': self.comment,
+            'pin': self.pin.to_dict() if self.pin else self.pin
+        }
 
 class Label(db.Model):
     '''Describes labels (tags) table. Each Pin has 0 or more labels.'''

@@ -39,5 +39,7 @@ class User(db.Model, UserMixin):
         return {
             'id': self.id,
             'username': self.username,
-            'email': self.email
+            'email': self.email,
+            # Can't recursively call owner to pin to owner to pin etc....
+            # 'pin': [pin.to_dict() for pin in self.pins]
         }
