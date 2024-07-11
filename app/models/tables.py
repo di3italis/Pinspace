@@ -1,6 +1,6 @@
 '''Model definitions'''
-from flask_sqlalchemy import SQLAlchemy
-from werkzeug.security import generate_password_hash, check_password_hash
+# from flask_sqlalchemy import SQLAlchemy
+# from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 from .db import db, environment, SCHEMA, add_prefix_for_prod
@@ -30,9 +30,12 @@ class Pin(db.Model):
             'image': self.image,
             'title': self.title,
             'description': self.description,
-            'owner': self.owner.to_dict() if self.owner else self.owner,
-            'comments': self.comments.to_dict() if self.comments else self.comments,
-            'labels': self.labels.to_dict() if self.labels else self.labels
+            'owner': self.owner.to_dict() if self.owner else None,
+            'comments': self.comments.to_dict() if self.comments else None,
+            'labels': self.labels.to_dict() if self.labels else None
+            # 'owner': self.owner.to_dict() if self.owner else Noneself.owner,
+            # 'comments': self.comments.to_dict() if self.comments else self.comments,
+            # 'labels': self.labels.to_dict() if self.labels else self.labels
         }
 
 
@@ -49,6 +52,15 @@ class Board(db.Model):
     owner = relationship("User", back_populates="boards")
 
     boardPins = relationship("BoardPin", back_populates="board")
+    def to_dict(self):
+        '''dict of Board'''
+        return {
+            'id': self.id,
+            'description': self.description,
+            'owner': self.owner.to_dict() if self.owner else None,
+            'comments': self.boardPins.to_dict() if self.boardPins else None,
+        }
+
 
 class BoardPin(db.Model):
     '''Describes boardPins table. Each board has 0 or more pins'''

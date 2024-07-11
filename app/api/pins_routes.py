@@ -1,9 +1,8 @@
+'''Pins routes'''
 from flask import Blueprint#, request
-from flask_login import current_user, login_user, logout_user, login_required
-from app.models import tables, db, Pin
+from flask_login import login_required, current_user
+from app.models import User, Pin#, tables, db,
 
-
-# pins_routes = Blueprint("pins", __name__, url_prefix="/pins")
 pins_routes = Blueprint("pins", __name__)
 
 @pins_routes.route("/all")
@@ -11,7 +10,8 @@ def pins_all():
     """
     Displays all pins
     """
-    pins = Pin.query.all()
+    # pins = Pin.query.all()
+    pins = User.query.all()
     return {'pins': [pin.to_dict() for pin in pins]}
 
 @pins_routes.route("/")
@@ -28,7 +28,7 @@ def pins_current():
     """
     Displays all pins of currently logged in user.
     """
-    pins = Pin.query.all()
+    pins = Pin.query.filter_by(id=current_user.id).all()
     return {'pins': [pin.to_dict() for pin in pins]}
 
 @pins_routes.route('/', methods=['POST'])
@@ -47,7 +47,7 @@ def pins_1pin(id):
     Displays 1 pin by id else [].
     """
     pin = Pin.query.filter_by(id=id).first()
-    return {'pin': pin.to_dict() if pin else []}
+    return {'pin': pin.to_dict() if pin else None}
     # return {'pins': [pin.to_dict() for pin in pins]}
 
 @pins_routes.route('/<int:id>', methods=['POST'])
@@ -58,7 +58,7 @@ def pins_1pin_edit(id):
     Also figure out proper validation.
     """
     pin = Pin.query.filter_by(id=id).first()
-    return {'pin': pin.to_dict() if pin else []}
+    return {'pin': pin.to_dict() if pin else None}
     # return {'pins': [pin.to_dict() for pin in pins]}
 
 @pins_routes.route('/<int:id>', methods=['DELETE'])
@@ -68,5 +68,5 @@ def pins_1pin_delete(id):
     deletes a pin by id.
     """
     pin = Pin.query.filter_by(id=id).first()
-    return {'pin': pin.to_dict() if pin else []}
+    return {'pin': pin.to_dict() if pin else None}
     # return {'pins': [pin.to_dict() for pin in pins]}
