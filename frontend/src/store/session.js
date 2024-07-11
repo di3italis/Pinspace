@@ -1,14 +1,48 @@
+// Import a custom fetch utility to handle CSRF protection
+import { csrfFetch } from './csrf';
+
+// Action type constants
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
 
-const setUser = (user) => ({
-  type: SET_USER,
-  payload: user
-});
+// Action creator for setting the current user in the Redux state
+const setUser = (user) => {
+    return {
+      type: SET_USER,
+      payload: user
+    };
+};
 
 const removeUser = () => ({
   type: REMOVE_USER
 });
+
+// Action creator for removing the current user from the Redux state
+const removeUser = () => {
+    return {
+        type: REMOVE_USER
+    };
+};
+
+// THUNKS
+// Thunk action for logging in a user
+export const login = (user) => async (dispatch) => {
+    // Destructuring to get credentials from the user object
+    const { credential, password } = user;
+    // Making a POST request to the server's login endpoint
+    const res = await csrfFetch("/api/session", {
+        method: "POST",
+        body: JSON.stringify({
+            credential,
+            password
+        })
+    });
+    const data = await res.json();
+    // Dispatching setUser action with the logged-in user data
+    dispatch(setUser(data.user));
+    return res;
+};
+
 
 export const thunkAuthenticate = () => async (dispatch) => {
 	const response = await fetch("/api/auth/");

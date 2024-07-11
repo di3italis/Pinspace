@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import styles from "./LoginForm.module.css";
+// import './LoginFormModal.css'
 import styles from "../../context/Modal.module.css";
 
 function LoginFormModal() {
@@ -29,13 +29,14 @@ function LoginFormModal() {
 
         setErrors(newErrors);
         setSubmittable(isValid);
+        // console.log("submittalbe:", submittable)
         return isValid;
     }, [credential, password]);
 
     useEffect(() => {
         validateForm();
     }, [credential, password, validateForm]);
-    
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!validateForm()) return;
@@ -59,10 +60,12 @@ function LoginFormModal() {
     const handleDemoUserOnClick = () => {
         return dispatch(
             sessionActions.login({
-                credential: "demo-user",
+                credential: "Demo-lition",
                 password: "password",
             })
-        ).then(closeModal);
+        ).then(() => {
+            closeModal();
+        });
     };
 
     return (
