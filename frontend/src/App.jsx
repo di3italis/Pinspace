@@ -30,7 +30,7 @@ function Layout() {
     );
 }
 
-const router = createBrowswerRouter([
+const router = createBrowserRouter([
     {
         element: <Layout />,
         children: [

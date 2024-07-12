@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import styles from "./LoginForm.module.css";
+// import styles from "./LoginForm.module.css";
 import styles from "../../context/Modal.module.css";
 
 function LoginFormModal() {
@@ -19,7 +19,8 @@ function LoginFormModal() {
         const newErrors = {};
 
         if (credential.length < 4) {
-            newErrors.credential = "Username or Email must be at least 4 characters";
+            newErrors.credential =
+                "Username or Email must be at least 4 characters";
             isValid = false;
         }
         if (password.length < 6) {
@@ -35,7 +36,7 @@ function LoginFormModal() {
     useEffect(() => {
         validateForm();
     }, [credential, password, validateForm]);
-    
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!validateForm()) return;
@@ -43,7 +44,7 @@ function LoginFormModal() {
             sessionActions.login({
                 credential,
                 password,
-            }),
+            })
         )
             .then(closeModal)
             .catch(async (res) => {
@@ -90,9 +91,13 @@ function LoginFormModal() {
                     {errors.credential && <h5>{errors.credential}</h5>}
                     {errors.password && <h5>{errors.password}</h5>}
                 </div>
-                <button className={`${styles.modalButton} ${!submittable ? styles.disabled : ""}`} 
-                    type="submit" 
-                    disabled={!submittable}>
+                <button
+                    className={`${styles.modalButton} ${
+                        !submittable ? styles.disabled : ""
+                    }`}
+                    type="submit"
+                    disabled={!submittable}
+                >
                     Log In
                 </button>
                 <button

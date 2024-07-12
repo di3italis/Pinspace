@@ -6,10 +6,11 @@ import { Provider } from "react-redux";
 import configureStore from "./store/store";
 import { restoreCSRF, csrfFetch } from "./store/csrf";
 // import { router } from "./router";
-import * as sessionActions from "./redux/session";
+import * as sessionActions from "./store/session";
 import { Modal, ModalProvider } from "./context/Modal.jsx";
 
-import styles from "./index.module.css";
+import "./index.css";
+// import styles from "./index.module.css";
 
 async function renderApp() {
     const store = await configureStore();

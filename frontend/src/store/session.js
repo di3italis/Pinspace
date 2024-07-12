@@ -1,26 +1,22 @@
 // Import a custom fetch utility to handle CSRF protection
-import { csrfFetch } from './csrf';
+import { csrfFetch } from "./csrf";
 
 // Action type constants
-const SET_USER = 'session/setUser';
-const REMOVE_USER = 'session/removeUser';
+const SET_USER = "session/setUser";
+const REMOVE_USER = "session/removeUser";
 
 // Action creator for setting the current user in the Redux state
 const setUser = (user) => {
     return {
-      type: SET_USER,
-      payload: user
+        type: SET_USER,
+        payload: user,
     };
 };
-
-const removeUser = () => ({
-  type: REMOVE_USER
-});
 
 // Action creator for removing the current user from the Redux state
 const removeUser = () => {
     return {
-        type: REMOVE_USER
+        type: REMOVE_USER,
     };
 };
 
@@ -34,8 +30,8 @@ export const login = (user) => async (dispatch) => {
         method: "POST",
         body: JSON.stringify({
             credential,
-            password
-        })
+            password,
+        }),
     });
     const data = await res.json();
     // Dispatching setUser action with the logged-in user data
@@ -43,71 +39,70 @@ export const login = (user) => async (dispatch) => {
     return res;
 };
 
-
 export const thunkAuthenticate = () => async (dispatch) => {
-	const response = await fetch("/api/auth/");
-	if (response.ok) {
-		const data = await response.json();
-		if (data.errors) {
-			return;
-		}
+    const response = await fetch("/api/auth/");
+    if (response.ok) {
+        const data = await response.json();
+        if (data.errors) {
+            return;
+        }
 
-		dispatch(setUser(data));
-	}
+        dispatch(setUser(data));
+    }
 };
 
-export const thunkLogin = (credentials) => async dispatch => {
-  const response = await fetch("/api/auth/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(credentials)
-  });
+export const thunkLogin = (credentials) => async (dispatch) => {
+    const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(credentials),
+    });
 
-  if(response.ok) {
-    const data = await response.json();
-    dispatch(setUser(data));
-  } else if (response.status < 500) {
-    const errorMessages = await response.json();
-    return errorMessages
-  } else {
-    return { server: "Something went wrong. Please try again" }
-  }
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setUser(data));
+    } else if (response.status < 500) {
+        const errorMessages = await response.json();
+        return errorMessages;
+    } else {
+        return { server: "Something went wrong. Please try again" };
+    }
 };
 
 export const thunkSignup = (user) => async (dispatch) => {
-  const response = await fetch("/api/auth/signup", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(user)
-  });
+    const response = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(user),
+    });
 
-  if(response.ok) {
-    const data = await response.json();
-    dispatch(setUser(data));
-  } else if (response.status < 500) {
-    const errorMessages = await response.json();
-    return errorMessages
-  } else {
-    return { server: "Something went wrong. Please try again" }
-  }
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setUser(data));
+    } else if (response.status < 500) {
+        const errorMessages = await response.json();
+        return errorMessages;
+    } else {
+        return { server: "Something went wrong. Please try again" };
+    }
 };
 
 export const thunkLogout = () => async (dispatch) => {
-  await fetch("/api/auth/logout");
-  dispatch(removeUser());
+    await fetch("/api/auth/logout");
+    dispatch(removeUser());
 };
 
 const initialState = { user: null };
 
 function sessionReducer(state = initialState, action) {
-  switch (action.type) {
-    case SET_USER:
-      return { ...state, user: action.payload };
-    case REMOVE_USER:
-      return { ...state, user: null };
-    default:
-      return state;
-  }
+    switch (action.type) {
+        case SET_USER:
+            return { ...state, user: action.payload };
+        case REMOVE_USER:
+            return { ...state, user: null };
+        default:
+            return state;
+    }
 }
 
 export default sessionReducer;
