@@ -30,7 +30,7 @@ class Pin(db.Model):
             'image': self.image,
             'title': self.title,
             'description': self.description,
-            'owner': self.owner.to_dict() if self.owner else None,
+            'owner': self.owner.to_dict(show_pins=False) if self.owner else None,
             'comments': self.comments.to_dict() if self.comments else None,
             'labels': self.labels.to_dict() if self.labels else None
             # 'owner': self.owner.to_dict() if self.owner else Noneself.owner,

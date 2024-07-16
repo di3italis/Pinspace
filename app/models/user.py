@@ -34,12 +34,23 @@ class User(db.Model, UserMixin):
         '''verifies the password matches the hashed password'''
         return check_password_hash(self.password, password)
 
-    def to_dict(self):
+    def to_dict(self, show_pins=True):
         '''dict of self'''
-        return {
+        dict_ = {
             'id': self.id,
             'username': self.username,
             'email': self.email,
-            # Can't recursively call owner to pin to owner to pin etc....
-            # 'pin': [pin.to_dict() for pin in self.pins]
         }
+        if show_pins:
+            dict_['pins'] = [pin.to_dict() for pin in self.pins] if self.pins else None
+        return dict_
+        # return {
+        #     'id': self.id,
+        #     'username': self.username,
+        #     'email': self.email,
+        #     # Can't recursively call owner to pin to owner to pin etc....
+        #     'pins': [pin.to_dict() for pin in self.pins] if show_pins and self.pins else None
+        # }
+
+
+            # 'owner': self.owner.to_dict() if self.owner else None,
