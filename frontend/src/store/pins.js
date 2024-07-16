@@ -81,7 +81,7 @@ export const getPinDetailsThunk = (pinId) => async (dispatch) => {
         if (res.ok) {
             const data = await res.json();
             console.log("getPinDetailsThunk data:", data);
-            dispatch(getPinDetails(data));
+            dispatch(getPinDetails(data.pin));
         }
     } catch (error) {
         console.log("ERROR IN GETTING PIN DETAILS", error);

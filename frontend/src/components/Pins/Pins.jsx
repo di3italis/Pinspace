@@ -15,8 +15,6 @@ export default function Pins() {
         dispatch(getPinsThunk());
     }, [dispatch]);
 
-    console.log("pin 1:", pins[0]);
-
     if (!pins) {
         return <div>Pins Not Found!</div>;
     }
