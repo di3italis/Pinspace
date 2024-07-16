@@ -1,13 +1,33 @@
 from sqlalchemy.sql import text
 from app.models import Pin, db, User, environment, SCHEMA
 
+
 # Adds demo info to any tables we want to seed
 def seed_tables():
-    '''Seeds the additional tables'''
-    pin1 = Pin(ownerId='1', image='None', title='demo title', description='demo descrip');
-
+    """Seeds the additional tables"""
+    pin1 = Pin(
+        ownerId="1",
+        image="https://i.ibb.co/2tTmr1B/1.jpg",
+        title="demo title",
+        description="demo descrip",
+    )
+    pin2 = Pin(
+        ownerId="2",
+        image="https://i.ibb.co/mBb3fjc/2.jpg",
+        title="demo title",
+        description="demo descrip",
+    )
+    pin3 = Pin(
+        ownerId="3",
+        image="https://i.ibb.co/0KzTh3p/3.jpg ",
+        title="demo title",
+        description="demo descrip",
+    )
     db.session.add(pin1)
+    db.session.add(pin2)
+    db.session.add(pin3)
     db.session.commit()
+
 
 # Uses a raw SQL query to TRUNCATE or DELETE the users table. SQLAlchemy doesn't
 # have a built in function to do this. With postgres in production TRUNCATE
