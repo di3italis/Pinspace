@@ -4,8 +4,6 @@ from flask_login import login_required, current_user
 from app.models import Pin, db#, tables
 from .utils import validate_MustStr
 
-# from app.models import User
-
 pins_routes = Blueprint("pins", __name__)
 
 @pins_routes.route("/all")
@@ -83,11 +81,10 @@ def pins_add():
 @pins_routes.route('/<int:id>')
 def pins_1pin(id):
     """
-    Displays 1 pin by id else [].
+    Displays 1 pin by id else []=
     """
     pin = Pin.query.filter_by(id=id).first()
     return {'pin': pin.to_dict() if pin else None}
-    # return {'pins': [pin.to_dict() for pin in pins]}
 
 @pins_routes.route('/<int:id>', methods=['POST'])
 @login_required
@@ -110,7 +107,7 @@ def pins_1pin_edit(id):
         return {"errors": {'pin': 'not found'}}, 400
 
     if not pin.ownerId == current_user.id:
-        return {"errors": {'pin': 'does not own pin'}}, 400
+        return {"errors": {'ownerId': 'does not own pin'}}, 400
 
     pin.image = body['image']
     pin.title = body['title']
@@ -130,7 +127,7 @@ def pins_1pin_delete(id):
     pin = Pin.query.filter_by(id=id).delete()
 
     if not pin.ownerId == current_user.id:
-        return {"errors": {'pin': 'does not own pin'}}, 400
+        return {"errors": {'ownerId': 'does not own pin'}}, 400
 
     db.session.commit()
 
