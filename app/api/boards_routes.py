@@ -1,7 +1,7 @@
 '''Board routes'''
 from flask import Blueprint, request
 from flask_login import current_user, login_required
-from app.models import Board, db
+from app.models import Board, db, BoardPin
 from .utils import validate_MustStr
 
 boards_routes = Blueprint("boards", __name__)
@@ -86,6 +86,52 @@ def board_delete(id):
     if not board.ownerId == current_user.id:
         return {"errors": {'ownerId': 'does not own board'}}, 400
 
+    db.session.commit()
+
+    return {}
+
+# '''
+# Add pin to board
+# remove pin from board
+# '''
+
+@boards_routes.route('/<int:id>/addPin/<int:pid>', methods=['POST'])
+# @login_required
+def boards_addPin(id, pid):
+    """
+    Create a board for the current user.
+    body expected:
+        description
+    """
+
+    # errors = {}
+
+    # if errors:
+    #     return {"errors": errors}, 400
+
+    board = Board.query.filter_by(id=id).first()
+    if not board:
+        return {"errors": {'board': 'not found'}}, 400
+    if not board.ownerId == current_user.id:
+        return {"errors": {'ownerId': 'does not own board'}}, 400
+
+    boardPin = BoardPin(
+        pinId=pid,
+        boardId=id
+    )
+    db.session.commit()
+    db.session.add(boardPin)
+
+    return boardPin.to_dict()
+
+@boards_routes.route('/<int:id>/addPin/<int:pid>', methods=['DELETE'])
+# @login_required
+def boards_deletePin(id, pid):
+    """
+    delete
+    """
+
+    boardPin = BoardPin.query.filter_by(pinId=pid, boardId=id).delete()
     db.session.commit()
 
     return {}

@@ -133,3 +133,5 @@ def pins_1pin_delete(id):
 
     return {}
     # return {'pins': [pin.to_dict() for pin in pins]}
+
+
