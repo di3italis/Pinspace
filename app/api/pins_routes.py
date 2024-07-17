@@ -93,12 +93,33 @@ def pins_1pin(id):
 @login_required
 def pins_1pin_edit(id):
     """
-    Edits a pin by id. Figure out how to handle body passed in.
-    Also figure out proper validation.
+    Edits a pin by id.
     """
+    # '''Validate body'''
+    body = request.json
+    errors = {}
+    validate_MustStr('image', body, errors)
+    validate_MustStr('title', body, errors)
+    validate_MustStr('description', body, errors)
+
+    if errors:
+        return {"errors": errors}, 400 #if errors else {}
+
     pin = Pin.query.filter_by(id=id).first()
-    return {'pin': pin.to_dict() if pin else None}
-    # return {'pins': [pin.to_dict() for pin in pins]}
+    if not pin:
+        return {"errors": {'pin': 'not found'}}, 400
+
+    if not pin.ownerId == current_user.id:
+        return {"errors": {'pin': 'does not own pin'}}, 400
+
+    pin.image = body['image']
+    pin.title = body['title']
+    pin.description = body['description']
+
+    db.session.commit()
+    db.session.add(pin)
+
+    return pin.to_dict()
 
 @pins_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
@@ -106,6 +127,12 @@ def pins_1pin_delete(id):
     """
     deletes a pin by id.
     """
-    pin = Pin.query.filter_by(id=id).first()
-    return {'pin': pin.to_dict() if pin else None}
+    pin = Pin.query.filter_by(id=id).delete()
+
+    if not pin.ownerId == current_user.id:
+        return {"errors": {'pin': 'does not own pin'}}, 400
+
+    db.session.commit()
+
+    return {}
     # return {'pins': [pin.to_dict() for pin in pins]}
