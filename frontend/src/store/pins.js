@@ -1,3 +1,4 @@
+// pins.js
 // --------------CONSTANTS----------------
 const GET_PINS = "pins/GET_PINS";
 const GET_PIN_DETAILS = "pins/GET_PIN";
