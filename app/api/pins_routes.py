@@ -1,7 +1,7 @@
 '''Pins routes'''
 from flask import Blueprint, request
 from flask_login import login_required, current_user
-from app.models import Pin, db#, tables
+from app.models import Pin, db, Comment
 from .utils import validate_MustStr
 
 pins_routes = Blueprint("pins", __name__)
@@ -130,6 +130,90 @@ def pins_1pin_delete(id):
         return {"errors": {'ownerId': 'does not own pin'}}, 400
 
     db.session.commit()
+
+    return {}
+    # return {'pins': [pin.to_dict() for pin in pins]}
+
+'''comments are anonymous for now.'''
+@pins_routes.route('/<int:id>/comment', methods=['POST'])
+#@login_required
+def pins_comment_add():
+    """
+    adds a comment on a pin
+    body expected:
+        comment (required)
+    """
+    # '''Validate body'''
+    body = request.json
+    errors = {}
+    validate_MustStr('comment', body, errors)
+
+    if errors:
+        return {"errors": errors}, 400
+
+    pin = Pin.query.filter_by(id=id).first()
+    if not pin:
+        return {"errors": {'pin': 'not found'}}, 400
+
+    # if not pin.ownerId == current_user.id:
+    #     return {"errors": {'ownerId': 'does not own pin'}}, 400
+
+    comment = Comment(
+        comment=body['comment'].strip(),
+        pinId=id
+    )
+    db.session.commit()
+    db.session.add(pin)
+
+    return pin.to_dict()
+
+@pins_routes.route('/comment/<int:cid>', methods=['DELETE'])
+@login_required
+def pins_comment_delete(cid):
+    """
+    deletes a comment by id.
+    """
+    comment = Comment.query.filter_by(id=cid).first()
+    if not comment:
+        return {"errors": {'comment': 'not found'}}, 400
+
+    if not comment.pin.ownerId == current_user.id:
+        return {"errors": {'pin.ownerId': 'does not own pin'}}, 400
+
+    comment = Comment.query.filter_by(id=id).delete()
+
+    db.session.commit()
+
+    return {}
+    # return {'pins': [pin.to_dict() for pin in pins]}
+
+@pins_routes.route('/comment/<int:cid>', methods=['PUT'])
+@login_required
+def pins_comment_edit(cid):
+    """
+    edits a comment by id.
+    body expected:
+        comment (required)
+    """
+    # '''Validate body'''
+    body = request.json
+    errors = {}
+    validate_MustStr('comment', body, errors)
+
+    if errors:
+        return {"errors": errors}, 400
+
+    comment = Comment.query.filter_by(id=cid).first()
+    if not comment:
+        return {"errors": {'comment': 'not found'}}, 400
+
+    if not comment.pin.ownerId == current_user.id:
+        return {"errors": {'pin.ownerId': 'does not own pin'}}, 400
+
+    comment.comment = body['comment']
+
+    db.session.commit()
+    db.session.add(comment)
 
     return {}
     # return {'pins': [pin.to_dict() for pin in pins]}
