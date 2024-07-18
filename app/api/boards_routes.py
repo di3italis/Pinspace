@@ -48,7 +48,7 @@ def boards_1(id):
     board = Board.query.filter_by(id=id).first()
     return {'board': board.to_dict() if board else None}
 
-@boards_routes.route('/<int:id>', methods=['POST'])
+@boards_routes.route('/<int:id>', methods=['PUT'])
 @login_required
 def board_edit(id):
     """
@@ -95,7 +95,7 @@ def board_delete(id):
 # remove pin from board
 # '''
 
-@boards_routes.route('/<int:id>/addPin/<int:pid>', methods=['POST'])
+@boards_routes.route('/<int:id>/boardPin/<int:pid>', methods=['POST'])
 # @login_required
 def boards_addPin(id, pid):
     """
@@ -124,14 +124,36 @@ def boards_addPin(id, pid):
 
     return boardPin.to_dict()
 
-@boards_routes.route('/<int:id>/addPin/<int:pid>', methods=['DELETE'])
-# @login_required
-def boards_deletePin(id, pid):
+@boards_routes.route('/<int:id>/boardPin/<int:pid>', methods=['DELETE'])
+@login_required
+def boards_delete_pin(id, pid):
     """
     delete
     """
+
+    board = Board.query.filter_by(id=id).first()
+    if not board:
+        return {"errors": {'board': 'not found'}}, 400
+    if not board.ownerId == current_user.id:
+        return {"errors": {'ownerId': 'does not own board'}}, 400
 
     boardPin = BoardPin.query.filter_by(pinId=pid, boardId=id).delete()
     db.session.commit()
 
     return {}
+
+@boards_routes.route('/<int:id>/boardPin')
+@login_required
+def boards_pin(id):
+    """
+    get all pins for the board
+    """
+
+    board = Board.query.filter_by(id=id).first()
+    if not board:
+        return {"errors": {'board': 'not found'}}, 400
+    if not board.ownerId == current_user.id:
+        return {"errors": {'ownerId': 'does not own board'}}, 400
+
+    board_pins = BoardPin.query.filter_by(boardId=id).all()
+    return {"boardPins": [boardPin.to_dict() for boardPin in board_pins]}

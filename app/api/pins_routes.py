@@ -86,7 +86,7 @@ def pins_1pin(id):
     pin = Pin.query.filter_by(id=id).first()
     return {'pin': pin.to_dict() if pin else None}
 
-@pins_routes.route('/<int:id>', methods=['POST'])
+@pins_routes.route('/<int:id>', methods=['PUT'])
 @login_required
 def pins_1pin_edit(id):
     """
@@ -133,5 +133,3 @@ def pins_1pin_delete(id):
 
     return {}
     # return {'pins': [pin.to_dict() for pin in pins]}
-
-
