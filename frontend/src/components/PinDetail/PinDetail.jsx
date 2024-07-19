@@ -16,7 +16,7 @@ export default function PinDetail() {
     useEffect(() => {
         dispatch(getPinDetailsThunk(pinId));
         console.log(`PinDetail pin ${pinId}`, pin);
-    }, [dispatch, pin, pinId]);
+    }, [dispatch, pinId]);
 
 
     if (!pin) {

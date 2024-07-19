@@ -32,8 +32,8 @@ def login():
     body = request.json
     print("body:", body)
     errors = {}
-    # validate_MustStr("credential", body, errors)
-    # validate_MustStr("password", body, errors)
+    validate_MustStr("credential", body, errors)
+    validate_MustStr("password", body, errors)
 
     if errors:
         print("errors:", errors)
