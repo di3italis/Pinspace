@@ -85,6 +85,13 @@ class BoardPin(db.Model):
 
     boardId = db.Column(db.Integer, ForeignKey(add_prefix_for_prod("boards.id")))
     board = relationship("Board", back_populates="boardPins")
+    def to_dict(self):
+        '''dict of BoardPin'''
+        return {
+            'id': self.id,
+            'pinId': self.pinId,
+            'boardId': self.boardId
+        }
 
 
 class Comment(db.Model):
