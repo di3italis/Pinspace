@@ -189,5 +189,3 @@ export default function pinsReducer(state = initialState, action) {
             return state;
     }
 }
-
-export default pinsReducer;

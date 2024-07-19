@@ -65,7 +65,7 @@ export const getCommentsThunk = (pinId) => async (dispatch) => {
 };
 
 // --------------ADD COMMENT THUNK----------------
-export const addCommentThunk = (payload) => async (dispatch) => {
+export const addCommentThunk = (payload, pinId) => async (dispatch) => {
     try {
         console.log("addCommentThunk payload", payload);
         const res = await fetch(`/api/pins/pinId/comment`, {

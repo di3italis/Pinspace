@@ -257,7 +257,7 @@ const spotsReducer = (state = initialState, action) => {
 
             return newState;
         }
-        // -------------------DELETE SPOT-------------------
+        // -------------------DELETE SPOT------------------
         case DELETE_SPOT: {
             // structured clone to avoid mutating state. Creates deep copy of an object
             const newState = structuredClone(state);

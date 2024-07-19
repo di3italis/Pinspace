@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
 	session: sessionReducer,
     pins: pinsReducer,
     boards: boardsReducer,
-    comments: commentsReducer
+    comments: commentsReducer,
     // define more reducers here
 })
 

@@ -4,7 +4,7 @@ const GET_BOARDS = "boards/GET_BOARDS";
 const GET_BOARD_DETAILS = "boards/GET_BOARD";
 const ADD_BOARD = "boards/ADD_BOARD";
 const DELETE_BOARD = "boards/DELETE_BOARD";
-const UPDATE_BOARD = "boards/UPDATE_BOARD";
+const EDIT_BOARD = "boards/EDIT_BOARD";
 const ERROR = "boards/ERROR";
 
 // --------------ACTIONS----------------
@@ -41,10 +41,10 @@ export const deleteBoard = (boardId) => {
     };
 };
 
-// --------------UPDATE BOARD ACTION----------------
+// --------------EDIT BOARD ACTION----------------
 export const updateBoard = (payload) => {
     return {
-        type: UPDATE_BOARD,
+        type: EDIT_BOARD,
         payload,
     };
 };
@@ -62,10 +62,10 @@ export const handleError = (payload) => {
 // --------------GET BOARDS THUNK----------------
 export const getBoardsThunk = () => async (dispatch) => {
     try {
-        const response = await fetch("/api/boards/");
+        const res = await fetch("/api/boards/");
 
-        if (response.ok) {
-            const data = await response.json();
+        if (res.ok) {
+            const data = await res.json();
             dispatch(getBoards(data.board));
             console.log("getBoardsThunk data:", data);
         }
@@ -79,10 +79,10 @@ export const getBoardsThunk = () => async (dispatch) => {
 // CHECK THIS!!!
 export const getBoardDetailsThunk = (boardId) => async (dispatch) => {
     try {
-        const response = await fetch(`/api/boards/${boardId}`);
+        const res = await fetch(`/api/boards/${boardId}`);
 
-        if (response.ok) {
-            const data = await response.json();
+        if (res.ok) {
+            const data = await res.json();
             dispatch(getBoardDetails(data.board));
             console.log("getBoardDetailsThunk data:", data);
         }
@@ -95,19 +95,106 @@ export const getBoardDetailsThunk = (boardId) => async (dispatch) => {
 // --------------ADD BOARD THUNK----------------
 export const addBoardThunk = (board) => async (dispatch) => {
     try {
-        const response = await fetch("/api/boards/", {
+        const res = await fetch("/api/boards/", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(board),
         });
 
-        if (response.ok) {
-            const data = await response.json();
+        if (res.ok) {
+            const data = await res.json();
             dispatch(addBoard(data.board));
             console.log("addBoardThunk data:", data);
         }
     } catch (error) {
         console.log("ERROR IN ADD BOARD", error);
         dispatch(handleError(error));
+    }
+}
+
+// --------------DELETE BOARD THUNK----------------
+export const deleteBoardThunk = (boardId) => async (dispatch) => {
+    try {
+        const res = await fetch(`/api/boards/${boardId}`, {
+            method: "DELETE",
+        });
+
+        if (res.ok) {
+            dispatch(deleteBoard(boardId));
+        }
+    } catch (error) {
+        console.log("ERROR IN DELETE BOARD", error);
+        dispatch(handleError(error));
+    }
+};
+
+// --------------EDIT BOARD THUNK----------------
+export const editBoardThunk = (payload, boardId) => async (dispatch) => {
+    try {
+        const res = await fetch(`/api/boards/${boardId}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+        });
+
+        if (res.ok) {
+            const data = await res.json();
+            dispatch(updateBoard(data.board));
+            return data;
+        }
+    } catch (error) {
+        console.log("ERROR IN EDIT BOARD", error);
+        dispatch(handleError(error));
+    }
+};
+
+// --------------REDUCER----------------
+const initialState = {};
+
+export default function boardsReducer(state = initialState, action) {
+    switch (action.type) {
+        // --------------GET BOARDS----------------
+        case GET_BOARDS: {
+            const newState = { ...state };
+            action.payload.forEach((board) => {
+                newState[board.id] = board;
+            });
+
+            return newState;
+        }
+        // --------------GET BOARD DETAILS----------------
+        case GET_BOARD_DETAILS: {
+            const id = action.payload.id;
+            return { ...state, [id]: action.payload };
+        }
+        // --------------ADD BOARD----------------
+        case ADD_BOARD: {
+            return {
+                ...state,
+                [action.payload.id]: action.payload
+            };
+        }
+        // --------------DELETE BOARD----------------
+        case DELETE_BOARD: {
+            const newState = structuredClone(state);
+            delete newState[action.boardId];
+            return newState;
+        }
+        // --------------EDIT BOARD----------------
+        case EDIT_BOARD: {
+            const newState = structuredClone(state);
+            newState[action.payload.id] = action.payload;
+            return newState;
+        }
+
+        // --------------ERROR----------------
+        case ERROR: {
+            return {
+                ...state,
+                error: action.payload
+            };
+        }
+        default:
+            return state;
     }
 }
