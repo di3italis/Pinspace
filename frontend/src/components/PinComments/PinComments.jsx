@@ -2,7 +2,7 @@
 import * as commentActions from '../../store/comments';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import styles from './PinDetail.module.css';
+import styles from './PinComments.module.css';
 
 export default function PinComments({ pinId }) {
     const pin = useSelector((state) => state.pins[pinId]);
@@ -18,9 +18,29 @@ export default function PinComments({ pinId }) {
         return <div>Be the first to comment!</div>;
     }
 
-    const pinCommentsArr = comments ? 
+    return (
+        <div>{comments}</div>
+    )
+
+    // const pinCommentsArr = comments ? 
 
     // const sortedComments = comments.sort((a, b) => {
     //     return new Date(b.createdAt) - new Date(a.createdAt);
     // });
+
+    // return (
+    //     <div className={styles.container}>
+    //         <div className={styles.header}>
+    //             <h2>Comments</h2>
+    //         </div>
+    //         <div className={styles.comments}>
+    //             {pinCommentsArr.map((comment) => (
+    //                 <div key={comment.id} className={styles.comment}>
+    //                     <h3>{comment.User.username}</h3>
+    //                     <p>{comment.content}</p>
+    //                 </div>
+    //             ))}
+    //         </div>
+    //     </div>
+    // )
 }

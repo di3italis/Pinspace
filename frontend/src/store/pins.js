@@ -145,7 +145,7 @@ export const updatePinThunk = (payload, pinId) => async (dispatch) => {
 };
 
 // --------------REDUCER----------------
-const initialState = { };
+const initialState = {};
 
 export default function pinsReducer(state = initialState, action) {
     switch (action.type) {
@@ -175,15 +175,19 @@ export default function pinsReducer(state = initialState, action) {
             delete newState[action.pinId];
             return newState;
         }
+        // --------------UPDATE PIN CASE----------------
         case UPDATE_PIN: {
             // structured clone to avoid mutating state. Creates deep copy of an object
             const newState = structuredClone(state);
             newState[action.payload.id] = action.payload;
             return newState;
         }
+        // --------------ERROR CASE----------------
         case ERROR:
             return { ...state, error: action.error };
         default:
             return state;
     }
 }
+
+export default pinsReducer;
