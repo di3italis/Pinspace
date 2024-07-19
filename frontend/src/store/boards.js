@@ -70,7 +70,7 @@ export const getBoardsThunk = () => async (dispatch) => {
             console.log("getBoardsThunk data:", data);
         }
     } catch (error) {
-        consol.log("ERROR IN GET BOARDS", error);
+        console.log("ERROR IN GET BOARDS", error);
         dispatch(handleError(error));
     }
 };
@@ -93,7 +93,7 @@ export const getBoardDetailsThunk = (boardId) => async (dispatch) => {
 };
 
 // --------------ADD BOARD THUNK----------------
-export cont addBoardThunk = (board) => async (dispatch) => {
+export const addBoardThunk = (board) => async (dispatch) => {
     try {
         const response = await fetch("/api/boards/", {
             method: "POST",

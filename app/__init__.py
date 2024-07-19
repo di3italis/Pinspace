@@ -14,6 +14,8 @@ from .seeds import seed_commands
 from .config import Config
 
 app = Flask(__name__, static_folder="../frontend/dist", static_url_path="/")
+# added this line trying to debug ->
+csrf = CSRFProtect(app)
 
 # Setup login manager
 login = LoginManager(app)
@@ -59,6 +61,7 @@ def https_redirect():
 
 @app.after_request
 def inject_csrf_token(response):
+    print("inject csrf response:", response)
     response.set_cookie(
         "csrf_token",
         generate_csrf(),

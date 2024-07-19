@@ -3,6 +3,7 @@ import {useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import HomeSplash from "./components/HomeSplash";
+import LoginFormModal from "./components/LoginFormModal";
 import Boards from "./components/Boards";
 import CreatePin from "./components/CreatePin";
 import Favorites from "./components/Favorites";
@@ -37,6 +38,14 @@ const router = createBrowserRouter([
             {
                 path: "/",
                 element: <HomeSplash />,
+            },
+            {
+                path: "/auth/login",
+                element: <LoginFormModal />,
+            },
+            {
+                path: "/helloworld",
+                element: <LoginFormModal />,
             },
             {
                 path: "/boards",
