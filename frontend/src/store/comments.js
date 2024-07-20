@@ -68,7 +68,7 @@ export const getCommentsThunk = (pinId) => async (dispatch) => {
 export const addCommentThunk = (payload, pinId) => async (dispatch) => {
     try {
         console.log("addCommentThunk payload", payload);
-        const res = await fetch(`/api/pins/pinId/comment`, {
+        const res = await fetch(`/api/pins/${pinId}/comment`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
@@ -124,18 +124,21 @@ const initialState = {};
 export default function commentsReducer(state = initialState, action) {
     switch (action.type) {
         // --------------GET COMMENTS CASE------------
-        case GET_COMMENTS:
+        case GET_COMMENTS: {
             console.log("GET COMMENTS REDUCER:", action.payload);
             // CHECK PAYLOAD RESPONSE
             return { ...state, ...action.payload };
+        }
         // --------------ADD COMMENT CASE------------
-        case ADD_COMMENT:
+        case ADD_COMMENT: {
             return { ...state, ...action.payload };
+        }
         // --------------DELETE COMMENT CASE------------
-        case DELETE_COMMENT:
+        case DELETE_COMMENT: {
             const newState = { ...state };
             delete newState[action.commentId];
             return newState;
+        }
         // --------------EDIT COMMENT CASE------------
         case EDIT_COMMENT:
             return { ...state, ...action.payload };

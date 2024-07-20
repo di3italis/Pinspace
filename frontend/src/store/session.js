@@ -1,4 +1,6 @@
 // session.js
+import { getCookie } from "./utils";
+
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
 
@@ -13,7 +15,11 @@ const removeUser = () => ({
 
 export const thunkAuthenticate = () => async (dispatch) => {
     console.log("GODDAMNIT!!!")
-	const response = await fetch("/api/auth/");
+	const response = await fetch("/api/auth/", {
+        headers: {
+            "X-CSRFToken": getCookie("csrf_token")
+        }
+    });
     console.log("thunkAuth res:", response)
 	if (response.ok) {
 		const data = await response.json();
@@ -32,13 +38,16 @@ export const thunkLogin = ({ credential, password }) => async dispatch => {
     console.log("credential:", credential)
     console.log("password:", password)
     const reqObj = { credential, password };
-    const reqArr = [ credential, password ];
+    // const reqArr = [ credential, password ];
     console.log("reqObj:", reqObj);
-    console.log("reqArr:", reqArr);
+    // console.log("reqArr:", reqArr);
 
   const response = await fetch("/api/auth/login", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { 
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie("csrf_token")
+        },
     body: JSON.stringify(reqObj)
   });
 
@@ -60,7 +69,10 @@ export const thunkLogin = ({ credential, password }) => async dispatch => {
 export const thunkSignup = (user) => async (dispatch) => {
   const response = await fetch("/api/auth/signup", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { 
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie("csrf_token")
+    },
     body: JSON.stringify(user)
   });
 
@@ -76,7 +88,11 @@ export const thunkSignup = (user) => async (dispatch) => {
 };
 
 export const thunkLogout = () => async (dispatch) => {
-  await fetch("/api/auth/logout");
+  await fetch("/api/auth/logout", {
+    headers: {
+      "X-CSRFToken": getCookie("csrf_token")
+    }
+    });
   dispatch(removeUser());
 };
 

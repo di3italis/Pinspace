@@ -7,7 +7,8 @@ import styles from './PinComments.module.css';
 export default function PinComments({ pinId }) {
     const pin = useSelector((state) => state.pins[pinId]);
     // const comments = useSelector((state) => Object.values(state.pins[pinId].comments));
-    const comments = pin.comments;
+    const comments = useSelector((state) => Object.values(state.comments));
+    // const comments = pin.comments;
     const dispatch = useDispatch();
 
     useEffect(() => {

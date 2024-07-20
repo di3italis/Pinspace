@@ -6,3 +6,4 @@ def validate_MustStr(key:str, body:dict, errors: dict):
     else:
         if not body[key].strip():
             errors[key] = key + ' not valid'
+

@@ -1,4 +1,4 @@
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import { legacy_createStore as createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import sessionReducer from './session'
 import pinsReducer from './pins'
@@ -12,20 +12,19 @@ const rootReducer = combineReducers({
     boards: boardsReducer,
     comments: commentsReducer,
     // define more reducers here
-})
+});
 
-const configureStore = async (preloadedState) => { // took out async 240406
-  let enhancer;
+let enhancer;
+if (import.meta.env.MODE === "production") {
+  enhancer = applyMiddleware(thunk);
+} else {
+  const logger = (await import("redux-logger")).default;
+  const composeEnhancers =
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+  enhancer = composeEnhancers(applyMiddleware(thunk, logger));
+}
 
-  if (import.meta.env.MODE === 'production') {
-  // if (process.env.NODE_ENV === 'production') {
-    enhancer = applyMiddleware(thunk);
-  } else {
-    const logger = (await import("redux-logger")).default
-    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-    enhancer = composeEnhancers(applyMiddleware(thunk, logger));
-  }
-
+const configureStore = (preloadedState) => {
   return createStore(rootReducer, preloadedState, enhancer);
 };
 
