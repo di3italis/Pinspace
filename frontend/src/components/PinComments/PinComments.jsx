@@ -19,7 +19,7 @@ export default function PinComments({ pinId }) {
     }
 
     return (
-        <div>{comments}</div>
+        <div> className={styles.container}{comments}</div>
     )
 
     // const pinCommentsArr = comments ? 
