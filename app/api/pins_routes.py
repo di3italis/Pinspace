@@ -1,10 +1,12 @@
-'''Pins routes'''
+"""Pins routes"""
+
 from flask import Blueprint, request
 from flask_login import login_required, current_user
 from app.models import Pin, db, Comment
 from .utils import validate_MustStr
 
 pins_routes = Blueprint("pins", __name__)
+
 
 @pins_routes.route("/all")
 def pins_all():
@@ -13,7 +15,8 @@ def pins_all():
     """
     pins = Pin.query.all()
     # testing pins = User.query.all()
-    return {'pins': [pin.to_dict() for pin in pins]}
+    return {"pins": [pin.to_dict() for pin in pins]}
+
 
 @pins_routes.route("/")
 def pins_all2():
@@ -21,7 +24,8 @@ def pins_all2():
     Displays all pins. this route can be modified to include paging and query parameters.
     """
     pins = Pin.query.all()
-    return {'pins': [pin.to_dict() for pin in pins]}
+    return {"pins": [pin.to_dict() for pin in pins]}
+
 
 @pins_routes.route("/current")
 @login_required
@@ -30,9 +34,10 @@ def pins_current():
     Displays all pins of currently logged in user.
     """
     pins = Pin.query.filter_by(id=current_user.id).all()
-    return {'pins': [pin.to_dict() for pin in pins]}
+    return {"pins": [pin.to_dict() for pin in pins]}
 
-@pins_routes.route('/', methods=['POST'])
+
+@pins_routes.route("/", methods=["POST"])
 @login_required
 def pins_add():
     """
@@ -45,9 +50,9 @@ def pins_add():
     # '''Validate body'''
     body = request.json
     errors = {}
-    validate_MustStr('image', body, errors)
-    validate_MustStr('title', body, errors)
-    validate_MustStr('description', body, errors)
+    validate_MustStr("image", body, errors)
+    validate_MustStr("title", body, errors)
+    validate_MustStr("description", body, errors)
 
     # if not "image" in body or body['image'] is None:
     #     errors["image"] = 'image required'
@@ -56,14 +61,13 @@ def pins_add():
     #         errors["image"] = 'image not valid'
 
     if errors:
-        return {"errors": errors}, 400 #if errors else {}
-
+        return {"errors": errors}, 400  # if errors else {}
 
     pin = Pin(
-        image=body['image'].strip(),
-        title=body['title'].strip(),
-        description=body['description'].strip(),
-        ownerId=current_user.id
+        image=body["image"].strip(),
+        title=body["title"].strip(),
+        description=body["description"].strip(),
+        ownerId=current_user.id,
     )
     db.session.commit()
     db.session.add(pin)
@@ -78,15 +82,17 @@ def pins_add():
     # return {'pin': pin}
     # return {'pins': [pin.to_dict() for pin in pins]}
 
-@pins_routes.route('/<int:id>')
+
+@pins_routes.route("/<int:id>")
 def pins_1pin(id):
     """
     Displays 1 pin by id else []=
     """
     pin = Pin.query.filter_by(id=id).first()
-    return {'pin': pin.to_dict() if pin else None}
+    return {"pin": pin.to_dict() if pin else None}
 
-@pins_routes.route('/<int:id>', methods=['PUT'])
+
+@pins_routes.route("/<int:id>", methods=["PUT"])
 @login_required
 def pins_1pin_edit(id):
     """
@@ -95,30 +101,31 @@ def pins_1pin_edit(id):
     # '''Validate body'''
     body = request.json
     errors = {}
-    validate_MustStr('image', body, errors)
-    validate_MustStr('title', body, errors)
-    validate_MustStr('description', body, errors)
+    validate_MustStr("image", body, errors)
+    validate_MustStr("title", body, errors)
+    validate_MustStr("description", body, errors)
 
     if errors:
-        return {"errors": errors}, 400 #if errors else {}
+        return {"errors": errors}, 400  # if errors else {}
 
     pin = Pin.query.filter_by(id=id).first()
     if not pin:
-        return {"errors": {'pin': 'not found'}}, 400
+        return {"errors": {"pin": "not found"}}, 400
 
     if not pin.ownerId == current_user.id:
-        return {"errors": {'ownerId': 'does not own pin'}}, 400
+        return {"errors": {"ownerId": "does not own pin"}}, 400
 
-    pin.image = body['image']
-    pin.title = body['title']
-    pin.description = body['description']
+    pin.image = body["image"]
+    pin.title = body["title"]
+    pin.description = body["description"]
 
     db.session.commit()
     db.session.add(pin)
 
     return pin.to_dict()
 
-@pins_routes.route('/<int:id>', methods=['DELETE'])
+
+@pins_routes.route("/<int:id>", methods=["DELETE"])
 @login_required
 def pins_1pin_delete(id):
     """
@@ -127,16 +134,21 @@ def pins_1pin_delete(id):
     pin = Pin.query.filter_by(id=id).delete()
 
     if not pin.ownerId == current_user.id:
-        return {"errors": {'ownerId': 'does not own pin'}}, 400
+        return {"errors": {"ownerId": "does not own pin"}}, 400
 
     db.session.commit()
 
     return {}
     # return {'pins': [pin.to_dict() for pin in pins]}
 
-'''comments are anonymous for now.'''
-@pins_routes.route('/<int:id>/comment', methods=['POST'])
-#@login_required
+
+"""In the Future: May need to add a route to GET all comments for a pin, for more nuanced functionality and robust comments storage/retrieval"""
+
+"""comments are anonymous for now."""
+
+
+@pins_routes.route("/<int:id>/comment", methods=["POST"])
+# @login_required
 def pins_comment_add():
     """
     adds a comment on a pin
@@ -146,28 +158,26 @@ def pins_comment_add():
     # '''Validate body'''
     body = request.json
     errors = {}
-    validate_MustStr('comment', body, errors)
+    validate_MustStr("comment", body, errors)
 
     if errors:
         return {"errors": errors}, 400
 
     pin = Pin.query.filter_by(id=id).first()
     if not pin:
-        return {"errors": {'pin': 'not found'}}, 400
+        return {"errors": {"pin": "not found"}}, 400
 
     # if not pin.ownerId == current_user.id:
     #     return {"errors": {'ownerId': 'does not own pin'}}, 400
 
-    comment = Comment(
-        comment=body['comment'].strip(),
-        pinId=id
-    )
+    comment = Comment(comment=body["comment"].strip(), pinId=id)
     db.session.commit()
     db.session.add(pin)
 
     return pin.to_dict()
 
-@pins_routes.route('/comment/<int:cid>', methods=['DELETE'])
+
+@pins_routes.route("/comment/<int:cid>", methods=["DELETE"])
 @login_required
 def pins_comment_delete(cid):
     """
@@ -175,10 +185,10 @@ def pins_comment_delete(cid):
     """
     comment = Comment.query.filter_by(id=cid).first()
     if not comment:
-        return {"errors": {'comment': 'not found'}}, 400
+        return {"errors": {"comment": "not found"}}, 400
 
     if not comment.pin.ownerId == current_user.id:
-        return {"errors": {'pin.ownerId': 'does not own pin'}}, 400
+        return {"errors": {"pin.ownerId": "does not own pin"}}, 400
 
     comment = Comment.query.filter_by(id=id).delete()
 
@@ -187,7 +197,8 @@ def pins_comment_delete(cid):
     return {}
     # return {'pins': [pin.to_dict() for pin in pins]}
 
-@pins_routes.route('/comment/<int:cid>', methods=['PUT'])
+
+@pins_routes.route("/comment/<int:cid>", methods=["PUT"])
 @login_required
 def pins_comment_edit(cid):
     """
@@ -198,19 +209,19 @@ def pins_comment_edit(cid):
     # '''Validate body'''
     body = request.json
     errors = {}
-    validate_MustStr('comment', body, errors)
+    validate_MustStr("comment", body, errors)
 
     if errors:
         return {"errors": errors}, 400
 
     comment = Comment.query.filter_by(id=cid).first()
     if not comment:
-        return {"errors": {'comment': 'not found'}}, 400
+        return {"errors": {"comment": "not found"}}, 400
 
     if not comment.pin.ownerId == current_user.id:
-        return {"errors": {'pin.ownerId': 'does not own pin'}}, 400
+        return {"errors": {"pin.ownerId": "does not own pin"}}, 400
 
-    comment.comment = body['comment']
+    comment.comment = body["comment"]
 
     db.session.commit()
     db.session.add(comment)
