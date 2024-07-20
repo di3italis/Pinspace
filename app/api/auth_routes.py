@@ -99,7 +99,8 @@ def sign_up():
     validate_MustStr("profile_image", body, errors)
 
     if errors:
-        return {"errors": errors}, 400  # if errors else {}
+        print("Validation errors sent: ", {"errors": errors})
+        return {"errors": errors}, 400 #if errors else {}
 
     user = User(
         first_name=body["first_name"],
