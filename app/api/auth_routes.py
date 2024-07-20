@@ -91,6 +91,7 @@ def sign_up():
     validate_MustStr('profile_image', body, errors)
 
     if errors:
+        print("Validation errors sent: ", {"errors": errors})
         return {"errors": errors}, 400 #if errors else {}
 
     user = User(
