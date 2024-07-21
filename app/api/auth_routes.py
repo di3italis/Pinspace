@@ -22,7 +22,6 @@ def authenticate():
 
 @auth_routes.route("/login", methods=["POST"])
 def login():
-    print("help")
     """
     Logs a user in
     body:
@@ -110,4 +109,3 @@ def unauthorized():
     Returns unauthorized JSON when flask-login authentication fails
     """
     return jsonify({"errors": {"message": "Unauthorized"}}), 401
-

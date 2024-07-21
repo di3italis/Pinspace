@@ -10,14 +10,18 @@ export default function BoardCard({ board }) {
     return <div>Board Not Found!</div>;
   }
   function DDotest(){
+    if (board === null){
+      return "Board is null"
+    } else{
+      console.log('Boards has boards!')
+      // + Object.keys(board).length()
+      return "Board exists" + 'keys are:'
 
-    console.log('sdsdsdsd' + board)
-    return board
+    }
   }
   return (
         <div>
-
-            <h1>No {DDotest()} BoardCard</h1>
+            <h1>{DDotest()} on BoardCard</h1>
         </div>
   );
 }

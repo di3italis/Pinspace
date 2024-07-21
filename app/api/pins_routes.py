@@ -69,8 +69,8 @@ def pins_add():
         description=body["description"].strip(),
         ownerId=current_user.id,
     )
-    db.session.commit()
     db.session.add(pin)
+    db.session.commit()
 
     return pin.to_dict()
 
@@ -119,8 +119,8 @@ def pins_1pin_edit(id):
     pin.title = body["title"]
     pin.description = body["description"]
 
+    db.session.update(pin)
     db.session.commit()
-    db.session.add(pin)
 
     return pin.to_dict()
 
@@ -186,8 +186,8 @@ def pins_comment_add():
     #     return {"errors": {'ownerId': 'does not own pin'}}, 400
 
     comment = Comment(comment=body["comment"].strip(), pinId=id)
+    db.session.add(comment)
     db.session.commit()
-    db.session.add(pin)
 
     return pin.to_dict()
 
@@ -240,8 +240,8 @@ def pins_comment_edit(cid):
 
     comment.comment = body["comment"]
 
+    db.session.update(comment)
     db.session.commit()
-    db.session.add(comment)
 
     return {}
     # return {'pins': [pin.to_dict() for pin in pins]}

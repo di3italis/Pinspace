@@ -14,7 +14,8 @@ const removeUser = () => ({
 });
 
 export const thunkAuthenticate = () => async (dispatch) => {
-    console.log("GODDAMNIT!!!")
+  // console.log("GODDAMNIT!!!")
+  console.log("Thunk Authenticate!!!")
 	const response = await fetch("/api/auth/", {
         headers: {
             "X-CSRFToken": getCookie("csrf_token")
@@ -44,7 +45,7 @@ export const thunkLogin = (payload) => async dispatch => {
 
   const response = await fetch("/api/auth/login", {
     method: "POST",
-    headers: { 
+    headers: {
             "Content-Type": "application/json",
             "X-CSRFToken": getCookie("csrf_token")
         },
@@ -70,7 +71,7 @@ export const thunkSignup = (payload) => async (dispatch) => {
     console.log("payload:", payload)
   const response = await fetch("/api/auth/signup", {
     method: "POST",
-    headers: { 
+    headers: {
             "Content-Type": "application/json",
             "X-CSRFToken": getCookie("csrf_token")
     },
