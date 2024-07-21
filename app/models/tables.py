@@ -30,13 +30,16 @@ class Pin(db.Model):
     def to_dict(self):
         """dict of Pin"""
         return {
-            'id': self.id,
-            'image': self.image,
-            'title': self.title,
-            'description': self.description,
-            'owner': self.owner.to_dict(show_pins=False) if self.owner else None,
-            'comments': self.comments.to_dict() if self.comments else None,
-            'labels': self.labels.to_dict() if self.labels else None
+            "id": self.id,
+            "image": self.image,
+            "title": self.title,
+            "description": self.description,
+            "owner": self.owner.to_dict(show_pins=False) if self.owner else None,
+            # 'comments': self.comments.to_dict() if self.comments else None,
+            "comments": [comment.to_dict() for comment in self.comments]
+            if self.comments
+            else None,
+            "labels": self.labels.to_dict() if self.labels else None,
             # 'owner': self.owner.to_dict() if self.owner else Noneself.owner,
             # 'comments': self.comments.to_dict() if self.comments else self.comments,
             # 'labels': self.labels.to_dict() if self.labels else self.labels
@@ -85,13 +88,10 @@ class BoardPin(db.Model):
 
     boardId = db.Column(db.Integer, ForeignKey(add_prefix_for_prod("boards.id")))
     board = relationship("Board", back_populates="boardPins")
+
     def to_dict(self):
-        '''dict of BoardPin'''
-        return {
-            'id': self.id,
-            'pinId': self.pinId,
-            'boardId': self.boardId
-        }
+        """dict of BoardPin"""
+        return {"id": self.id, "pinId": self.pinId, "boardId": self.boardId}
 
 
 class Comment(db.Model):
@@ -112,7 +112,8 @@ class Comment(db.Model):
         return {
             "id": self.id,
             "comment": self.comment,
-            "pin": self.pin.to_dict() if self.pin else self.pin,
+            "pinId": self.pinId,
+            # "pin": self.pin.to_dict() if self.pin else self.pin,
         }
 
 

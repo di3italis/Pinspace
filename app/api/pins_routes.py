@@ -190,8 +190,9 @@ def pins_comment_delete(cid):
     if not comment.pin.ownerId == current_user.id:
         return {"errors": {"pin.ownerId": "does not own pin"}}, 400
 
-    comment = Comment.query.filter_by(id=id).delete()
+    # comment = Comment.query.filter_by(id=id).delete()
 
+    db.session.delete(comment)
     db.session.commit()
 
     return {}

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getPinDetailsThunk } from "../../store/pins";
+import * as pinActions from "../../store/pins";
 import PinComments from "../PinComments";
 import styles from "./PinDetail.module.css";
 
@@ -14,14 +14,18 @@ export default function PinDetail() {
     // console.log("PinDetail pins", pins);
     const pin = useSelector((state) => state.pins[pinId]);
 
+
     useEffect(() => {
-        dispatch(getPinDetailsThunk(pinId));
+        dispatch(pinActions.getPinDetailsThunk(pinId));
         // console.log(`PinDetail pin ${pinId}`, pin);
     }, [dispatch, pinId]);
 
+    const deletePin = () => {
+        dispatch(pinActions.deletePinThunk(pin.id));
+    };
 
     if (!pin) {
-        return <div>Pin Not Found!</div>;
+        return <div>Pin (Details) Not Found!</div>;
     }
 
     return (
@@ -31,6 +35,7 @@ export default function PinDetail() {
             <div className={styles.comments}>
                 <PinComments /> 
             </div>
+            <button onClick={deletePin}>Delete Pin</button>
         </div>
     )
 }

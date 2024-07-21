@@ -11,37 +11,37 @@ export default function PinComments({ pinId }) {
     // const comments = pin.comments;
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(commentActions.getCommentsThunk(pinId));
-    }, [dispatch, pinId]);
+    // useEffect(() => {
+    //     dispatch(commentActions.getCommentsThunk(pinId));
+    // }, [dispatch, pinId]);
 
     if (!comments) {
         return <div>Be the first to comment!</div>;
     }
 
-    return (
-        <div> className={styles.container}{comments}</div>
-    )
+    // return (
+    //     <div> className={styles.container}{comments}</div>
+    // )
 
-    // const pinCommentsArr = comments ? 
+    const pinCommentsArr = comments ? comments.filter((comment) => comment.pinId === pinId) : []; 
 
     // const sortedComments = comments.sort((a, b) => {
     //     return new Date(b.createdAt) - new Date(a.createdAt);
     // });
 
-    // return (
-    //     <div className={styles.container}>
-    //         <div className={styles.header}>
-    //             <h2>Comments</h2>
-    //         </div>
-    //         <div className={styles.comments}>
-    //             {pinCommentsArr.map((comment) => (
-    //                 <div key={comment.id} className={styles.comment}>
-    //                     <h3>{comment.User.username}</h3>
-    //                     <p>{comment.content}</p>
-    //                 </div>
-    //             ))}
-    //         </div>
-    //     </div>
-    // )
+    return (
+        <div className={styles.container}>
+            <div className={styles.header}>
+                <h2>Comments</h2>
+            </div>
+            <div className={styles.comments}>
+                {pinCommentsArr.map((comment) => (
+                    <div key={comment.id} className={styles.comment}>
+                        <h3>{comment.User.username}</h3>
+                        <p>{comment.content}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    )
 }

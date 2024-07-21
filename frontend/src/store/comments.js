@@ -1,4 +1,6 @@
 // comments.js
+import { getCookie } from "./utils";
+
 // --------------CONSTANTS----------------
 const GET_COMMENTS = "comments/GET_COMMENTS";
 const ADD_COMMENT = "comments/ADD_COMMENT";
@@ -89,6 +91,9 @@ export const deleteCommentThunk = (commentId) => async (dispatch) => {
     try {
         const res = await fetch(`/api/pins/comment/${commentId}`, {
             method: "DELETE",
+            headers: {
+              "X-CSRFToken": getCookie("csrf_token")
+            }
         });
         if (res.ok) {
             dispatch(deleteComment(commentId));
