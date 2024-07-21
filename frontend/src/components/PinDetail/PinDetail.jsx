@@ -1,7 +1,9 @@
+// PinDetail.jsx
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import * as pinActions from "../../store/pins";
+import * as commentActions from "../../store/comments"
 import PinComments from "../PinComments";
 import styles from "./PinDetail.module.css";
 
@@ -33,7 +35,7 @@ export default function PinDetail() {
             <h1>{pin.title}</h1>
             <img src={pin.image}/>
             <div className={styles.comments}>
-                <PinComments /> 
+                <PinComments key={pinId} pinId={pinId} /> 
             </div>
             <button onClick={deletePin}>Delete Pin</button>
         </div>

@@ -55,10 +55,11 @@ export const handleError = (payload) => {
 // --------------GET COMMENTS THUNK----------------
 export const getCommentsThunk = (pinId) => async (dispatch) => {
     try {
-        const res = await fetch(`/api/pins/${pinId}/comments`);
+        const res = await fetch(`/api/pins/${pinId}/comment`);
+        console.log("getCommentsThunk res:", res);
         if (res.ok) {
             const data = await res.json();
-            dispatch(getComments(data));
+            dispatch(getComments(data.comments));
         }
     } catch (error) {
         console.error("ERROR IN GET COMMENTS", error);
@@ -92,6 +93,7 @@ export const deleteCommentThunk = (commentId) => async (dispatch) => {
         const res = await fetch(`/api/pins/comment/${commentId}`, {
             method: "DELETE",
             headers: {
+              "Content-Type": "application/json",
               "X-CSRFToken": getCookie("csrf_token")
             }
         });
@@ -131,12 +133,15 @@ export default function commentsReducer(state = initialState, action) {
         // --------------GET COMMENTS CASE------------
         case GET_COMMENTS: {
             console.log("GET COMMENTS REDUCER:", action.payload);
-            // CHECK PAYLOAD RESPONSE
-            return { ...state, ...action.payload };
+            const newState = {};
+            action.payload.forEach((comment) => {
+                newState[comment.id] = comment;
+            });
+            return newState;
         }
         // --------------ADD COMMENT CASE------------
         case ADD_COMMENT: {
-            return { ...state, ...action.payload };
+            return { ...state, [action.payload.id]: action.payload };
         }
         // --------------DELETE COMMENT CASE------------
         case DELETE_COMMENT: {
