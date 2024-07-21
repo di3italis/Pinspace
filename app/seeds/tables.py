@@ -1,3 +1,4 @@
+# seeds/tables.py
 from sqlalchemy.sql import text
 from app.models import Pin, db, Comment, environment, SCHEMA
 

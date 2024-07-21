@@ -1,3 +1,4 @@
+# models/tables.py
 """Model definitions"""
 
 # from flask_sqlalchemy import SQLAlchemy
