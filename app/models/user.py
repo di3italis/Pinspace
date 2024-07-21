@@ -5,10 +5,10 @@ from .db import db, environment, SCHEMA
 
 
 class User(db.Model, UserMixin):
-    __tablename__ = 'users'
+    __tablename__ = "users"
 
     if environment == "production":
-        __table_args__ = {'schema': SCHEMA}
+        __table_args__ = {"schema": SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(20), nullable=False)
@@ -23,7 +23,7 @@ class User(db.Model, UserMixin):
 
     @property
     def password(self):
-        '''returns the hashed password'''
+        """returns the hashed password"""
         return self.hashed_password
 
     @password.setter
@@ -31,18 +31,18 @@ class User(db.Model, UserMixin):
         self.hashed_password = generate_password_hash(password)
 
     def check_password(self, password):
-        '''verifies the password matches the hashed password'''
+        """verifies the password matches the hashed password"""
         return check_password_hash(self.password, password)
 
     def to_dict(self, show_pins=True):
-        '''dict of self'''
+        """dict of self"""
         dict_ = {
-            'id': self.id,
-            'username': self.username,
-            'email': self.email,
+            "id": self.id,
+            "username": self.username,
+            "email": self.email,
         }
         if show_pins:
-            dict_['pins'] = [pin.to_dict() for pin in self.pins] if self.pins else None
+            dict_["pins"] = [pin.to_dict() for pin in self.pins] if self.pins else None
         return dict_
         # return {
         #     'id': self.id,
@@ -52,5 +52,4 @@ class User(db.Model, UserMixin):
         #     'pins': [pin.to_dict() for pin in self.pins] if show_pins and self.pins else None
         # }
 
-
-            # 'owner': self.owner.to_dict() if self.owner else None,
+        # 'owner': self.owner.to_dict() if self.owner else None,

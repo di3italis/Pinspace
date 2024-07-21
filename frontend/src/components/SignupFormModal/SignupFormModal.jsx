@@ -6,10 +6,13 @@ import "./SignupForm.css";
 
 function SignupFormModal() {
     const dispatch = useDispatch();
+    const [first_name, setFirstName] = useState("");
+    const [last_name, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [profile_image, setProfileImage] = useState("");
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
 
@@ -25,8 +28,11 @@ function SignupFormModal() {
 
         const serverResponse = await dispatch(
             thunkSignup({
-                email,
+                first_name,
+                last_name,
                 username,
+                email,
+                profile_image,
                 password,
             })
         );
@@ -44,15 +50,25 @@ function SignupFormModal() {
             {errors.server && <p>{errors.server}</p>}
             <form onSubmit={handleSubmit}>
                 <label>
-                    Email
+                    First Name
                     <input
                         type="text"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        value={first_name}
+                        onChange={(e) => setFirstName(e.target.value)}
                         required
                     />
                 </label>
-                {errors.email && <p>{errors.email}</p>}
+                {errors.first_name && <p>{errors.first_name}</p>}
+                <label>
+                    Last Name
+                    <input
+                        type="text"
+                        value={last_name}
+                        onChange={(e) => setLastName(e.target.value)}
+                        required
+                    />
+                </label>
+                {errors.last_name && <p>{errors.last_name}</p>}
                 <label>
                     Username
                     <input
@@ -63,6 +79,26 @@ function SignupFormModal() {
                     />
                 </label>
                 {errors.username && <p>{errors.username}</p>}
+                <label>
+                    Email
+                    <input
+                        type="text"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </label>
+                {errors.email && <p>{errors.email}</p>}
+                <label>
+                    Profile Image URL
+                    <input
+                        type="text"
+                        value={profile_image}
+                        onChange={(e) => setProfileImage(e.target.value)}
+                        required
+                    />
+                </label>
+                {errors.profile_image && <p>{errors.profile_image}</p>}
                 <label>
                     Password
                     <input

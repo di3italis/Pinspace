@@ -34,12 +34,12 @@ export const thunkAuthenticate = () => async (dispatch) => {
     }
 };
 
-export const thunkLogin = ({ credential, password }) => async dispatch => {
-    console.log("credential:", credential)
-    console.log("password:", password)
-    const reqObj = { credential, password };
+export const thunkLogin = (payload) => async dispatch => {
+    // console.log("credential:", credential)
+    // console.log("password:", password)
+    // const reqObj = { credential, password };
     // const reqArr = [ credential, password ];
-    console.log("reqObj:", reqObj);
+    // console.log("reqObj:", reqObj);
     // console.log("reqArr:", reqArr);
 
   const response = await fetch("/api/auth/login", {
@@ -48,7 +48,7 @@ export const thunkLogin = ({ credential, password }) => async dispatch => {
             "Content-Type": "application/json",
             "X-CSRFToken": getCookie("csrf_token")
         },
-    body: JSON.stringify(reqObj)
+    body: JSON.stringify(payload)
   });
 
   if(response.ok) {
@@ -66,14 +66,15 @@ export const thunkLogin = ({ credential, password }) => async dispatch => {
   }
 };
 
-export const thunkSignup = (user) => async (dispatch) => {
+export const thunkSignup = (payload) => async (dispatch) => {
+    console.log("payload:", payload)
   const response = await fetch("/api/auth/signup", {
     method: "POST",
     headers: { 
             "Content-Type": "application/json",
             "X-CSRFToken": getCookie("csrf_token")
     },
-    body: JSON.stringify(user)
+    body: JSON.stringify(payload)
   });
 
   if(response.ok) {
