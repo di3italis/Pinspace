@@ -55,10 +55,11 @@ export const handleError = (payload) => {
 // --------------GET COMMENTS THUNK----------------
 export const getCommentsThunk = (pinId) => async (dispatch) => {
     try {
-        const res = await fetch(`/api/pins/${pinId}/comments`);
+        const res = await fetch(`/api/pins/${pinId}/comment`);
+        console.log("getCommentsThunk res:", res);
         if (res.ok) {
             const data = await res.json();
-            dispatch(getComments(data));
+            dispatch(getComments(data.comments));
         }
     } catch (error) {
         console.error("ERROR IN GET COMMENTS", error);
@@ -133,6 +134,8 @@ export default function commentsReducer(state = initialState, action) {
             console.log("GET COMMENTS REDUCER:", action.payload);
             // CHECK PAYLOAD RESPONSE
             return { ...state, ...action.payload };
+            // const id = action.payload.id;
+            // return { ...state, [id]: action.payload };
         }
         // --------------ADD COMMENT CASE------------
         case ADD_COMMENT: {

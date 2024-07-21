@@ -1,6 +1,6 @@
 """Pins routes"""
 
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
 from app.models import Pin, db, Comment
 from .utils import validate_MustStr
@@ -131,15 +131,30 @@ def pins_1pin_delete(id):
     """
     deletes a pin by id.
     """
-    pin = Pin.query.filter_by(id=id).delete()
+    pin = Pin.query.filter_by(id=id).first()
 
-    if not pin.ownerId == current_user.id:
-        return {"errors": {"ownerId": "does not own pin"}}, 400
+    if not pin:
+        return {"errors": {"pin": "not found"}}, 404
 
+    if pin.ownerId != current_user.id:
+        return {"errors": {"ownerId": "does not own pin"}}, 403
+
+    db.session.delete(pin)
     db.session.commit()
 
-    return {}
+    return {"message": "Pin deleted successfully"}, 200
     # return {'pins': [pin.to_dict() for pin in pins]}
+
+
+@pins_routes.route("/<int:id>/comment", methods=["GET"])
+def pins_comment(id):
+    """
+    get all comments on a pin
+    """
+
+    comments = Comment.query.filter_by(pinId=id).all()
+
+    return {"comments": [comment.to_dict() for comment in comments]}
 
 
 """In the Future: May need to add a route to GET all comments for a pin, for more nuanced functionality and robust comments storage/retrieval"""

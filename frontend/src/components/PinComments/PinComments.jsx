@@ -2,20 +2,26 @@
 import * as commentActions from '../../store/comments';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import styles from './PinComments.module.css';
 
 export default function PinComments({ pinId }) {
+    const { pinId: pinIdStr } = useParams();
     const pin = useSelector((state) => state.pins[pinId]);
     // const comments = useSelector((state) => Object.values(state.pins[pinId].comments));
     const comments = useSelector((state) => Object.values(state.comments));
     // const comments = pin.comments;
     const dispatch = useDispatch();
 
-    // useEffect(() => {
-    //     dispatch(commentActions.getCommentsThunk(pinId));
-    // }, [dispatch, pinId]);
+    console.log("PinComments pinId:", pinId);
 
-    if (!comments) {
+    useEffect(() => {
+        dispatch(commentActions.getCommentsThunk(pinId));
+    }, [dispatch, pinId]);
+
+    console.log("comments:", comments)
+
+    if (!comments || comments.length === 0) {
         return <div>Be the first to comment!</div>;
     }
 
@@ -23,7 +29,8 @@ export default function PinComments({ pinId }) {
     //     <div> className={styles.container}{comments}</div>
     // )
 
-    const pinCommentsArr = comments ? comments.filter((comment) => comment.pinId === pinId) : []; 
+    const pinCommentsArr = comments.filter((comment) => comment.pinId === pinId); 
+    console.log("pinCommentsArr[0]:", pinCommentsArr[0]);
 
     // const sortedComments = comments.sort((a, b) => {
     //     return new Date(b.createdAt) - new Date(a.createdAt);
@@ -37,8 +44,7 @@ export default function PinComments({ pinId }) {
             <div className={styles.comments}>
                 {pinCommentsArr.map((comment) => (
                     <div key={comment.id} className={styles.comment}>
-                        <h3>{comment.User.username}</h3>
-                        <p>{comment.content}</p>
+                        <p>{comment.comment}</p>
                     </div>
                 ))}
             </div>
