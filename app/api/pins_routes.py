@@ -164,7 +164,7 @@ def pins_comment(id):
 
 @pins_routes.route("/<int:id>/comment", methods=["POST"])
 # @login_required
-def pins_comment_add():
+def pins_comment_add(id):
     """
     adds a comment on a pin
     body expected:
@@ -186,10 +186,10 @@ def pins_comment_add():
     #     return {"errors": {'ownerId': 'does not own pin'}}, 400
 
     comment = Comment(comment=body["comment"].strip(), pinId=id)
+    db.session.add(comment)
     db.session.commit()
-    db.session.add(pin)
 
-    return pin.to_dict()
+    return comment.to_dict()
 
 
 @pins_routes.route("/comment/<int:cid>", methods=["DELETE"])
