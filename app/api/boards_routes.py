@@ -13,7 +13,7 @@ def boards_get():
     """
     Gets all boards for the current user
     """
-    boards = Board.query.filter_by(id=current_user.id).all()
+    boards = Board.query.filter_by(ownerId=current_user.id).all()
     return jsonify({"boards": [board.to_dict() for board in boards]})
 
 @boards_routes.route('/', methods=['POST'])

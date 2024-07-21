@@ -33,7 +33,7 @@ def pins_current():
     """
     Displays all pins of currently logged in user.
     """
-    pins = Pin.query.filter_by(id=current_user.id).all()
+    pins = Pin.query.filter_by(ownerId=current_user.id).all()
     return {"pins": [pin.to_dict() for pin in pins]}
 
 

@@ -68,7 +68,7 @@ export const getBoardsThunk = () => async (dispatch) => {
 
         if (res.ok) {
             const data = await res.json();
-            //console.log('ERRRRRRRRRdfsdfsdfdsfsdfds', data)
+            console.log('getBoardsThunk fetch("/api/boards/::', data)
 
             dispatch(getBoards(data.boards));
             console.log("getBoardsThunk data:", data);
