@@ -93,6 +93,7 @@ export const deleteCommentThunk = (commentId) => async (dispatch) => {
         const res = await fetch(`/api/pins/comment/${commentId}`, {
             method: "DELETE",
             headers: {
+              "Content-Type": "application/json",
               "X-CSRFToken": getCookie("csrf_token")
             }
         });
@@ -132,14 +133,15 @@ export default function commentsReducer(state = initialState, action) {
         // --------------GET COMMENTS CASE------------
         case GET_COMMENTS: {
             console.log("GET COMMENTS REDUCER:", action.payload);
-            // CHECK PAYLOAD RESPONSE
-            return { ...state, ...action.payload };
-            // const id = action.payload.id;
-            // return { ...state, [id]: action.payload };
+            const newState = {};
+            action.payload.forEach((comment) => {
+                newState[comment.id] = comment;
+            });
+            return newState;
         }
         // --------------ADD COMMENT CASE------------
         case ADD_COMMENT: {
-            return { ...state, ...action.payload };
+            return { ...state, [action.payload.id]: action.payload };
         }
         // --------------DELETE COMMENT CASE------------
         case DELETE_COMMENT: {

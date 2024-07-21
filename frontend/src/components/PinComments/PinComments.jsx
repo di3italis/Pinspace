@@ -19,6 +19,11 @@ export default function PinComments({ pinId }) {
         dispatch(commentActions.getCommentsThunk(pinId));
     }, [dispatch, pinId]);
 
+    const deleteComment = (commentId) => { 
+        dispatch(commentActions.deleteCommentThunk(commentId));
+    }
+
+
     console.log("comments:", comments)
 
     if (!comments || comments.length === 0) {
@@ -45,6 +50,7 @@ export default function PinComments({ pinId }) {
                 {pinCommentsArr.map((comment) => (
                     <div key={comment.id} className={styles.comment}>
                         <p>{comment.comment}</p>
+                        <button onClick={() => deleteComment(comment.id)}>Delete Comment</button>
                     </div>
                 ))}
             </div>

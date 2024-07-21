@@ -199,18 +199,19 @@ def pins_comment_delete(cid):
     deletes a comment by id.
     """
     comment = Comment.query.filter_by(id=cid).first()
+
     if not comment:
-        return {"errors": {"comment": "not found"}}, 400
+        return {"errors": {"comment": "not found"}}, 404
 
-    if not comment.pin.ownerId == current_user.id:
-        return {"errors": {"pin.ownerId": "does not own pin"}}, 400
-
+    # if not comment.pin.ownerId == current_user.id:
+    #     return {"errors": {"pin.ownerId": "does not own pin"}}, 403
+    #
     # comment = Comment.query.filter_by(id=id).delete()
 
     db.session.delete(comment)
     db.session.commit()
 
-    return {}
+    return {"message": "Comment deleted successfully"}, 200
     # return {'pins': [pin.to_dict() for pin in pins]}
 
 
