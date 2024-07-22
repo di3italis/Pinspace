@@ -28,7 +28,7 @@ export default function Pins() {
     return (
         <div className={styles.pins}>
             {pins.map((pin) => (
-                <PinCard key={pin.id} pin={pin} />
+                <PinCard key={pin.id} pin={pin} addBoard={true}/>
             ))}
         </div>
     );

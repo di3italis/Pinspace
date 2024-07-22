@@ -6,7 +6,7 @@ import * as pinActions from '../../store/pins';
 import styles from './PinCard.module.css';
 import {addBoardPinThunk} from "../../store/boardpins";
 
-export default function PinCard({ pin }) {
+export default function PinCard({ pin, addBoard }) {
   const dispatch = useDispatch();
 
   const boards = useSelector((state) => Object.values(state.boards));
@@ -29,7 +29,7 @@ export default function PinCard({ pin }) {
       const serverResponse = await dispatch(
         addBoardPinThunk(selectedBoard, pin.id)
       );
-       console.log("response from BAORDPIN ADD:", serverResponse)
+      //  console.log("response from BAORDPIN ADD:", serverResponse)
       if (serverResponse) {
         // board.description = description
         // cancelEdit();
@@ -40,9 +40,17 @@ export default function PinCard({ pin }) {
       }
 
     }
+    // const doX = () => {
+    //   console.log('dox', pin)
+    // }
+
+    if (!pin){
+      return <h1>PinCard</h1>
+    }
 
     return (
         <div className={styles.card}>
+
             <Link to={`/pins/${pin.id}`}>
                 <div className={styles.imageContainer}>
                     <img
@@ -54,15 +62,19 @@ export default function PinCard({ pin }) {
                 </div>
                 <h1>PinCard</h1>
             </Link>
-            Link to Board
-            <select
-              value={selectedBoard} // ...force the select's value to match the state variable...
-              onChange={e => setselectedBoard(e.target.value)} // ... and update the state variable on any change!
-            >
-              {getOptions()}
-            </select>
-            {(selectedBoard != '') && <button onClick={addBoardPin}>Add to Board</button>}
 
+            {addBoard &&
+            <>
+              Link to Board
+              <select
+                value={selectedBoard} // ...force the select's value to match the state variable...
+                onChange={e => setselectedBoard(e.target.value)} // ... and update the state variable on any change!
+              >
+                {getOptions()}
+              </select>
+              {(selectedBoard != '') && <button onClick={addBoardPin}>Add to Board</button>}
+            </>
+            }
 
         </div>
     );
