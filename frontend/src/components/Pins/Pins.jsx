@@ -1,3 +1,4 @@
+// Pins.jsx
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPinsThunk } from "../../store/pins";
@@ -6,6 +7,7 @@ import styles from "./Pins.module.css";
 
 export default function Pins() {
     const dispatch = useDispatch();
+    const sessionUser = useSelector((state) => state.session.user);
     // should i use Object.values or just grab state.pins?
     const pins = useSelector((state) => Object.values(state.pins));
     // const pins = useSelector((state) => state.pins);
@@ -27,9 +29,15 @@ export default function Pins() {
 
     return (
         <div className={styles.pins}>
-            {pins.map((pin) => (
+            {sessionUser ? 
+                (pins.map((pin) => (
                 <PinCard key={pin.id} pin={pin} addBoard={true}/>
-            ))}
+            )))
+            :
+            (pins.map((pin) => (
+                <PinCard key={pin.id} pin={pin} addBoard={false}/>
+            )))
+        }
         </div>
     );
 }
