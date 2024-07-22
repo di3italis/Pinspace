@@ -33,7 +33,7 @@ def pins_current():
     """
     Displays all pins of currently logged in user.
     """
-    pins = Pin.query.filter_by(id=current_user.id).all()
+    pins = Pin.query.filter_by(ownerId=current_user.id).all()
     return {"pins": [pin.to_dict() for pin in pins]}
 
 
@@ -69,8 +69,8 @@ def pins_add():
         description=body["description"].strip(),
         ownerId=current_user.id,
     )
-    db.session.commit()
     db.session.add(pin)
+    db.session.commit()
 
     return pin.to_dict()
 
@@ -119,8 +119,8 @@ def pins_1pin_edit(id):
     pin.title = body["title"]
     pin.description = body["description"]
 
-    db.session.commit()
     db.session.add(pin)
+    db.session.commit()
 
     return pin.to_dict()
 
@@ -139,7 +139,9 @@ def pins_1pin_delete(id):
     if pin.ownerId != current_user.id:
         return {"errors": {"ownerId": "does not own pin"}}, 403
 
-    db.session.delete(pin)
+    pin = Pin.query.filter_by(id=id).delete()
+
+    # db.session.delete(pin)
     db.session.commit()
 
     return {"message": "Pin deleted successfully"}, 200
@@ -198,7 +200,7 @@ def pins_comment_delete(cid):
     """
     deletes a comment by id.
     """
-    comment = Comment.query.filter_by(id=cid).first()
+    comment = Comment.query.filter_by(id=cid).delete()
 
     if not comment:
         return {"errors": {"comment": "not found"}}, 404
@@ -208,7 +210,7 @@ def pins_comment_delete(cid):
     #
     # comment = Comment.query.filter_by(id=id).delete()
 
-    db.session.delete(comment)
+    # db.session.delete(comment)
     db.session.commit()
 
     return {"message": "Comment deleted successfully"}, 200
@@ -240,8 +242,8 @@ def pins_comment_edit(cid):
 
     comment.comment = body["comment"]
 
-    db.session.commit()
     db.session.add(comment)
+    db.session.commit()
 
     return {}
     # return {'pins': [pin.to_dict() for pin in pins]}

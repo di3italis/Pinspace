@@ -1,4 +1,6 @@
 // boards.js
+import { getCookie } from "./utils";
+
 // --------------CONSTANTS----------------
 const GET_BOARDS = "boards/GET_BOARDS";
 const GET_BOARD_DETAILS = "boards/GET_BOARD";
@@ -66,7 +68,9 @@ export const getBoardsThunk = () => async (dispatch) => {
 
         if (res.ok) {
             const data = await res.json();
-            dispatch(getBoards(data.board));
+            console.log('getBoardsThunk fetch("/api/boards/::', data)
+
+            dispatch(getBoards(data.boards));
             console.log("getBoardsThunk data:", data);
         }
     } catch (error) {
@@ -97,14 +101,17 @@ export const addBoardThunk = (board) => async (dispatch) => {
     try {
         const res = await fetch("/api/boards/", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "X-CSRFToken": getCookie("csrf_token"),
+              "Content-Type": "application/json" },
             body: JSON.stringify(board),
         });
 
         if (res.ok) {
             const data = await res.json();
-            dispatch(addBoard(data.board));
             console.log("addBoardThunk data:", data);
+
+            dispatch(addBoard(data));
         }
     } catch (error) {
         console.log("ERROR IN ADD BOARD", error);
@@ -116,7 +123,10 @@ export const addBoardThunk = (board) => async (dispatch) => {
 export const deleteBoardThunk = (boardId) => async (dispatch) => {
     try {
         const res = await fetch(`/api/boards/${boardId}`, {
-            method: "DELETE",
+          headers: {
+            "X-CSRFToken": getCookie("csrf_token"),
+            "Content-Type": "application/json" },
+          method: "DELETE",
         });
 
         if (res.ok) {
@@ -131,15 +141,20 @@ export const deleteBoardThunk = (boardId) => async (dispatch) => {
 // --------------EDIT BOARD THUNK----------------
 export const editBoardThunk = (payload, boardId) => async (dispatch) => {
     try {
+
         const res = await fetch(`/api/boards/${boardId}`, {
             method: "PUT",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "X-CSRFToken": getCookie("csrf_token"),
+              "Content-Type": "application/json" },
             body: JSON.stringify(payload),
         });
 
         if (res.ok) {
             const data = await res.json();
-            dispatch(updateBoard(data.board));
+            console.log("editBoardThunk", data);
+
+            dispatch(updateBoard(data));
             return data;
         }
     } catch (error) {
@@ -155,7 +170,9 @@ export default function boardsReducer(state = initialState, action) {
     switch (action.type) {
         // --------------GET BOARDS----------------
         case GET_BOARDS: {
-            const newState = { ...state };
+            const newState = structuredClone(state);
+            //const newState = { ...state };
+
             action.payload.forEach((board) => {
                 newState[board.id] = board;
             });
@@ -164,12 +181,14 @@ export default function boardsReducer(state = initialState, action) {
         }
         // --------------GET BOARD DETAILS----------------
         case GET_BOARD_DETAILS: {
-            const id = action.payload.id;
+          const newState = structuredClone(state);
+          const id = action.payload.id;
             return { ...state, [id]: action.payload };
         }
         // --------------ADD BOARD----------------
         case ADD_BOARD: {
-            return {
+          const newState = structuredClone(state);
+          return {
                 ...state,
                 [action.payload.id]: action.payload
             };
