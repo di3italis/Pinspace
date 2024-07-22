@@ -1,19 +1,27 @@
 // PinComments.jsx
 import * as commentActions from '../../store/comments';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './PinComments.module.css';
 
 export default function PinComments({ pinId }) {
     const { pinId: pinIdStr } = useParams();
+    const [comment, setComment] = useState("");
     const pin = useSelector((state) => state.pins[pinId]);
-    // const comments = useSelector((state) => Object.values(state.pins[pinId].comments));
     const comments = useSelector((state) => Object.values(state.comments));
-    // const comments = pin.comments;
     const dispatch = useDispatch();
 
     console.log("PinComments pinId:", pinId);
+
+    const handleChange =(e) => {
+        setComment(e.target.value);
+    }
+
+    const handleSubmit = () => {
+        dispatch(commentActions.addCommentThunk(comment, pinId));
+        setComment("");
+    }
 
     useEffect(() => {
         dispatch(commentActions.getCommentsThunk(pinId));
@@ -22,7 +30,6 @@ export default function PinComments({ pinId }) {
     const deleteComment = (commentId) => { 
         dispatch(commentActions.deleteCommentThunk(commentId));
     }
-
 
     console.log("comments:", comments)
 
@@ -53,6 +60,14 @@ export default function PinComments({ pinId }) {
                         <button onClick={() => deleteComment(comment.id)}>Delete Comment</button>
                     </div>
                 ))}
+            </div>
+            <div className={styles.newComment}>
+                <textarea 
+                    value={comment}
+                    onChange={handleChange}
+                    placeholder="Share your thoughts!"
+                />
+                <button onClick={handleSubmit}>Post Comment</button>
             </div>
         </div>
     )

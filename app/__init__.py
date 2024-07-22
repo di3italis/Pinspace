@@ -17,7 +17,7 @@ from .config import Config
 
 app = Flask(__name__, static_folder="../frontend/dist", static_url_path="/")
 # added this line trying to debug ->
-csrf = CSRFProtect(app)
+# csrf = CSRFProtect(app)
 
 # Setup login manager
 login = LoginManager(app)

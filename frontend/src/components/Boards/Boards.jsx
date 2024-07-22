@@ -8,6 +8,7 @@ import BoardCard from "../BoardCard";
 export default function Boards() {
   const dispatch = useDispatch();
   const boards = useSelector((state) => Object.values(state.boards));
+   const user = useSelector((state) => state.session.user); 
 
   const [showCreate, setshowCreate] = useState(false);
   const [description, setdescription] = useState("");
@@ -15,7 +16,7 @@ export default function Boards() {
 
   useEffect(() => {
       dispatch(getBoardsThunk());
-  }, [dispatch]);
+  }, [dispatch, user]);
 
   if (!boards) {
       return <div>Boards Not Found!</div>;

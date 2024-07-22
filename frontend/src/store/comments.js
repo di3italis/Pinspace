@@ -68,12 +68,17 @@ export const getCommentsThunk = (pinId) => async (dispatch) => {
 };
 
 // --------------ADD COMMENT THUNK----------------
-export const addCommentThunk = (payload, pinId) => async (dispatch) => {
+export const addCommentThunk = (comment, pinId) => async (dispatch) => {
     try {
+        const payload = { comment };
         console.log("addCommentThunk payload", payload);
         const res = await fetch(`/api/pins/${pinId}/comment`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+                "Content-Type": "application/json",
+                "X-CSRFToken": getCookie("csrf_token")
+
+            },
             body: JSON.stringify(payload),
         });
         if (res.ok) {

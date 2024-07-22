@@ -1,5 +1,6 @@
 // session.js
 import { getCookie } from "./utils";
+import { clearBoards } from "./boards";
 
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
@@ -95,6 +96,7 @@ export const thunkLogout = () => async (dispatch) => {
       "X-CSRFToken": getCookie("csrf_token")
     }
     });
+    dispatch(clearBoards());
   dispatch(removeUser());
 };
 

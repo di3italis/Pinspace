@@ -1,3 +1,4 @@
+// HomeSplash.jsx
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./HomeSplash.module.css";
 import Boards from "../Boards";
