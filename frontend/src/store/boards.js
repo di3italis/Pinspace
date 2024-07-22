@@ -138,9 +138,12 @@ export const deleteBoardThunk = (boardId) => async (dispatch) => {
 // --------------EDIT BOARD THUNK----------------
 export const editBoardThunk = (payload, boardId) => async (dispatch) => {
     try {
+
         const res = await fetch(`/api/boards/${boardId}`, {
             method: "PUT",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "X-CSRFToken": getCookie("csrf_token"),
+              "Content-Type": "application/json" },
             body: JSON.stringify(payload),
         });
 

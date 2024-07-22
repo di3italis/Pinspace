@@ -119,7 +119,7 @@ def pins_1pin_edit(id):
     pin.title = body["title"]
     pin.description = body["description"]
 
-    db.session.update(pin)
+    db.session.add(pin)
     db.session.commit()
 
     return pin.to_dict()
@@ -240,7 +240,7 @@ def pins_comment_edit(cid):
 
     comment.comment = body["comment"]
 
-    db.session.update(comment)
+    db.session.add(comment)
     db.session.commit()
 
     return {}

@@ -27,6 +27,8 @@ export default function Boards() {
   const handleCreateSubmit = async (e) => {
     e.preventDefault();
 
+    setdescription('');
+
     const serverResponse = await dispatch(
       addBoardThunk({
         description,
@@ -38,14 +40,19 @@ export default function Boards() {
     if (serverResponse) {
         setErrors(serverResponse);
     } else {
-      setshowCreate(false)
+      cancelCreate()
     }
-};
+  };
+
+  function cancelCreate(){
+    setdescription('');
+    setshowCreate(false)
+  }
 
   function getCreateForm(){
       return (
         <>
-            <h1>Log In</h1>
+            <h1>Creating </h1>
             <form onSubmit={handleCreateSubmit}>
                 <label>
                     Description
@@ -58,6 +65,7 @@ export default function Boards() {
                 </label>
                 {errors.description && <p>{errors.description}</p>}
                 <button type="submit">Create Board</button>
+                <button onClick={cancelCreate}>Cancel</button>
             </form>
         </>
     );

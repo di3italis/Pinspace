@@ -70,7 +70,7 @@ def board_edit(id):
 
     board.description = body['description']
 
-    db.session.update(board)
+    db.session.add(board)
     db.session.commit()
 
     return jsonify(board.to_dict())
