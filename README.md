@@ -1,3 +1,11 @@
+# Details for README:
+- Overview of Project
+- Link to Live
+- Outline Tech used
+- Explain 2 Features that showcase our skillz
+- Challenges and Solutions
+- Code Snippets
+
 # PinSpace
 
 ## Overview
