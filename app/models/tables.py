@@ -68,7 +68,7 @@ class Board(db.Model):
             "id": self.id,
             "description": self.description,
             "owner": self.owner.to_dict() if self.owner else None,
-            "comments": self.boardPins.to_dict() if self.boardPins else None,
+            # "comments": self.boardPins.to_dict() if self.boardPins else None,
         }
 
 

@@ -102,9 +102,8 @@ def board_delete(id):
 # @login_required
 def boards_addPin(id, pid):
     """
-    Create a board for the current user.
+    Create a boardPin for the current user.
     body expected:
-        description
     """
 
     # errors = {}

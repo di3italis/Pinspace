@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteBoardThunk, editBoardThunk } from "../../store/boards";
+import { deleteBoardThunk, editBoardThunk} from "../../store/boards";
+import { getBoardPinsThunk } from "../../store/boardpins";
 
 export default function BoardCard({ board }) {
   const dispatch = useDispatch();
@@ -8,9 +9,20 @@ export default function BoardCard({ board }) {
   const [inEdit, setinEdit] = useState(false);
   const [description, setdescription] = useState(false);
 
+
+  // const boardPins = useSelector((state) => {
+  //   console.log('ISSTEZTE', state)
+  //   return [];
+  //     let res = state.boards.BP.filter((bp) => {
+  //       return bp.boardId == board.id
+  //     })
+  //     return res
+  //   });
+
   useEffect(() => {
     setdescription(board?.description);
-  }, [board?.description]);
+    dispatch(getBoardPinsThunk(board.id));
+  }, [dispatch, board]);
 
   if (!board) {
     return <div>Board Not Found!</div>;
@@ -58,13 +70,20 @@ export default function BoardCard({ board }) {
     setdescription(board?.description);
     setinEdit(false)
   }
+//   <div >
+//   {boardPins.map((b) => (
+//     b.id
+//   ))}
+// </div>
 
   return (
     <>
-      <div className='redBox'>
+
+       <div className='redBox'>
           {!inEdit &&
             <>
               <h1>{board.description}</h1>
+              <h2>BoardID is {board.id}</h2>
               <button onClick={startUpdate}>Edit</button>
               <button onClick={deleteBoard}>Delete</button>
             </>

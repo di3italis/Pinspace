@@ -9,8 +9,10 @@ const DELETE_BOARD = "boards/DELETE_BOARD";
 const EDIT_BOARD = "boards/EDIT_BOARD";
 const ERROR = "boards/ERROR";
 
+
 // --------------ACTIONS----------------
 //
+
 // --------------GET BOARDS ACTION----------------
 export const getBoards = (payload) => {
     return {
@@ -61,6 +63,8 @@ export const handleError = (payload) => {
 
 // --------------THUNKS----------------
 //
+
+
 // --------------GET BOARDS THUNK----------------
 export const getBoardsThunk = () => async (dispatch) => {
     try {
