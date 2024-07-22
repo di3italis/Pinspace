@@ -139,7 +139,9 @@ def pins_1pin_delete(id):
     if pin.ownerId != current_user.id:
         return {"errors": {"ownerId": "does not own pin"}}, 403
 
-    db.session.delete(pin)
+    pin = Pin.query.filter_by(id=id).delete()
+
+    # db.session.delete(pin)
     db.session.commit()
 
     return {"message": "Pin deleted successfully"}, 200
@@ -198,7 +200,7 @@ def pins_comment_delete(cid):
     """
     deletes a comment by id.
     """
-    comment = Comment.query.filter_by(id=cid).first()
+    comment = Comment.query.filter_by(id=cid).delete()
 
     if not comment:
         return {"errors": {"comment": "not found"}}, 404
@@ -208,7 +210,7 @@ def pins_comment_delete(cid):
     #
     # comment = Comment.query.filter_by(id=id).delete()
 
-    db.session.delete(comment)
+    # db.session.delete(comment)
     db.session.commit()
 
     return {"message": "Comment deleted successfully"}, 200

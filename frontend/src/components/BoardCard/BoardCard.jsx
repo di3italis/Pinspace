@@ -27,17 +27,31 @@ export default function BoardCard({ board }) {
       }, board.id)
     );
 
-    console.log("response from BAORD edit:", serverResponse)
 
+     console.log("response from BAORD edit:", serverResponse)
     if (serverResponse) {
-      console.log('edit thunk resp is', serverResponse )
+      board.description = description
+      cancelEdit();
+      //console.log('edit thunk resp is', serverResponse )
         // setErrors(serverResponse);
     } else {
-      // cancelCreate()
+      //
     }
   };
 
   const deleteBoard = async () => {
+    const serverResponse = await dispatch(
+      deleteBoardThunk(board.id)
+    );
+    console.log("response from BAORD Delete:", serverResponse)
+    if (serverResponse) {
+      // board.description = description
+      // cancelEdit();
+      //console.log('edit thunk resp is', serverResponse )
+        // setErrors(serverResponse);
+    } else {
+      //
+    }
   }
 
   const cancelEdit = async () => {

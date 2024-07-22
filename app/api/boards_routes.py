@@ -81,12 +81,14 @@ def board_delete(id):
     """
     deletes a board by id.
     """
-    board = Board.query.filter_by(id=id).delete()
+    board = Board.query.filter_by(id=id).first()
 
     if not board.ownerId == current_user.id:
         return jsonify({"errors": {'ownerId': 'does not own board'}}), 400
 
-    db.session.delete(board)
+    board = Board.query.filter_by(id=id).delete()
+
+    # db.session.delete(board)
     db.session.commit()
 
     return jsonify({})
@@ -140,7 +142,7 @@ def boards_delete_pin(id, pid):
 
     boardPin = BoardPin.query.filter_by(pinId=pid, boardId=id).delete()
 
-    db.session.delete(boardPin)
+    # db.session.delete(boardPin)
     db.session.commit()
 
     return jsonify({})

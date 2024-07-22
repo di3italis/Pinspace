@@ -123,7 +123,10 @@ export const addBoardThunk = (board) => async (dispatch) => {
 export const deleteBoardThunk = (boardId) => async (dispatch) => {
     try {
         const res = await fetch(`/api/boards/${boardId}`, {
-            method: "DELETE",
+          headers: {
+            "X-CSRFToken": getCookie("csrf_token"),
+            "Content-Type": "application/json" },
+          method: "DELETE",
         });
 
         if (res.ok) {
@@ -149,7 +152,9 @@ export const editBoardThunk = (payload, boardId) => async (dispatch) => {
 
         if (res.ok) {
             const data = await res.json();
-            dispatch(updateBoard(data.board));
+            console.log("editBoardThunk", data);
+
+            dispatch(updateBoard(data));
             return data;
         }
     } catch (error) {
