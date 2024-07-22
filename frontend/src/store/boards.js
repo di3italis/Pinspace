@@ -7,6 +7,7 @@ const GET_BOARD_DETAILS = "boards/GET_BOARD";
 const ADD_BOARD = "boards/ADD_BOARD";
 const DELETE_BOARD = "boards/DELETE_BOARD";
 const EDIT_BOARD = "boards/EDIT_BOARD";
+const CLEAR_BOARDS = "boards/CLEAR_BOARDS"
 const ERROR = "boards/ERROR";
 
 // --------------ACTIONS----------------
@@ -51,6 +52,13 @@ export const updateBoard = (payload) => {
     };
 };
 
+// --------------CLEAR BOARDS ACTION----------------
+export const clearBoards = () => {
+    return {
+        type: CLEAR_BOARDS,
+    };
+};
+
 // --------------ERROR ACTION----------------
 export const handleError = (payload) => {
     return {
@@ -68,10 +76,8 @@ export const getBoardsThunk = () => async (dispatch) => {
 
         if (res.ok) {
             const data = await res.json();
-            console.log('getBoardsThunk fetch("/api/boards/::', data)
-
-            dispatch(getBoards(data.boards));
             console.log("getBoardsThunk data:", data);
+            dispatch(getBoards(data.boards));
         }
     } catch (error) {
         console.log("ERROR IN GET BOARDS", error);
@@ -170,14 +176,13 @@ export default function boardsReducer(state = initialState, action) {
     switch (action.type) {
         // --------------GET BOARDS----------------
         case GET_BOARDS: {
+            // old
             const newState = structuredClone(state);
-            //const newState = { ...state };
-
             action.payload.forEach((board) => {
                 newState[board.id] = board;
             });
-
             return newState;
+
         }
         // --------------GET BOARD DETAILS----------------
         case GET_BOARD_DETAILS: {
@@ -205,7 +210,9 @@ export default function boardsReducer(state = initialState, action) {
             newState[action.payload.id] = action.payload;
             return newState;
         }
-
+        // --------------CLEAR BOARDS----------------
+        case CLEAR_BOARDS:
+            return {};
         // --------------ERROR----------------
         case ERROR: {
             return {

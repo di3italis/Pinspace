@@ -23,6 +23,10 @@ function Navigation() {
       <li>
         <NavLink to="/boards/">My Boards</NavLink>
       </li>}
+      {sessionUser && 
+      <li>
+        <NavLink to="/create-pin/">Create Pin</NavLink>
+      </li>}
     </ul>
   );
 }
