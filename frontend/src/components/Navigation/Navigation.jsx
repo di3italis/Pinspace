@@ -2,7 +2,7 @@
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
-import Pins from "../Pins";
+import { Pins, MyPins } from "../Pins";
 import "./Navigation.css";
 
 function Navigation() {

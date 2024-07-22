@@ -2,7 +2,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./HomeSplash.module.css";
 import Boards from "../Boards";
-import Pins from "../Pins";
+import { Pins, MyPins } from "../Pins";
 
 export default function HomeSplash() {
     const sessionUser = useSelector((state) => state.session.user);

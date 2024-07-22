@@ -1,5 +1,6 @@
 // boards.js
 import { getCookie } from "./utils";
+import { REMOVE_USER } from "./session";
 
 // --------------CONSTANTS----------------
 const GET_BOARDS = "boards/GET_BOARDS";
