@@ -1,4 +1,6 @@
 // pins.js
+import { getCookie } from "./utils";
+
 // --------------CONSTANTS----------------
 const GET_PINS = "pins/GET_PINS";
 const GET_PIN_DETAILS = "pins/GET_PIN";
@@ -115,9 +117,17 @@ export const deletePinThunk = (pinId) => async (dispatch) => {
     try {
         const res = await fetch(`/api/pins/${pinId}`, {
             method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": getCookie("csrf_token")
+            }
         });
         if (res.ok) {
             dispatch(deletePin(pinId));
+        } else {
+            const errorData = await res.json();
+            console.error("Failed to delete pin:", errorData);
+            dispatch(handleError(errorData));
         }
     } catch (error) {
         console.log("ERROR IN DELETING PIN", error);

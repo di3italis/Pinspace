@@ -1,4 +1,6 @@
 // comments.js
+import { getCookie } from "./utils";
+
 // --------------CONSTANTS----------------
 const GET_COMMENTS = "comments/GET_COMMENTS";
 const ADD_COMMENT = "comments/ADD_COMMENT";
@@ -53,10 +55,11 @@ export const handleError = (payload) => {
 // --------------GET COMMENTS THUNK----------------
 export const getCommentsThunk = (pinId) => async (dispatch) => {
     try {
-        const res = await fetch(`/api/pins/${pinId}/comments`);
+        const res = await fetch(`/api/pins/${pinId}/comment`);
+        console.log("getCommentsThunk res:", res);
         if (res.ok) {
             const data = await res.json();
-            dispatch(getComments(data));
+            dispatch(getComments(data.comments));
         }
     } catch (error) {
         console.error("ERROR IN GET COMMENTS", error);
@@ -65,12 +68,17 @@ export const getCommentsThunk = (pinId) => async (dispatch) => {
 };
 
 // --------------ADD COMMENT THUNK----------------
-export const addCommentThunk = (payload, pinId) => async (dispatch) => {
+export const addCommentThunk = (comment, pinId) => async (dispatch) => {
     try {
+        const payload = { comment };
         console.log("addCommentThunk payload", payload);
-        const res = await fetch(`/api/pins/pinId/comment`, {
+        const res = await fetch(`/api/pins/${pinId}/comment`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+                "Content-Type": "application/json",
+                "X-CSRFToken": getCookie("csrf_token")
+
+            },
             body: JSON.stringify(payload),
         });
         if (res.ok) {
@@ -89,6 +97,10 @@ export const deleteCommentThunk = (commentId) => async (dispatch) => {
     try {
         const res = await fetch(`/api/pins/comment/${commentId}`, {
             method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": getCookie("csrf_token")
+            }
         });
         if (res.ok) {
             dispatch(deleteComment(commentId));
@@ -124,18 +136,24 @@ const initialState = {};
 export default function commentsReducer(state = initialState, action) {
     switch (action.type) {
         // --------------GET COMMENTS CASE------------
-        case GET_COMMENTS:
+        case GET_COMMENTS: {
             console.log("GET COMMENTS REDUCER:", action.payload);
-            // CHECK PAYLOAD RESPONSE
-            return { ...state, ...action.payload };
+            const newState = {};
+            action.payload.forEach((comment) => {
+                newState[comment.id] = comment;
+            });
+            return newState;
+        }
         // --------------ADD COMMENT CASE------------
-        case ADD_COMMENT:
-            return { ...state, ...action.payload };
+        case ADD_COMMENT: {
+            return { ...state, [action.payload.id]: action.payload };
+        }
         // --------------DELETE COMMENT CASE------------
-        case DELETE_COMMENT:
+        case DELETE_COMMENT: {
             const newState = { ...state };
             delete newState[action.commentId];
             return newState;
+        }
         // --------------EDIT COMMENT CASE------------
         case EDIT_COMMENT:
             return { ...state, ...action.payload };

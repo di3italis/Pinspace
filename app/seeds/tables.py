@@ -1,5 +1,6 @@
+# seeds/tables.py
 from sqlalchemy.sql import text
-from app.models import Pin, db, User, environment, SCHEMA
+from app.models import Pin, db, Comment, environment, SCHEMA
 
 
 # Adds demo info to any tables we want to seed
@@ -23,6 +24,24 @@ def seed_tables():
         title="demo title",
         description="demo descrip",
     )
+    comment1 = Comment(
+        # userId="1",
+        pinId="1",
+        comment="demo comment 1",
+    )
+    comment2 = Comment(
+        # userId="2",
+        pinId="2",
+        comment="demo comment 1",
+    )
+    comment3 = Comment(
+        # userId="3",
+        pinId="3",
+        comment="demo comment 1",
+    )
+    db.session.add(comment1)
+    db.session.add(comment2)
+    db.session.add(comment3)
     db.session.add(pin1)
     db.session.add(pin2)
     db.session.add(pin3)

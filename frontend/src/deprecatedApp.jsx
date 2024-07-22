@@ -44,10 +44,6 @@ const router = createBrowserRouter([
                 element: <LoginFormModal />,
             },
             {
-                path: "/helloworld",
-                element: <LoginFormModal />,
-            },
-            {
                 path: "/boards",
                 element: <Boards />,
             },
