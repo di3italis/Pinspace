@@ -1,3 +1,4 @@
+// HomeSplash.jsx
 import styles from "./HomeSplash.module.css";
 
 export default function HomeSplash() {
