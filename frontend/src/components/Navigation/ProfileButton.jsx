@@ -65,7 +65,7 @@ function ProfileButton() {
                                 </li>
                                 <li>
                                     <NavLink
-                                        to={"/pins/all/"}
+                                        to={"/pins/current/"}
                                         onClick={() => setShowMenu(false)}
                                     >
                                         My Pins

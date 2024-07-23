@@ -1,5 +1,6 @@
 // boards.js
 import { getCookie } from "./utils";
+// import { REMOVE_USER } from "./session";
 
 // --------------CONSTANTS----------------
 const GET_BOARDS = "boards/GET_BOARDS";
@@ -7,9 +8,8 @@ const GET_BOARD_DETAILS = "boards/GET_BOARD";
 const ADD_BOARD = "boards/ADD_BOARD";
 const DELETE_BOARD = "boards/DELETE_BOARD";
 const EDIT_BOARD = "boards/EDIT_BOARD";
-const CLEAR_BOARDS = "boards/CLEAR_BOARDS"
+const CLEAR_BOARDS = "boards/CLEAR_BOARDS";
 const ERROR = "boards/ERROR";
-
 
 // --------------ACTIONS----------------
 //
@@ -72,7 +72,6 @@ export const handleError = (payload) => {
 // --------------THUNKS----------------
 //
 
-
 // --------------GET BOARDS THUNK----------------
 export const getBoardsThunk = () => async (dispatch) => {
     try {
@@ -112,8 +111,9 @@ export const addBoardThunk = (board) => async (dispatch) => {
         const res = await fetch("/api/boards/", {
             method: "POST",
             headers: {
-              "X-CSRFToken": getCookie("csrf_token"),
-              "Content-Type": "application/json" },
+                "X-CSRFToken": getCookie("csrf_token"),
+                "Content-Type": "application/json",
+            },
             body: JSON.stringify(board),
         });
 
@@ -127,16 +127,17 @@ export const addBoardThunk = (board) => async (dispatch) => {
         console.log("ERROR IN ADD BOARD", error);
         dispatch(handleError(error));
     }
-}
+};
 
 // --------------DELETE BOARD THUNK----------------
 export const deleteBoardThunk = (boardId) => async (dispatch) => {
     try {
         const res = await fetch(`/api/boards/${boardId}`, {
-          headers: {
-            "X-CSRFToken": getCookie("csrf_token"),
-            "Content-Type": "application/json" },
-          method: "DELETE",
+            headers: {
+                "X-CSRFToken": getCookie("csrf_token"),
+                "Content-Type": "application/json",
+            },
+            method: "DELETE",
         });
 
         if (res.ok) {
@@ -151,12 +152,12 @@ export const deleteBoardThunk = (boardId) => async (dispatch) => {
 // --------------EDIT BOARD THUNK----------------
 export const editBoardThunk = (payload, boardId) => async (dispatch) => {
     try {
-
         const res = await fetch(`/api/boards/${boardId}`, {
             method: "PUT",
             headers: {
-              "X-CSRFToken": getCookie("csrf_token"),
-              "Content-Type": "application/json" },
+                "X-CSRFToken": getCookie("csrf_token"),
+                "Content-Type": "application/json",
+            },
             body: JSON.stringify(payload),
         });
 
@@ -180,27 +181,25 @@ export default function boardsReducer(state = initialState, action) {
     switch (action.type) {
         // --------------GET BOARDS----------------
         case GET_BOARDS: {
-            // old
             const newState = structuredClone(state);
             action.payload.forEach((board) => {
                 newState[board.id] = board;
             });
             return newState;
-
         }
         // --------------GET BOARD DETAILS----------------
         case GET_BOARD_DETAILS: {
-          const newState = structuredClone(state);
-          const id = action.payload.id;
-            return { ...state, [id]: action.payload };
+            const newState = structuredClone(state);
+            // const id = action.payload.id;
+            newState[action.payload.id] = action.payload;
+            return newState;
+            // return { ...state, [id]: action.payload };
         }
         // --------------ADD BOARD----------------
         case ADD_BOARD: {
-          const newState = structuredClone(state);
-          return {
-                ...state,
-                [action.payload.id]: action.payload
-            };
+            const newState = structuredClone(state);
+            newState[action.payload.id] = action.payload;
+            return newState;
         }
         // --------------DELETE BOARD----------------
         case DELETE_BOARD: {
@@ -221,7 +220,7 @@ export default function boardsReducer(state = initialState, action) {
         case ERROR: {
             return {
                 ...state,
-                error: action.payload
+                error: action.payload,
             };
         }
         default:

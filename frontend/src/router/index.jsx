@@ -9,7 +9,8 @@ import CreatePin from "../components/CreatePin";
 import Favorites from "../components/Favorites";
 // import Navigation from "../components/Navigation";
 import PinDetail from "../components/PinDetail";
-import Pins from "../components/Pins";
+import UpdatePin from "../components/UpdatePin";
+import { Pins, MyPins } from "../components/Pins";
 import Layout from "./Layout";
 
 export const router = createBrowserRouter([
@@ -45,12 +46,20 @@ export const router = createBrowserRouter([
                 element: <Favorites />,
             },
             {
-                path: "/pins/all",
+                path: "/pins/",
                 element: <Pins />,
+            },
+            {
+                path: "/pins/current",
+                element: <MyPins />,
             },
             {
                 path: "/pins/:pinId",
                 element: <PinDetail />,
+            },
+            {
+                path: "/pins/edit/:pinId",
+                element: <UpdatePin />,
             },
         ],
     },

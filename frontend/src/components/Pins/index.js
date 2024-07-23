@@ -1,3 +1,4 @@
 import Pins from "./Pins";
+import MyPins from "./MyPins";
 
-export default Pins;
+export { Pins, MyPins };

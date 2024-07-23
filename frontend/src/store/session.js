@@ -3,7 +3,7 @@ import { getCookie } from "./utils";
 import { clearBoards } from "./boards";
 
 const SET_USER = 'session/setUser';
-const REMOVE_USER = 'session/removeUser';
+export const REMOVE_USER = 'session/removeUser';
 
 const setUser = (user) => ({
   type: SET_USER,
@@ -107,7 +107,8 @@ function sessionReducer(state = initialState, action) {
     case SET_USER:
       return { ...state, user: action.payload };
     case REMOVE_USER:
-      return { ...state, user: null };
+      // return { ...state, user: null };
+        return initialState;
     default:
       return state;
   }
