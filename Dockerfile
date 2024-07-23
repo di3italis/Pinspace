@@ -13,8 +13,8 @@ ARG DATABASE_URL
 ARG SCHEMA
 ARG SECRET_KEY
 
-WORKDIR /var/www
-# WORKDIR /app
+# WORKDIR /var/www
+WORKDIR /app
 
 
 COPY requirements.txt .
@@ -25,6 +25,8 @@ RUN pip install psycopg2
 
 COPY . .
 
+RUN flask db init
+RUN flask db migrate
 RUN flask db upgrade
 RUN flask seed all
 
