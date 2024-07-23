@@ -8,8 +8,9 @@ import styles from "./Pins.module.css";
 export default function Pins() {
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user);
-    // should i use Object.values or just grab state.pins?
+
     const pins = useSelector((state) => Object.values(state.pins));
+
     // const pins = useSelector((state) => state.pins);
     // console.log("Pins:", pins);
 
@@ -29,10 +30,10 @@ export default function Pins() {
 
     return (
         <div className={styles.pins}>
-            {pins.map((pin) => (
+            {sessionUser ?
+                (pins.map((pin) => (
                 <PinCard key={pin.id} pin={pin} addBoard={true}/>
             ))}
         </div>
     );
 }
-

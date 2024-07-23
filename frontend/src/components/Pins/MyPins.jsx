@@ -10,8 +10,19 @@ export default function Pins() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const sessionUser = useSelector((state) => state.session.user);
-    // should i use Object.values or just grab state.pins?
-    const pins = useSelector((state) => Object.values(state.pins));
+
+    // const pins = useSelector((state) => Object.values(state.pins));
+
+    const pins = useSelector((state) => {
+      console.log('sessionUser.idsessionUser.idsessionUser.id', sessionUser.id)
+      let res = Object.values(state.pins).filter((a) => {
+        return a.owner.id == sessionUser.id
+      })
+      return res;
+   });
+
+
+
     // const pins = useSelector((state) => state.pins);
     console.log("Pins:", pins);
 
@@ -23,17 +34,12 @@ export default function Pins() {
         return <div>Pins Not Found!</div>;
     }
 
-    // return (
-    //     <div className={styles.pins}>
-    //         <p>PINS PAGE</p>
-    //     </div>
-    // );
-
     return (
         <div className={styles.pins}>
-            {sessionUser
+        <h1>My Pins</h1>
+        {sessionUser
                 ? pins.map((pin) => (
-                      <PinCard key={pin.id} pin={pin} addBoard={true} />
+                      <PinCard key={pin.id} pin={pin} addBoard={false} />
                   ))
                 : pins.map((pin) => (
                       <PinCard key={pin.id} pin={pin} addBoard={false} />

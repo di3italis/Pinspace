@@ -16,6 +16,7 @@ export default function PinDetail() {
     // const pins = useSelector((state) => state.pins);
     // console.log("PinDetail pins", pins);
     const pin = useSelector((state) => state.pins[pinId]);
+    const user = useSelector((state) => state.session.user);
 
     useEffect(() => {
         dispatch(pinActions.getPinDetailsThunk(pinId));
@@ -35,6 +36,9 @@ export default function PinDetail() {
         return <div>Pin (Details) Not Found!</div>;
     }
 
+    const isOwner = () =>{
+      return pin.owner.id === user.id
+    }
     return (
         <div className={styles.main}>
             <h1>{pin.title}</h1>
@@ -42,8 +46,10 @@ export default function PinDetail() {
             <div className={styles.comments}>
                 <PinComments key={pinId} pinId={pinId} />
             </div>
-            <button onClick={deletePin}>Delete Pin</button>
-            <button onClick={updatePin}>Update Pin</button>
+            { isOwner() && <>
+              <button onClick={deletePin}>Delete Pin</button>
+              <button onClick={updatePin}>Update Pin</button>
+            </>}
         </div>
     );
 }
