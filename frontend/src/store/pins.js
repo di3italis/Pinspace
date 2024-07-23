@@ -108,7 +108,12 @@ export const getUserPinsThunk = () => async (dispatch) => {
 // --------------GET PIN DETAILS THUNK----------------
 export const getPinDetailsThunk = (pinId) => async (dispatch) => {
     try {
-        const res = await fetch(`/api/pins/${pinId}`);
+        const res = await fetch(`/api/pins/${pinId}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": getCookie("csrf_token"),
+            },
+        });
         if (res.ok) {
             const data = await res.json();
             console.log("getPinDetailsThunk data:", data);
@@ -124,9 +129,12 @@ export const getPinDetailsThunk = (pinId) => async (dispatch) => {
 export const addPinThunk = (payload) => async (dispatch) => {
     try {
         console.log("addPinThunk payload:", payload);
-        const res = await fetch("/api/pins", {
+        const res = await fetch("/api/pins/", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+                "Content-Type": "application/json",
+                "X-CSRFToken": getCookie("csrf_token"),
+            },
             body: JSON.stringify(payload),
         });
         if (res.ok) {
@@ -168,7 +176,10 @@ export const updatePinThunk = (payload, pinId) => async (dispatch) => {
     try {
         const res = await fetch(`/api/pins/${pinId}`, {
             method: "PUT",
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+                "Content-Type": "application/json",
+                "X-CSRFToken": getCookie("csrf_token"),
+            },
             body: JSON.stringify(payload),
         });
         if (res.ok) {

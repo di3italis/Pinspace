@@ -33,20 +33,10 @@ export default function PinComments({ pinId }) {
 
     console.log("comments:", comments)
 
-    if (!comments || comments.length === 0) {
-        return <div>Be the first to comment!</div>;
-    }
 
-    // return (
-    //     <div> className={styles.container}{comments}</div>
-    // )
 
     const pinCommentsArr = comments.filter((comment) => comment.pinId === pinId); 
     console.log("pinCommentsArr[0]:", pinCommentsArr[0]);
-
-    // const sortedComments = comments.sort((a, b) => {
-    //     return new Date(b.createdAt) - new Date(a.createdAt);
-    // });
 
     return (
         <div className={styles.container}>

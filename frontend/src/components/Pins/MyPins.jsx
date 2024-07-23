@@ -17,7 +17,7 @@ export default function Pins() {
 
     useEffect(() => {
         sessionUser ? dispatch(getUserPinsThunk()) : navigate("/");
-    }, [dispatch]);
+    }, [dispatch, navigate, sessionUser]);
 
     if (!pins) {
         return <div>Pins Not Found!</div>;
