@@ -21,7 +21,7 @@ export default function HomeSplash() {
                     </>
                 ) : (
                     <>
-                        <Pins />
+                        {/* <Pins /> */}
                     </>
                 )}
             </div>
