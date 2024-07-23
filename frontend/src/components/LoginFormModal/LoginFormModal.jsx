@@ -14,8 +14,8 @@ function LoginFormModal() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("credential", credential);
-        console.log("password", password);
+        // console.log("credential", credential);
+        // console.log("password", password);
 
         const serverResponse = await dispatch(
             thunkLogin({

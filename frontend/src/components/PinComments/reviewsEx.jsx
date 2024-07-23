@@ -24,7 +24,7 @@ export default function SpotReviews({ spotId }) {
               (review) => review.spotId === spotId
           )
         : [];
-    console.log("ReviewsArr:", spotReviewsArray)
+    // console.log("ReviewsArr:", spotReviewsArray)
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -102,4 +102,3 @@ export default function SpotReviews({ spotId }) {
         </div>
     );
 }
-

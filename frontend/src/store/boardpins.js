@@ -36,20 +36,20 @@ const handleError = (payload) => {
 // --------------GET BOARDPINS THUNK---------------
 export const getBoardPinsThunk = (boardPinId) => async (dispatch) => {
   try {
-    console.log('getBoardPinsThunk fetch("/api/boards/:: FETCHING BOARD ID::', boardPinId)
+    // console.log('getBoardPinsThunk fetch("/api/boards/:: FETCHING BOARD ID::', boardPinId)
 
 
     const res = await fetch(`/api/boards/${boardPinId}/boardPin`);
 
       if (res.ok) {
           const data = await res.json();
-           console.log('getBoardPinsThunk fetch("/api/boards/::', data)
+          //  console.log('getBoardPinsThunk fetch("/api/boards/::', data)
 
           dispatch(getBoardPins(data.boardPins));
           // console.log("getBoardPinsThunk data:", data);
       }
   } catch (error) {
-      console.log("ERROR IN GET BOARDPINS", error);
+      // console.log("ERROR IN GET BOARDPINS", error);
       dispatch(handleError(error));
   }
 };
@@ -68,7 +68,7 @@ export const deleteBoardPinThunk = (boardPinId, pinId) => async (dispatch) => {
           dispatch(deleteBoardPin(boardPinId));
       }
   } catch (error) {
-      console.log("ERROR IN DELETE BOARD", error);
+      // console.log("ERROR IN DELETE BOARD", error);
       dispatch(handleError(error));
   }
 };
@@ -84,11 +84,11 @@ export const addBoardPinThunk = (boardId, pinId) => async (dispatch) => {
 
       if (res.ok) {
           const data = await res.json();
-          console.log("addBoardPinThunk data:", data);
+          // console.log("addBoardPinThunk data:", data);
           dispatch(addBoardPin(data));
       }
   } catch (error) {
-      console.log("ERROR IN ADD BOARDPIN", error);
+      // console.log("ERROR IN ADD BOARDPIN", error);
       dispatch(handleError(error));
   }
 }

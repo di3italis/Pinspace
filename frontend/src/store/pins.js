@@ -77,12 +77,12 @@ export const getPinsThunk = () => async (dispatch) => {
         const res = await fetch("/api/pins");
         if (res.ok) {
             const data = await res.json();
-            console.log("getPinsThunk data.Pins:", data.pins);
+            // console.log("getPinsThunk data.Pins:", data.pins);
             // dispatch(getPins(data.Pins));
             dispatch(getPins(data.pins));
         }
     } catch (error) {
-        console.log("ERROR IN GET PINS", error);
+        // console.log("ERROR IN GET PINS", error);
         dispatch(handleError(error));
     }
 };
@@ -96,11 +96,11 @@ export const getUserPinsThunk = () => async (dispatch) => {
                 "X-CSRFToken": getCookie("csrf_token"),
             },
         });
-        console.log("getUserPinsThunk res:", res);
+        // console.log("getUserPinsThunk res:", res);
         const data = await res.json();
         dispatch(getUserPins(data.pins));
     } catch (error) {
-        console.log("ERROR IN GETTING USER PINS", error);
+        // console.log("ERROR IN GETTING USER PINS", error);
         dispatch(handleError(error));
     }
 };
@@ -116,11 +116,11 @@ export const getPinDetailsThunk = (pinId) => async (dispatch) => {
         });
         if (res.ok) {
             const data = await res.json();
-            console.log("getPinDetailsThunk data:", data);
+            // console.log("getPinDetailsThunk data:", data);
             dispatch(getPinDetails(data.pin));
         }
     } catch (error) {
-        console.log("ERROR IN GETTING PIN DETAILS", error);
+        // console.log("ERROR IN GETTING PIN DETAILS", error);
         dispatch(handleError(error));
     }
 };
@@ -128,10 +128,10 @@ export const getPinDetailsThunk = (pinId) => async (dispatch) => {
 // --------------ADD PIN THUNK----------------
 export const addPinThunk = (payload) => async (dispatch) => {
     try {
-        console.log("addPinThunk payload:", payload);
+        // console.log("addPinThunk payload:", payload);
         const res = await fetch("/api/pins/", {
             method: "POST",
-            headers: { 
+            headers: {
                 "Content-Type": "application/json",
                 "X-CSRFToken": getCookie("csrf_token"),
             },
@@ -143,7 +143,7 @@ export const addPinThunk = (payload) => async (dispatch) => {
             return data;
         }
     } catch (error) {
-        console.log("ERROR IN ADDING PIN", error);
+        // console.log("ERROR IN ADDING PIN", error);
         dispatch(handleError(error));
     }
 };
@@ -166,7 +166,7 @@ export const deletePinThunk = (pinId) => async (dispatch) => {
             dispatch(handleError(errorData));
         }
     } catch (error) {
-        console.log("ERROR IN DELETING PIN", error);
+        // console.log("ERROR IN DELETING PIN", error);
         dispatch(handleError(error));
     }
 };
@@ -176,7 +176,7 @@ export const updatePinThunk = (payload, pinId) => async (dispatch) => {
     try {
         const res = await fetch(`/api/pins/${pinId}`, {
             method: "PUT",
-            headers: { 
+            headers: {
                 "Content-Type": "application/json",
                 "X-CSRFToken": getCookie("csrf_token"),
             },
@@ -188,7 +188,7 @@ export const updatePinThunk = (payload, pinId) => async (dispatch) => {
             return data;
         }
     } catch (error) {
-        console.log("ERROR IN UPDATING PIN", error);
+        // console.log("ERROR IN UPDATING PIN", error);
         dispatch(handleError(error));
     }
 };
@@ -201,7 +201,7 @@ export default function pinsReducer(state = initialState, action) {
         // --------------GET PINS CASE----------------
         case GET_PINS: {
             const newState = { ...state };
-            console.log("newState:", newState);
+            // console.log("newState:", newState);
             action.payload.forEach((pin) => {
                 newState[pin.id] = pin;
             });
@@ -211,7 +211,7 @@ export default function pinsReducer(state = initialState, action) {
         // --------------GET USER PINS CASE----------------
         case GET_USER_PINS: {
             const newState = { ...state };
-            console.log("GET_USER_PINS action.payload:", action.payload);
+            // console.log("GET_USER_PINS action.payload:", action.payload);
             action.payload.forEach((pin) => {
                 newState[pin.id] = pin;
             });
@@ -220,7 +220,7 @@ export default function pinsReducer(state = initialState, action) {
         }
         // --------------GET PIN DETAILS CASE----------------
         case GET_PIN_DETAILS: {
-            console.log("GET_PIN_DETAILS action.payload:", action.payload);
+            // console.log("GET_PIN_DETAILS action.payload:", action.payload);
             const id = action.payload.id;
             return { ...state, [id]: action.payload };
         }

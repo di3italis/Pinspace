@@ -56,13 +56,13 @@ export const handleError = (payload) => {
 export const getCommentsThunk = (pinId) => async (dispatch) => {
     try {
         const res = await fetch(`/api/pins/${pinId}/comment`);
-        console.log("getCommentsThunk res:", res);
+        // console.log("getCommentsThunk res:", res);
         if (res.ok) {
             const data = await res.json();
             dispatch(getComments(data.comments));
         }
     } catch (error) {
-        console.error("ERROR IN GET COMMENTS", error);
+        // console.error("ERROR IN GET COMMENTS", error);
         dispatch(handleError(error));
     }
 };
@@ -71,10 +71,10 @@ export const getCommentsThunk = (pinId) => async (dispatch) => {
 export const addCommentThunk = (comment, pinId) => async (dispatch) => {
     try {
         const payload = { comment };
-        console.log("addCommentThunk payload", payload);
+        // console.log("addCommentThunk payload", payload);
         const res = await fetch(`/api/pins/${pinId}/comment`, {
             method: "POST",
-            headers: { 
+            headers: {
                 "Content-Type": "application/json",
                 "X-CSRFToken": getCookie("csrf_token")
 
@@ -87,7 +87,7 @@ export const addCommentThunk = (comment, pinId) => async (dispatch) => {
             return data;
         }
     } catch (error) {
-        console.error("ERROR IN ADD COMMENT", error);
+        // console.error("ERROR IN ADD COMMENT", error);
         dispatch(handleError(error));
     }
 };

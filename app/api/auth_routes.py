@@ -14,7 +14,7 @@ def authenticate():
     """
     Authenticates a user.
     """
-    print("current_user:", current_user)
+    # print("current_user:", current_user)
     if current_user.is_authenticated:
         return jsonify(current_user.to_dict())
     return jsonify({"errors": {"message": "Unauthorized"}}), 401
@@ -29,13 +29,13 @@ def login():
         password
     """
     body = request.json
-    print("body:", body)
+    # print("body:", body)
     errors = {}
     validate_MustStr("credential", body, errors)
     validate_MustStr("password", body, errors)
 
     if errors:
-        print("errors:", errors)
+        # print("errors:", errors)
         return jsonify({"errors": errors}), 400  # if errors else {}
 
     # credential can be email or username
@@ -86,7 +86,7 @@ def sign_up():
     validate_MustStr("profile_image", body, errors)
 
     if errors:
-        print("Validation errors sent: ", {"errors": errors})
+        # print("Validation errors sent: ", {"errors": errors})
         return jsonify({"errors": errors}), 400  # if errors else {}
 
     user = User(

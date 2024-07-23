@@ -12,7 +12,7 @@ export default function PinComments({ pinId }) {
     const comments = useSelector((state) => Object.values(state.comments));
     const dispatch = useDispatch();
 
-    console.log("PinComments pinId:", pinId);
+    // console.log("PinComments pinId:", pinId);
 
     const handleChange = (e) => {
         setComment(e.target.value);
@@ -31,12 +31,12 @@ export default function PinComments({ pinId }) {
         dispatch(commentActions.deleteCommentThunk(commentId));
     };
 
-    console.log("comments:", comments);
+    // console.log("comments:", comments);
 
     const pinCommentsArr = comments.filter(
         (comment) => comment.pinId === pinId
     );
-    console.log("pinCommentsArr[0]:", pinCommentsArr[0]);
+    // console.log("pinCommentsArr[0]:", pinCommentsArr[0]);
 
     return (
         <div className={styles.container}>

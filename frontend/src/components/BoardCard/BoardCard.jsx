@@ -31,7 +31,7 @@ export default function BoardCard({ board }) {
   }
   const startUpdate = () => {
 
-    console.log('bpbpbpbpbpb', boardPins, pins[1])
+    // console.log('bpbpbpbpbpb', boardPins, pins[1])
     setinEdit(true)
   }
 
@@ -44,7 +44,7 @@ export default function BoardCard({ board }) {
     );
 
 
-     console.log("response from BAORD edit:", serverResponse)
+    //  console.log("response from BAORD edit:", serverResponse)
     if (serverResponse) {
       board.description = description
       cancelEdit();
@@ -59,7 +59,7 @@ export default function BoardCard({ board }) {
     const serverResponse = await dispatch(
       deleteBoardThunk(board.id)
     );
-    console.log("response from BAORD Delete:", serverResponse)
+    // console.log("response from BAORD Delete:", serverResponse)
     if (serverResponse) {
       // board.description = description
       // cancelEdit();

@@ -36,7 +36,7 @@ export default function Boards() {
             })
         );
 
-        console.log("response frpm BAORD CREATE:", serverResponse);
+        // console.log("response frpm BAORD CREATE:", serverResponse);
 
         if (serverResponse) {
             setErrors(serverResponse);

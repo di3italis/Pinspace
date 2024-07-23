@@ -11,7 +11,7 @@ export default function Pins() {
     // should i use Object.values or just grab state.pins?
     const pins = useSelector((state) => Object.values(state.pins));
     // const pins = useSelector((state) => state.pins);
-    console.log("Pins:", pins);
+    // console.log("Pins:", pins);
 
     useEffect(() => {
         dispatch(getPinsThunk());
@@ -29,7 +29,7 @@ export default function Pins() {
 
     return (
         <div className={styles.pins}>
-            {sessionUser ? 
+            {sessionUser ?
                 (pins.map((pin) => (
                 <PinCard key={pin.id} pin={pin} addBoard={true}/>
             )))

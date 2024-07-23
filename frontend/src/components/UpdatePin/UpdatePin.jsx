@@ -17,7 +17,7 @@ export default function UpdatePin() {
     const [description, setDescription] = useState("");
     const [errors, setErrors] = useState({});
 
-    console.log("UpdatePin pinId:", pinId);
+    // console.log("UpdatePin pinId:", pinId);
 
     useEffect(() => {
         dispatch(pinActions.getPinDetailsThunk(pinId));

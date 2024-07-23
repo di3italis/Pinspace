@@ -79,11 +79,11 @@ export const getBoardsThunk = () => async (dispatch) => {
 
         if (res.ok) {
             const data = await res.json();
-            console.log("getBoardsThunk data:", data);
+            // console.log("getBoardsThunk data:", data);
             dispatch(getBoards(data.boards));
         }
     } catch (error) {
-        console.log("ERROR IN GET BOARDS", error);
+        // console.log("ERROR IN GET BOARDS", error);
         dispatch(handleError(error));
     }
 };
@@ -97,10 +97,10 @@ export const getBoardDetailsThunk = (boardId) => async (dispatch) => {
         if (res.ok) {
             const data = await res.json();
             dispatch(getBoardDetails(data.board));
-            console.log("getBoardDetailsThunk data:", data);
+            // console.log("getBoardDetailsThunk data:", data);
         }
     } catch (error) {
-        console.log("ERROR IN GET BOARD DETAILS", error);
+        // console.log("ERROR IN GET BOARD DETAILS", error);
         dispatch(handleError(error));
     }
 };
@@ -119,12 +119,12 @@ export const addBoardThunk = (board) => async (dispatch) => {
 
         if (res.ok) {
             const data = await res.json();
-            console.log("addBoardThunk data:", data);
+            // console.log("addBoardThunk data:", data);
 
             dispatch(addBoard(data));
         }
     } catch (error) {
-        console.log("ERROR IN ADD BOARD", error);
+        // console.log("ERROR IN ADD BOARD", error);
         dispatch(handleError(error));
     }
 };
@@ -144,7 +144,7 @@ export const deleteBoardThunk = (boardId) => async (dispatch) => {
             dispatch(deleteBoard(boardId));
         }
     } catch (error) {
-        console.log("ERROR IN DELETE BOARD", error);
+        // console.log("ERROR IN DELETE BOARD", error);
         dispatch(handleError(error));
     }
 };
@@ -169,7 +169,7 @@ export const editBoardThunk = (payload, boardId) => async (dispatch) => {
             return data;
         }
     } catch (error) {
-        console.log("ERROR IN EDIT BOARD", error);
+        // console.log("ERROR IN EDIT BOARD", error);
         dispatch(handleError(error));
     }
 };
