@@ -28,12 +28,14 @@ export default function Pins() {
     //     </div>
     // );
 
+    if (!sessionUser){
+      return <h1>No sessionUser</h1>
+    }
+
+
     return (
         <div className={styles.pins}>
-            {sessionUser ?
-                (pins.map((pin) => (
-                <PinCard key={pin.id} pin={pin} addBoard={true}/>
-            ))}
+            {pins.map((pin) => (<PinCard key={pin?.id} pin={pin} addBoard={true}/>))}
         </div>
     );
 }
