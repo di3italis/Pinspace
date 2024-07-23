@@ -4,6 +4,7 @@ import sessionReducer from './session'
 import pinsReducer from './pins'
 import boardsReducer from './boards'
 import commentsReducer from './comments'
+import boardpinsReducer from './boardpins';
 
 // import reducers here
 const rootReducer = combineReducers({
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
     pins: pinsReducer,
     boards: boardsReducer,
     comments: commentsReducer,
+    boardpins: boardpinsReducer,
     // define more reducers here
 });
 

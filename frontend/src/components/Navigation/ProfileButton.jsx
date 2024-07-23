@@ -1,7 +1,9 @@
+// ProfileButton.jsx
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FaUserCircle } from "react-icons/fa";
 import { thunkLogout } from "../../store/session";
+import { NavLink, useNavigate } from "react-router-dom";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
@@ -11,6 +13,7 @@ function ProfileButton() {
     const [showMenu, setShowMenu] = useState(false);
     const user = useSelector((store) => store.session.user);
     const ulRef = useRef();
+    const navigate = useNavigate();
 
     const toggleMenu = (e) => {
         e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
@@ -37,6 +40,7 @@ function ProfileButton() {
         e.preventDefault();
         dispatch(thunkLogout());
         closeMenu();
+        navigate("/");
     };
 
     return (
@@ -50,6 +54,32 @@ function ProfileButton() {
                         <>
                             <li>{user.username}</li>
                             <li>{user.email}</li>
+                            <ul className="menu-buttons">
+                                <li>
+                                    <NavLink
+                                        to={"/boards/"}
+                                        onClick={() => setShowMenu(false)}
+                                    >
+                                        My Boards
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        to={"/pins/current/"}
+                                        onClick={() => setShowMenu(false)}
+                                    >
+                                        My Pins
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        to={"/create-pin/"}
+                                        onClick={() => setShowMenu(false)}
+                                    >
+                                        Create Pin
+                                    </NavLink>
+                                </li>
+                            </ul>
                             <li>
                                 <button onClick={logout}>Log Out</button>
                             </li>

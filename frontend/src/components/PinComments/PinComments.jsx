@@ -1,52 +1,42 @@
 // PinComments.jsx
-import * as commentActions from '../../store/comments';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import styles from './PinComments.module.css';
+import * as commentActions from "../../store/comments";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+// import { useParams } from "react-router-dom";
+import styles from "./PinComments.module.css";
 
 export default function PinComments({ pinId }) {
-    const { pinId: pinIdStr } = useParams();
+    // const { pinId: pinIdStr } = useParams();
     const [comment, setComment] = useState("");
-    const pin = useSelector((state) => state.pins[pinId]);
+    // const pin = useSelector((state) => state.pins[pinId]);
     const comments = useSelector((state) => Object.values(state.comments));
     const dispatch = useDispatch();
 
     console.log("PinComments pinId:", pinId);
 
-    const handleChange =(e) => {
+    const handleChange = (e) => {
         setComment(e.target.value);
-    }
+    };
 
     const handleSubmit = () => {
         dispatch(commentActions.addCommentThunk(comment, pinId));
         setComment("");
-    }
+    };
 
     useEffect(() => {
         dispatch(commentActions.getCommentsThunk(pinId));
     }, [dispatch, pinId]);
 
-    const deleteComment = (commentId) => { 
+    const deleteComment = (commentId) => {
         dispatch(commentActions.deleteCommentThunk(commentId));
-    }
+    };
 
-    console.log("comments:", comments)
+    console.log("comments:", comments);
 
-    if (!comments || comments.length === 0) {
-        return <div>Be the first to comment!</div>;
-    }
-
-    // return (
-    //     <div> className={styles.container}{comments}</div>
-    // )
-
-    const pinCommentsArr = comments.filter((comment) => comment.pinId === pinId); 
+    const pinCommentsArr = comments.filter(
+        (comment) => comment.pinId === pinId
+    );
     console.log("pinCommentsArr[0]:", pinCommentsArr[0]);
-
-    // const sortedComments = comments.sort((a, b) => {
-    //     return new Date(b.createdAt) - new Date(a.createdAt);
-    // });
 
     return (
         <div className={styles.container}>
@@ -57,12 +47,14 @@ export default function PinComments({ pinId }) {
                 {pinCommentsArr.map((comment) => (
                     <div key={comment.id} className={styles.comment}>
                         <p>{comment.comment}</p>
-                        <button onClick={() => deleteComment(comment.id)}>Delete Comment</button>
+                        <button onClick={() => deleteComment(comment.id)}>
+                            Delete Comment
+                        </button>
                     </div>
                 ))}
             </div>
             <div className={styles.newComment}>
-                <textarea 
+                <textarea
                     value={comment}
                     onChange={handleChange}
                     placeholder="Share your thoughts!"
@@ -70,5 +62,5 @@ export default function PinComments({ pinId }) {
                 <button onClick={handleSubmit}>Post Comment</button>
             </div>
         </div>
-    )
+    );
 }
