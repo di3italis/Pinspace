@@ -17,10 +17,9 @@ ENV DATABASE_URL=$DATABASE_URL
 ENV SCHEMA=$SCHEMA
 ENV SECRET_KEY=$SECRET_KEY
 
-# WORKDIR /var/www
-WORKDIR /app
+WORKDIR /var/www
+# WORKDIR /app
 
-EXPOSE 80
 
 COPY requirements.txt .
 
@@ -30,10 +29,10 @@ RUN pip install psycopg2
 
 COPY . .
 
-# RUN flask db upgrade
-# RUN flask seed all
+RUN flask db upgrade
+RUN flask seed all
 
 # Run the application with Gunicorn
-CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:80"]
-# CMD gunicorn app:app
+# CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:80"]
+CMD gunicorn app:app
 # CMD flask run
