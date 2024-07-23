@@ -29,15 +29,10 @@ export default function Pins() {
 
     return (
         <div className={styles.pins}>
-            {sessionUser ?
-                (pins.map((pin) => (
+            {pins.map((pin) => (
                 <PinCard key={pin.id} pin={pin} addBoard={true}/>
-            )))
-            :
-            (pins.map((pin) => (
-                <PinCard key={pin.id} pin={pin} addBoard={false}/>
-            )))
-        }
+            ))}
         </div>
     );
 }
+
