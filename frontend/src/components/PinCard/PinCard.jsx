@@ -29,7 +29,9 @@ export default function PinCard({ pin, addBoard }) {
             );
         }
     };
-
+    const haveBoards = () =>{
+      return boards?.length > 0
+    }
     const addBoardPin = async () => {
         const serverResponse = await dispatch(
             addBoardPinThunk(selectedBoard, pin.id)
@@ -66,7 +68,7 @@ export default function PinCard({ pin, addBoard }) {
                 <h1>PinCard</h1>
             </Link>
 
-            {addBoard && (
+            {addBoard && haveBoards() && (
                 <>
                     Link to Board
                     <select
