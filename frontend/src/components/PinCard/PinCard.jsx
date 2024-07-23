@@ -1,8 +1,8 @@
 // PinCard.jsx
-import { useEffect, useState } from "react";
+import { /*useEffect,*/ useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import * as pinActions from "../../store/pins";
+// import * as pinActions from "../../store/pins";
 import styles from "./PinCard.module.css";
 import { addBoardPinThunk } from "../../store/boardpins";
 

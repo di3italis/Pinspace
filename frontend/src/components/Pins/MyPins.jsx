@@ -1,7 +1,7 @@
 // Pins.jsx
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPinsThunk, getUserPinsThunk } from "../../store/pins";
+import { /*getPinsThunk,*/ getUserPinsThunk } from "../../store/pins";
 import { useNavigate } from "react-router-dom";
 import PinCard from "../PinCard";
 import styles from "./Pins.module.css";

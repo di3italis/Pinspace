@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react';
-import {useDispatch, useSelector } from 'react-redux';
-import { addPinThunk } from '../../store/pins';
-import styles from './CreatePin.module.css';
+import { useState /*, useEffect*/ } from "react";
+import { useDispatch /*, useSelector*/ } from "react-redux";
+import { addPinThunk } from "../../store/pins";
+import styles from "./CreatePin.module.css";
 
 export default function CreatePin() {
     const dispatch = useDispatch();
-    const [image, setImage] = useState('');
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
+    const [image, setImage] = useState("");
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
     // const [boardId, setBoardId] = useState('');
     const [errors, setErrors] = useState({});
 
@@ -22,9 +22,9 @@ export default function CreatePin() {
         if (res.errors) {
             setErrors(res.errors["message"]);
         } else {
-            setImage('');
-            setTitle('');
-            setDescription('');
+            setImage("");
+            setTitle("");
+            setDescription("");
             // setBoardId('');
         }
     };
@@ -34,24 +34,39 @@ export default function CreatePin() {
             <div className={styles.createSpotContainer}>
                 <h2>Create a Pin</h2>
                 <form className={styles.form} onSubmit={handleSubmit}>
-                    <input className={styles.input} 
-                        type="text" 
-                        placeholder="Image URL" 
-                        value={image} 
-                        onChange={(e) => setImage(e.target.value)} required />
-                    {errors.image && <p className={styles.error}>{errors.image}</p>}
-                    <input className={styles.input} 
-                        type="text" 
-                        placeholder="Title" 
-                        value={title} 
-                        onChange={(e) => setTitle(e.target.value)} required />
-                    {errors.image && <p className={styles.error}>{errors.image}</p>}
-                    <input className={styles.input} 
-                        type="text" 
-                        placeholder="Description" 
-                        value={description} 
-                        onChange={(e) => setDescription(e.target.value)} required />
-                    {errors.image && <p className={styles.error}>{errors.image}</p>}
+                    <input
+                        className={styles.input}
+                        type="text"
+                        placeholder="Image URL"
+                        value={image}
+                        onChange={(e) => setImage(e.target.value)}
+                        required
+                    />
+                    {errors.image && (
+                        <p className={styles.error}>{errors.image}</p>
+                    )}
+                    <input
+                        className={styles.input}
+                        type="text"
+                        placeholder="Title"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        required
+                    />
+                    {errors.image && (
+                        <p className={styles.error}>{errors.image}</p>
+                    )}
+                    <input
+                        className={styles.input}
+                        type="text"
+                        placeholder="Description"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        required
+                    />
+                    {errors.image && (
+                        <p className={styles.error}>{errors.image}</p>
+                    )}
                     <button className={styles.button} type="submit">
                         Create Pin
                     </button>

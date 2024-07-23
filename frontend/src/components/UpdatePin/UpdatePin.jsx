@@ -7,7 +7,7 @@ import styles from "./UpdatePin.module.css";
 
 export default function UpdatePin() {
     const { pinId: pinIdStr } = useParams();
-    const pinId =parseInt(pinIdStr, 10);
+    const pinId = parseInt(pinIdStr, 10);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const pin = useSelector((state) => state.pins[pinId]);
@@ -29,14 +29,16 @@ export default function UpdatePin() {
             setTitle(pin.title);
             setDescription(pin.description);
         }
-    }, [pin])
+    }, [pin]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors({});
         const updatedPin = { image, title, description };
 
-        const res = await dispatch(pinActions.updatePinThunk(updatedPin, pinId));
+        const res = await dispatch(
+            pinActions.updatePinThunk(updatedPin, pinId)
+        );
         if (res.errors) {
             setErrors(res.errors["message"]);
         } else {
@@ -62,7 +64,9 @@ export default function UpdatePin() {
                         onChange={(e) => setImage(e.target.value)}
                         required
                     />
-                    {errors.image && <p className={styles.error}>{errors.image}</p>}
+                    {errors.image && (
+                        <p className={styles.error}>{errors.image}</p>
+                    )}
                     <label>Title</label>
                     <input
                         className={styles.input}
@@ -72,7 +76,9 @@ export default function UpdatePin() {
                         onChange={(e) => setTitle(e.target.value)}
                         required
                     />
-                    {errors.title && <p className={styles.error}>{errors.title}</p>}
+                    {errors.title && (
+                        <p className={styles.error}>{errors.title}</p>
+                    )}
                     <label>Description</label>
                     <input
                         className={styles.input}
@@ -82,7 +88,9 @@ export default function UpdatePin() {
                         onChange={(e) => setDescription(e.target.value)}
                         required
                     />
-                    {errors.description && <p className={styles.error}>{errors.description}</p>}
+                    {errors.description && (
+                        <p className={styles.error}>{errors.description}</p>
+                    )}
                     <button className={styles.button} type="submit">
                         Update Pin
                     </button>
@@ -90,4 +98,4 @@ export default function UpdatePin() {
             </div>
         </div>
     );
-};
+}

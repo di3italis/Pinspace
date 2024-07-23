@@ -1,8 +1,8 @@
 // HomeSplash.jsx
-import { useDispatch, useSelector } from "react-redux";
+import { /*useDispatch,*/ useSelector } from "react-redux";
 import styles from "./HomeSplash.module.css";
 import Boards from "../Boards";
-import { Pins, MyPins } from "../Pins";
+import { Pins /*, MyPins*/ } from "../Pins";
 
 export default function HomeSplash() {
     const sessionUser = useSelector((state) => state.session.user);
@@ -14,17 +14,16 @@ export default function HomeSplash() {
                 <p className={styles.subtitle}>
                     The best place to find inspiration for your next project
                 </p>
-                {sessionUser ? 
+                {sessionUser ? (
                     <>
                         <Boards />
                         <Pins />
                     </>
-                
-                :
+                ) : (
                     <>
                         <Pins />
                     </>
-                }
+                )}
             </div>
         </div>
     );
