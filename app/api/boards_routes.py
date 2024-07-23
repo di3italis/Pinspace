@@ -24,6 +24,7 @@ def boards_add():
     body expected:
         description
     """
+    print('BEFORE A BOARDdddsdadasdasdasdasdasdasdasdasdasdasdasd')
     body = request.json
     errors = {}
     validate_MustStr('description', body, errors)
@@ -35,8 +36,10 @@ def boards_add():
         description=body['description'].strip(),
         ownerId=current_user.id
     )
+    print('BEFORE 2 BOARDdddsdadasdasdasdasdasdasdasdasdasdasdasd', board.to_dict())
     db.session.add(board)
     db.session.commit()
+    print('BEFORE 3 BOARDdddsdadasdasdasdasdasdasdasdasdasdasdasd', board.to_dict())
 
     return jsonify(board.to_dict())
 

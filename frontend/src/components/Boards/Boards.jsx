@@ -7,8 +7,8 @@ import BoardCard from "../BoardCard";
 
 export default function Boards() {
     const dispatch = useDispatch();
-    const boards = useSelector((state) => Object.values(state.boards));
     const user = useSelector((state) => state.session.user);
+    const boards = useSelector((state) => Object.values(state.boards));
 
     const [showCreate, setShowCreate] = useState(false);
     const [description, setDescription] = useState("");
@@ -20,6 +20,8 @@ export default function Boards() {
 
     if (!boards) {
         return <div>Boards Not Found!</div>;
+    } else{
+      console.log('bbbbbbbbbbbbb', boards)
     }
 
     function reserveClick(/*e*/) {
@@ -79,11 +81,12 @@ export default function Boards() {
             </button>
             {showCreate && getCreateForm()}
 
-            {boards.map((board) => (
-                <BoardCard key={board.id} board={board} />
+            {boards.map((board, index) => (
+                <BoardCard key={index} board={board} />
             ))}
         </div>
     );
+    // <BoardCard key={board.id} board={board} />
 
     // return (
     //       <div>

@@ -37,7 +37,7 @@ export default function PinDetail() {
     }
 
     const isOwner = () =>{
-      return pin.ownerId === user.id
+      return pin.owner.id === user.id
     }
     return (
         <div className={styles.main}>
