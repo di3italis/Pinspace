@@ -30,8 +30,8 @@ RUN pip install psycopg2
 
 COPY . .
 
-RUN flask db upgrade
-RUN flask seed all
+# RUN flask db upgrade
+# RUN flask seed all
 
 # Run the application with Gunicorn
 CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:80"]
