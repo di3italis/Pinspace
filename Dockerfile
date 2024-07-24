@@ -7,11 +7,17 @@ RUN apk add postgresql-dev gcc python3-dev musl-dev
 # Install build dependencies
 # RUN apk add --no-cache build-base postgresql-dev gcc python3-dev musl-dev
 
-ARG FLASK_APP
-ARG FLASK_ENV
-ARG DATABASE_URL
-ARG SCHEMA
-ARG SECRET_KEY
+# ARG FLASK_APP
+# ARG FLASK_ENV
+# ARG DATABASE_URL
+# ARG SCHEMA
+# ARG SECRET_KEY
+
+ENV FLASK_APP
+ENV FLASK_ENV
+ENV DATABASE_URL
+ENV SCHEMA
+ENV SECRET_KEY
 
 # WORKDIR /var/www
 WORKDIR /app
@@ -25,8 +31,10 @@ RUN pip install psycopg2
 
 COPY . .
 
-RUN flask db init
-RUN flask db migrate
+EXPOSE 8000
+
+# RUN flask db init
+# RUN flask db migrate
 RUN flask db upgrade
 RUN flask seed all
 
