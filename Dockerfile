@@ -1,24 +1,18 @@
 FROM python:3.9.18-alpine3.18
 
-RUN apk add --no-cache build-base postgresql-dev gcc python3-dev musl-dev
+RUN apk add build-base
 
-# Set the working directory to the root
+RUN apk add postgresql-dev gcc python3-dev musl-dev
+
 WORKDIR /
 
-# Install pipenv
-RUN pip install pipenv
+COPY requirements.txt .
 
-# Copy Pipfile and Pipfile.lock
-COPY Pipfile Pipfile.lock ./
+RUN pip install -r requirements.txt
+RUN pip install psycopg2
 
-# Install dependencies
-RUN pipenv install --deploy --ignore-pipfile
-
-# Copy the rest of the application files
 COPY . .
 
-# Ensure the entrypoint script is executable
-RUN chmod +x /entrypoint.sh
-
-# Use pipenv to run the application
-CMD ["/entrypoint.sh"]
+RUN flask db upgrade
+RUN flask seed all
+CMD gunicorn app:app
