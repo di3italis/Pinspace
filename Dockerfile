@@ -17,7 +17,8 @@ RUN pip install pipenv
 COPY Pipfile* ./
 
 # Install dependencies
-RUN pipenv install --deploy --ignore-pipfile
+RUN pipenv install 
+# --deploy --ignore-pipfile
 
 COPY . .
 
