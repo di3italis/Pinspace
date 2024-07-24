@@ -13,11 +13,12 @@ RUN apk add postgresql-dev gcc python3-dev musl-dev
 # ARG SCHEMA
 # ARG SECRET_KEY
 
-ENV FLASK_APP
-ENV FLASK_ENV
-ENV DATABASE_URL
-ENV SCHEMA
-ENV SECRET_KEY
+ENV FLASK_APP=app
+ENV FLASK_ENV=production
+ENV REACT_APP_BASE_URL=https://pinspace-2.onrender.com
+ENV DATABASE_URL=postgresql://app_academy_projects_wb0r_user:UOFxwda0JXpTKEPdScJ2pcdc26nMIGo4@dpg-cpt4pujv2p9s73b1e5ig-a/app_academy_projects_wb0r
+ENV SCHEMA=pin_space1
+ENV SECRET_KEY=d659d580d4a490642f93b85fcddbd771
 
 # WORKDIR /var/www
 WORKDIR /app
