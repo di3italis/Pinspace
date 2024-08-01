@@ -4,6 +4,10 @@ import { useDispatch } from "react-redux";
 import { ModalProvider, Modal } from "../context/Modal";
 import { thunkAuthenticate } from "../store/session";
 import Navigation from "../components/Navigation/Navigation";
+import { ModalProvider as ModalProviderEx } from "../context/ModalEx";
+
+//!!!!! Note. Modals were not working until I wrapped a new ModalProviderEx. Unknown why it does not work without it.
+
 
 export default function Layout() {
   const dispatch = useDispatch();
@@ -14,11 +18,15 @@ export default function Layout() {
 
   return (
     <>
+      <ModalProviderEx>
       <ModalProvider>
-        <Navigation />
+      <Navigation />
         {isLoaded && <Outlet />}
         <Modal />
       </ModalProvider>
+      </ModalProviderEx>
     </>
   );
 }
+
+{/*  */}
