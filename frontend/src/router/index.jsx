@@ -21,18 +21,18 @@ export const router = createBrowserRouter([
                 path: "/",
                 element: <HomeSplash />,
             },
-            {
-                path: "/auth/login",
-                element: <LoginFormModal />,
-            },
-            {
-                path: "login",
-                element: <LoginFormModal />,
-            },
-            {
-                path: "signup",
-                element: <SignupFormModal />,
-            },
+            // {
+            //     path: "/auth/login",
+            //     element: <LoginFormModal />,
+            // },
+            // {
+            //     path: "login",
+            //     element: <LoginFormModal />,
+            // },
+            // {
+            //     path: "signup",
+            //     element: <SignupFormModal />,
+            // },
             {
                 path: "/boards",
                 element: <Boards />,
