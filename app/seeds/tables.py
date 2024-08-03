@@ -60,9 +60,12 @@ def undo_tables():
     else:
         db.session.execute(text("DELETE FROM pins"))
 
+
 def undo_comments():
     if environment == "production":
-        db.session.execute(f"TRUNCATE comments {SCHEMA}.pins RESTART IDENTITY CASCADE;")
+        db.session.execute(
+            f"TRUNCATE comments {SCHEMA}.comments RESTART IDENTITY CASCADE;"
+        )
     else:
         db.session.execute(text("DELETE FROM comments"))
 
