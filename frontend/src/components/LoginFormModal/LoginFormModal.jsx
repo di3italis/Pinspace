@@ -1,5 +1,5 @@
 // this is from the starter code
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { thunkLogin } from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
@@ -11,6 +11,7 @@ function LoginFormModal() {
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
+    const formRef = useRef(null)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -33,8 +34,9 @@ function LoginFormModal() {
 
     return (
         <>
+            <div className="loginWrapper ">
             <h1>Log In</h1>
-            <form onSubmit={handleSubmit}>
+            <form ref={formRef} className="loginWrapper" onSubmit={handleSubmit}>
                 <label>
                     Email or Username
                     <input
@@ -57,6 +59,7 @@ function LoginFormModal() {
                 {errors.password && <p>{errors.password}</p>}
                 <button type="submit">Log In</button>
             </form>
+            </div>
         </>
     );
 }

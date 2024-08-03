@@ -1,7 +1,8 @@
 //Modal.jsx
 import ReactDOM from "react-dom";
 import { useRef, createContext, useContext, useState } from "react";
-import styles from "./Modal.module.css";
+// import styles from "./Modal.module.css";
+import "./Modal.module.css";
 
 const ModalContext = createContext();
 
@@ -43,14 +44,24 @@ export function Modal() {
     // if no div ref's modalRef or modalContext != truthy, render nothing
     if (!modalRef || !modalRef.current || !modalContent) return null;
 
-    // render this to the div ref'd by modalRef
+    // // render this to the div ref'd by modalRef
+    // return ReactDOM.createPortal(
+    //     <div className={styles.modal}>
+    //         <div className={styles.modalBackground} onClick={closeModal} />
+    //         <div className={styles.modalContent}>{modalContent}</div>
+    //     </div>,
+    //     modalRef.current
+    // );
+
+    //imported from ministay. Not clear if this fundamentally differnt.
     return ReactDOM.createPortal(
-        <div className={styles.modal}>
-            <div className={styles.modalBackground} onClick={closeModal} />
-            <div className={styles.modalContent}>{modalContent}</div>
-        </div>,
-        modalRef.current
+      <div id="modal" >
+        <div id="modal-background" onClick={closeModal} />
+        <div id="modal-content" className="login">{modalContent}</div>
+      </div>,
+      modalRef.current
     );
+
 }
 
 export const useModal = () => useContext(ModalContext);

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import styles from "./PinCard.module.css";
 import { addBoardPinThunk } from "../../store/boardpins";
 
+
 export default function PinCard({ pin, addBoard }) {
     const dispatch = useDispatch();
 
