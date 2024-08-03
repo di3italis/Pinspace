@@ -39,12 +39,12 @@ def seed_tables():
         pinId="3",
         comment="demo comment 1",
     )
-    db.session.add(comment1)
-    db.session.add(comment2)
-    db.session.add(comment3)
     db.session.add(pin1)
     db.session.add(pin2)
     db.session.add(pin3)
+    db.session.add(comment1)
+    db.session.add(comment2)
+    db.session.add(comment3)
     db.session.commit()
 
 

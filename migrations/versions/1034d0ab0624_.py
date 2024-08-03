@@ -8,6 +8,9 @@ Create Date: 2024-08-02 20:29:17.448511
 from alembic import op
 import sqlalchemy as sa
 
+import os 
+SCHEMA = os.environ.get("SCHEMA")
+
 
 # revision identifiers, used by Alembic.
 revision = '1034d0ab0624'
@@ -30,6 +33,10 @@ def upgrade():
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+
     op.create_table('boards',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('description', sa.String(length=500), nullable=False),
@@ -37,6 +44,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['ownerId'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE boards SET SCHEMA {SCHEMA};")
+
     op.create_table('pins',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('image', sa.String(length=255), nullable=False),
@@ -46,6 +57,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['ownerId'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE pins SET SCHEMA {SCHEMA};")
+
     op.create_table('board_pins',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('pinId', sa.Integer(), nullable=False),
@@ -53,6 +68,11 @@ def upgrade():
     sa.ForeignKeyConstraint(['boardId'], ['boards.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+
+    if environment == "production":
+    op.execute(f"ALTER TABLE board_pins SET SCHEMA {SCHEMA};")
+
+
     op.create_table('comments',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('comment', sa.String(length=250), nullable=False),
@@ -60,6 +80,11 @@ def upgrade():
     sa.ForeignKeyConstraint(['pinId'], ['pins.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+
+        if environment == "production":
+    op.execute(f"ALTER TABLE comments SET SCHEMA {SCHEMA};")
+
+
     op.create_table('labels',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('label', sa.String(length=15), nullable=False),
@@ -67,6 +92,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['pinId'], ['pins.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+
+            if environment == "production":
+    op.execute(f"ALTER TABLE comments SET SCHEMA {SCHEMA};")
+
     # ### end Alembic commands ###
 
 
