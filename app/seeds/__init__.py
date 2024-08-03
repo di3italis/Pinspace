@@ -6,7 +6,7 @@ from .tables import seed_tables, undo_tables
 
 # Creates a seed group to hold our commands
 # So we can type `flask seed --help`
-seed_commands = AppGroup("seed2")
+seed_commands = AppGroup("seed")
 
 
 # Creates the `flask seed all` command
