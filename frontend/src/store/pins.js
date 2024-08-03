@@ -74,7 +74,12 @@ export const handleError = (payload) => {
 // --------------GET PINS THUNK----------------
 export const getPinsThunk = () => async (dispatch) => {
     try {
-        const res = await fetch("/api/pins");
+        const res = await fetch("/api/pins", {
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": getCookie("csrf_token"),
+            },
+        });
         if (res.ok) {
             const data = await res.json();
             // console.log("getPinsThunk data.Pins:", data.pins);
