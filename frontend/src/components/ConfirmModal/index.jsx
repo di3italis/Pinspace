@@ -1,6 +1,5 @@
 import './ConfirmModal.css';
 
-import React from "react";
 import { useModal } from "../../context/Modal";
 
 function ConfirmModal({detail}) {
