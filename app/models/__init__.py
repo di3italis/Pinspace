@@ -1,4 +1,4 @@
-from .db import db
+from .db import db, environment, SCHEMA
 from .user import User
 from .pin import Pin
 from .board import Board
