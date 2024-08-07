@@ -48,7 +48,6 @@ def seed_comments():
     """Seeds the comments table"""
     for i in range(len(comments)):
         comment = Comment(
-            ownerId=choice(range(1, len(users_list) + 1)),
             pinId=f"{i + 1}",
             comment=comments[i],
         )
