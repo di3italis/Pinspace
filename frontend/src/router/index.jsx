@@ -22,7 +22,7 @@ export const router = createBrowserRouter([
                 element: <HomeSplash />,
             },
             {
-                path: "/auth/login",
+                path: "auth/login",
                 element: <LoginFormModal />,
             },
             {
@@ -34,31 +34,31 @@ export const router = createBrowserRouter([
                 element: <SignupFormModal />,
             },
             {
-                path: "/boards",
+                path: "boards",
                 element: <Boards />,
             },
             {
-                path: "/create-pin",
+                path: "create-pin",
                 element: <CreatePin />,
             },
             {
-                path: "/favorites",
+                path: "favorites",
                 element: <Favorites />,
             },
             {
-                path: "/pins/",
+                path: "pins",
                 element: <Pins />,
             },
             {
-                path: "/pins/current",
+                path: "pins/current",
                 element: <MyPins />,
             },
             {
-                path: "/pins/:pinId",
+                path: "pins/:pinId",
                 element: <PinDetail />,
             },
             {
-                path: "/pins/edit/:pinId",
+                path: "pins/edit/:pinId",
                 element: <UpdatePin />,
             },
         ],

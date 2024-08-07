@@ -17,7 +17,7 @@ export default function HomeSplash() {
                 {sessionUser ? (
                     <>
                         <Boards />
-                        <Pins />x
+                        <Pins />
                     </>
                 ) : (
                     <>
