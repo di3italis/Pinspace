@@ -7,12 +7,14 @@ import styles from "./PinCard.module.css";
 import { addBoardPinThunk } from "../../store/boardpins";
 
 
-export default function PinCard({ pin, addBoard }) {
+export default function PinCard({ key, pin, addBoard }) {
     const dispatch = useDispatch();
 
     const boards = useSelector((state) => Object.values(state.boards));
 
     const [selectedBoard, setselectedBoard] = useState("");
+
+    console.log('THIS PINCARD KEY ===', key)
 
     const getOptions = () => {
         if (boards.length === 0) {
