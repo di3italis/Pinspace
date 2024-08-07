@@ -12,15 +12,16 @@ export default function Pins() {
     //const pins = useSelector((state) => Object.values(state.pins));
     let pins = useSelector((state) => state.pins);
     pins = Object.values(pins)
+
     //console.log("Pins:", pins);
 
     useEffect(() => {
         dispatch(getPinsThunk());
     }, [dispatch]);
 
-    if (!pins) {
-        return <div>Pins Not Found!</div>;
-    }
+    // if (!pins) {
+    //     return <div key ='none'>Pins Not Found!</div>;
+    // }
 
     // return (
     //     <div className={styles.pins}>
@@ -34,17 +35,18 @@ export default function Pins() {
       return <h1>no pins</h1>
 
     const getPinCards = () => {
-      const r = pins.map((pin) => {
-        console.log('adding', pin.id)
-        return (
-              <>
-              <PinCard key={pin.id} pin={pin} addBoard={true} />
-              </>
-        )
-      }
+      // return <PinCard key={pins[1].id} key2={pins[1].id} pin={pins[1]} addBoard={true} />
+      // return (
+      //   <>
+      //   {/* <PinCard key={pin.id} key2={pin.id} pin={pin} addBoard={true} /> */}
+      //   </>
+      // )
 
-      )
-      return r;
+      return pins.map((pin) => {
+        return (
+          <PinCard key={pin.id} pin={pin} addBoard={true} />
+        )
+      })
     }
 
     return (
