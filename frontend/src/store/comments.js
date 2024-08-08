@@ -137,7 +137,7 @@ export default function commentsReducer(state = initialState, action) {
     switch (action.type) {
         // --------------GET COMMENTS CASE------------
         case GET_COMMENTS: {
-            console.log("GET COMMENTS REDUCER:", action.payload);
+            // console.log("GET COMMENTS REDUCER:", action.payload);
             const newState = {};
             action.payload.forEach((comment) => {
                 newState[comment.id] = comment;
