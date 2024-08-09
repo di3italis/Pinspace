@@ -45,6 +45,7 @@ function ProfileButton() {
 
     return (
         <>
+        <h1>Beta V 1</h1>
             <button onClick={toggleMenu}>
                 <FaUserCircle />
             </button>
