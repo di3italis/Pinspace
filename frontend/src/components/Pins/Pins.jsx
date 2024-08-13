@@ -45,7 +45,7 @@ export default function Pins() {
 
       return pins.map((pin) => {
         return (
-          <PinCard key={pin.id} pin={pin} addBoard={true} />
+          {pin} && <PinCard key={pin?.id} pin={pin} addBoard={true} />
                   )
       })
     }
