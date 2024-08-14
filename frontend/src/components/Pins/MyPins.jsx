@@ -31,13 +31,16 @@ export default function Pins() {
 
     return (
         <div className={styles.pins}>
-            {sessionUser
+            <h1 className="redBox">My Pins</h1>
+            <div className="redBox">
+              {sessionUser
                 ? pins.map((pin) => (
-                      <PinCard key={pin.id} pin={pin} addBoard={true} />
+                      <PinCard className='redBox' key={pin.id} pin={pin} addBoard={false} />
                   ))
                 : pins.map((pin) => (
                       <PinCard key={pin.id} pin={pin} addBoard={false} />
                   ))}
+            </div>
         </div>
     );
 }

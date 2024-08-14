@@ -7,14 +7,33 @@ import "./LoginFormModal.css";
 
 function LoginFormModal() {
     const dispatch = useDispatch();
-    const [credential, setCredential] = useState("");
-    const [password, setPassword] = useState("");
+    let [credential, setCredential] = useState("");
+    let [password, setPassword] = useState("");
     const [errors, setErrors] = useState({});
+
     const { closeModal } = useModal();
     const formRef = useRef(null)
 
+    const handleSubmitDemo = async () => {
+       credential = 'a';
+       password = 'a';
+
+        const serverResponse = await dispatch(
+            thunkLogin({
+                credential,
+                password,
+            })
+        );
+
+        if (serverResponse) {
+            setErrors(serverResponse);
+        } else {
+            closeModal();
+        }
+    };
+
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e?.preventDefault();
         // console.log("credential", credential);
         // console.log("password", password);
 
@@ -58,7 +77,8 @@ function LoginFormModal() {
                 </label>
                 {errors.password && <p>{errors.password}</p>}
                 <button type="submit">Log In</button>
-            </form>
+                </form>
+                <button className='noBtn' onClick={handleSubmitDemo}> Demo User </button>
             </div>
         </>
     );

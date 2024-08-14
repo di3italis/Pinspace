@@ -33,9 +33,19 @@ def seed_users():
         profile_image="none",
     )
 
+    demo2 = User(
+        username="a",
+        email="a",
+        password="a",
+        first_name="DemoFirst",
+        last_name="DemoLast",
+        profile_image="none",
+    )
+
     db.session.add(demo)
     db.session.add(marnie)
     db.session.add(bobbie)
+    db.session.add(demo2)
     db.session.commit()
 
 

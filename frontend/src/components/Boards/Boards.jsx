@@ -7,7 +7,10 @@ import BoardCard from "../BoardCard";
 
 export default function Boards() {
     const dispatch = useDispatch();
-    const boards = useSelector((state) => Object.values(state.boards));
+    //const boards = useSelector((state) => Object.values(state.boards));
+    let boards = useSelector((state) => state.boards);
+    boards = Object.values(boards);
+
     const user = useSelector((state) => state.session.user);
 
     const [showCreate, setShowCreate] = useState(false);
