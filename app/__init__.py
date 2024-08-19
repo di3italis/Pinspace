@@ -6,7 +6,7 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 
 from flask_wtf.csrf import generate_csrf
-from flask_login import LoginManager
+from flask_login import LoginManager, FlaskLoginClient
 from .models import db, User
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
@@ -20,11 +20,13 @@ app = Flask(__name__, static_folder="../frontend/dist", static_url_path="/")
 # Setup login manager
 login = LoginManager(app)
 login.login_view = "auth.unauthorized"
+login.session_protection = None
 
+# app.test_client_class = FlaskLoginClient
 
 @login.user_loader
 def load_user(id):
-    return User.query.get(int(id))
+    return str(User.query.get(int(id)))
 
 
 # Tell flask about our seed commands

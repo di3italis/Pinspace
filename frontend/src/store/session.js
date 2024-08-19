@@ -53,17 +53,25 @@ export const thunkLogin = (payload) => async (dispatch) => {
         body: JSON.stringify(payload),
     });
 
+    const response2 = await fetch("/api/auth", {
+      headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": getCookie("csrf_token"),
+      },
+  });
+
+
     if (response.ok) {
         const data = await response.json();
-        // console.log("Login successful:", data);  // Add detailed logging
+        console.log("Login successful:", data);  // Add detailed logging
         dispatch(setUser(data));
     } else if (response.status < 500) {
         const errorMessages = await response.json();
-        // console.log("Login error:", errorMessages);  // Add detailed logging
+        console.log("Login error:", errorMessages);  // Add detailed logging
         return errorMessages;
     } else {
-        // console.log("Server error");
-        // console.log("response:", response);
+        console.log("Server error");
+        console.log("response:", response);
         return { server: "Something went wrong. Please try again" };
     }
 };
