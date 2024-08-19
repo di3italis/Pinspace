@@ -16,12 +16,12 @@ export default function HomeSplash() {
                 </p>
                 {sessionUser ? (
                     <>
-                        <Boards />
-                        <Pins />
+                        {/* <Boards />
+                        <Pins /> */}
                     </>
                 ) : (
                     <>
-                        <Pins key='a'/>
+                        {/* <Pins key='a'/> */}
                     </>
                 )}
             </div>

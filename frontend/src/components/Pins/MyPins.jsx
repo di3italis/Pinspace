@@ -11,9 +11,11 @@ export default function Pins() {
     const navigate = useNavigate();
     const sessionUser = useSelector((state) => state.session.user);
     // should i use Object.values or just grab state.pins?
-    const pins = useSelector((state) => Object.values(state.pins));
+    //const pins = useSelector((state) => Object.values(state.pins));
     // const pins = useSelector((state) => state.pins);
-    console.log("Pins:", pins);
+    let pins = useSelector((state) => state.pins);
+    pins = Object.values(pins)
+    // console.log("Pins:", pins);
 
     useEffect(() => {
         sessionUser ? dispatch(getUserPinsThunk()) : navigate("/");

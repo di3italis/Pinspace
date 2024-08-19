@@ -13,6 +13,13 @@ def pins_all():
     """
     Displays all pins
     """
+    print('R:: Pins /all', current_user)
+    print('R:: Pins /all', current_user)
+    print('R:: Pins /all', current_user)
+    print('R:: Pins /all', current_user)
+    # return request.json
+
+
     pins = Pin.query.all()
     # testing pins = User.query.all()
     return {"pins": [pin.to_dict() for pin in pins]}
@@ -23,6 +30,10 @@ def pins_all2():
     """
     Displays all pins. this route can be modified to include paging and query parameters.
     """
+    print('R:: Pins /', current_user)
+    print('R:: Pins /', current_user)
+    print('R:: Pins /', current_user)
+    print('R:: Pins /', current_user)
     pins = Pin.query.all()
     return {"pins": [pin.to_dict() for pin in pins]}
 

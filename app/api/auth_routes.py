@@ -1,6 +1,8 @@
 from flask import Blueprint, request, jsonify
 from flask_login import current_user, login_user, logout_user, login_manager  # , login_required
 from app.models import User, db
+from app.forms import LoginForm
+
 # import base64
 
 # from app.forms import LoginForm
@@ -15,7 +17,6 @@ def authenticate():
     """
     Authenticates a user.
     """
-    print("current_user ASASASASASASASASASASASASASASASASASASASIS AUTH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:", current_user)
     # print("current_user:", current_user)
     if current_user.is_authenticated:
         print("current_user IS AUTH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:", current_user)
@@ -33,7 +34,24 @@ def login():
         credential
         password
     """
-    print("loginloginloginloginloginloginloginloginloginloginloginloginloginloginloginloginloginloginloginloginloginlogin AUTH!")
+
+    form = LoginForm()
+    # Get the csrf_token from the request cookie and put it into the
+    # form manually to validate_on_submit can be used
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        # Add the user to the session, we are logged in!
+        # user = User.query.filter(User.email == form.data['email']).first()
+        user = User.query.filter(
+            (User.email == form.data['credential']) | (User.username == form.data['credential'])
+        ).first()
+        login_user(user)
+        # login_user(user, remember=True)
+        print("IN LOGIN ON BACKEND After login", current_user)
+        print("IN LOGIN ON BACKEND After login", current_user)
+
+        return user.to_dict()
+    return form.errors, 401
 
 
     body = request.json

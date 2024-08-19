@@ -43,6 +43,8 @@ export const thunkLogin = (payload) => async (dispatch) => {
     // const reqArr = [ credential, password ];
     // console.log("reqObj:", reqObj);
     // console.log("reqArr:", reqArr);
+    console.log("thunkLogin:", payload);  // Add detailed logging
+    console.log("thunkLogin:", payload);  // Add detailed logging
 
     const response = await fetch("/api/auth/login", {
         method: "POST",
@@ -56,13 +58,16 @@ export const thunkLogin = (payload) => async (dispatch) => {
     // const response2 = await fetch("/api/auth", {
     //   headers: {
     //       "Content-Type": "application/json",
-    //       "X-CSRFToken": getCookie("csrf_token"),
+    //       // "X-CSRFToken": getCookie("csrf_token"),
     //   },
     // });
 
 
     if (response.ok) {
         const data = await response.json();
+        console.log("Login successful:", data);  // Add detailed logging
+        console.log("Login successful:", data);  // Add detailed logging
+        console.log("Login successful:", data);  // Add detailed logging
         console.log("Login successful:", data);  // Add detailed logging
         dispatch(setUser(data));
     } else if (response.status < 500) {
