@@ -61,6 +61,7 @@ export const thunkLogin = (payload) => async (dispatch) => {
     console.log("thunkLogin:", payload);  // Add detailed logging
     console.log("thunkLogin:", payload);  // Add detailed logging
 
+    console.log("Attempting fetch /api/auth/login:");  // Add detailed logging
     const response = await fetch("/api/auth/login", {
         method: "POST",
         headers: {
@@ -69,8 +70,14 @@ export const thunkLogin = (payload) => async (dispatch) => {
         },
         body: JSON.stringify(payload),
     });
+    console.log("processed fetch /api/auth/login:");  // Add detailed logging
+
+    console.log("Attempting fetch auth:");  // Add detailed logging
+    await doAuth()
+    console.log("Processed fetch auth:");  // Add detailed logging
 
 
+    console.log("Dispatching to store:");  // Add detailed logging
     if (response.ok) {
         const data = await response.json();
         console.log("/api/auth/login Login successful:", data);  // Add detailed logging
