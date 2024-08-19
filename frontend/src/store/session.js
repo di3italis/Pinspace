@@ -1,5 +1,5 @@
 // session.js
-import { getCookie } from "./utils";
+// import { getCookie } from "./utils";
 import { clearBoards } from "./boards";
 
 const SET_USER = "session/setUser";
@@ -18,9 +18,9 @@ export const thunkAuthenticate = () => async (dispatch) => {
     // console.log("GODDAMNIT!!!")
     // console.log("Thunk Authenticate!!!")
     const response = await fetch("/api/auth", {
-        headers: {
-            "X-CSRFToken": getCookie("csrf_token"),
-        },
+        // headers: {
+        //     "X-CSRFToken": getCookie("csrf_token"),
+        // },
     });
     // console.log("thunkAuth res:", response)
     if (response.ok) {
@@ -48,17 +48,17 @@ export const thunkLogin = (payload) => async (dispatch) => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "X-CSRFToken": getCookie("csrf_token"),
+            // "X-CSRFToken": getCookie("csrf_token"),
         },
         body: JSON.stringify(payload),
     });
 
-    const response2 = await fetch("/api/auth", {
-      headers: {
-          "Content-Type": "application/json",
-          "X-CSRFToken": getCookie("csrf_token"),
-      },
-  });
+    // const response2 = await fetch("/api/auth", {
+    //   headers: {
+    //       "Content-Type": "application/json",
+    //       "X-CSRFToken": getCookie("csrf_token"),
+    //   },
+    // });
 
 
     if (response.ok) {
@@ -82,7 +82,7 @@ export const thunkSignup = (payload) => async (dispatch) => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "X-CSRFToken": getCookie("csrf_token"),
+            // "X-CSRFToken": getCookie("csrf_token"),
         },
         body: JSON.stringify(payload),
     });
@@ -100,9 +100,9 @@ export const thunkSignup = (payload) => async (dispatch) => {
 
 export const thunkLogout = () => async (dispatch) => {
     await fetch("/api/auth/logout", {
-        headers: {
-            "X-CSRFToken": getCookie("csrf_token"),
-        },
+        // headers: {
+        //     "X-CSRFToken": getCookie("csrf_token"),
+        // },
     });
     dispatch(clearBoards());
     dispatch(removeUser());

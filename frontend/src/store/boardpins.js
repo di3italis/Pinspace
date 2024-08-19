@@ -1,4 +1,4 @@
-import { getCookie } from "./utils";
+// import { getCookie } from "./utils";
 
 const ADD_BOARDPIN = "boardPins/ADD_BOARDPIN";
 const DEL_BOARDPIN = "boardPins/DEL_BOARDPIN";
@@ -59,7 +59,7 @@ export const deleteBoardPinThunk = (boardPinId, pinId) => async (dispatch) => {
   try {
       const res = await fetch(`/api/boards/${boardPinId}/boardPin/${pinId}`, {
         headers: {
-          "X-CSRFToken": getCookie("csrf_token"),
+          //"X-CSRFToken": getCookie("csrf_token"),
           "Content-Type": "application/json" },
         method: "DELETE",
       });
@@ -77,9 +77,9 @@ export const addBoardPinThunk = (boardId, pinId) => async (dispatch) => {
   try {
       const res = await fetch(`/api/boards/${boardId}/boardPin/${pinId}`, {
           method: "POST",
-          headers: {
-            "X-CSRFToken": getCookie("csrf_token"),
-          }
+          // headers: {
+          //   "X-CSRFToken": getCookie("csrf_token"),
+          // }
       });
 
       if (res.ok) {

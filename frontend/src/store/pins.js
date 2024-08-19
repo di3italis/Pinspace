@@ -1,5 +1,5 @@
 // pins.js
-import { getCookie } from "./utils";
+// import { getCookie } from "./utils";
 import { REMOVE_USER } from "./session";
 
 // --------------CONSTANTS----------------
@@ -77,7 +77,7 @@ export const getPinsThunk = () => async (dispatch) => {
         const res = await fetch("/api/pins", {
             headers: {
                 "Content-Type": "application/json",
-                "X-CSRFToken": getCookie("csrf_token"),
+                // "X-CSRFToken": getCookie("csrf_token"),
             },
         });
         if (res.ok) {
@@ -98,7 +98,7 @@ export const getUserPinsThunk = () => async (dispatch) => {
         const res = await fetch("/api/pins/current", {
             headers: {
                 "Content-Type": "application/json",
-                "X-CSRFToken": getCookie("csrf_token"),
+                // "X-CSRFToken": getCookie("csrf_token"),
             },
         });
         // console.log("getUserPinsThunk res:", res);
@@ -116,7 +116,7 @@ export const getPinDetailsThunk = (pinId) => async (dispatch) => {
         const res = await fetch(`/api/pins/${pinId}`, {
             headers: {
                 "Content-Type": "application/json",
-                "X-CSRFToken": getCookie("csrf_token"),
+                // "X-CSRFToken": getCookie("csrf_token"),
             },
         });
         if (res.ok) {
@@ -138,7 +138,7 @@ export const addPinThunk = (payload) => async (dispatch) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "X-CSRFToken": getCookie("csrf_token"),
+                // "X-CSRFToken": getCookie("csrf_token"),
             },
             body: JSON.stringify(payload),
         });
@@ -160,7 +160,7 @@ export const deletePinThunk = (pinId) => async (dispatch) => {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
-                "X-CSRFToken": getCookie("csrf_token"),
+                // "X-CSRFToken": getCookie("csrf_token"),
             },
         });
         if (res.ok) {
@@ -183,7 +183,7 @@ export const updatePinThunk = (payload, pinId) => async (dispatch) => {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
-                "X-CSRFToken": getCookie("csrf_token"),
+                // "X-CSRFToken": getCookie("csrf_token"),
             },
             body: JSON.stringify(payload),
         });
