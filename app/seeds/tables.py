@@ -33,7 +33,7 @@ except ValueError as e:
 
 def seed_pins():
     """Seeds the pins table"""
-    for i in range(len(pin_titles - 1)):
+    for i in range(len(pin_titles) - 1):
         pin = Pin(
             ownerId=choice(range(1, len(users_list) + 1)),
             image=pin_image_urls[i],
