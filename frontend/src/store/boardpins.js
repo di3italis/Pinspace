@@ -39,13 +39,19 @@ export const getBoardPinsThunk = (boardPinId) => async (dispatch) => {
     // console.log('getBoardPinsThunk fetch("/api/boards/:: FETCHING BOARD ID::', boardPinId)
 
 
-    const res = await fetch(`/api/boards/${boardPinId}/boardPin`);
+    const res = await fetch(`/api/boards/${boardPinId}/boardPin`, {
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": getCookie("csrf_token"),
+            method: "GET",
+            },
+        });
 
       if (res.ok) {
           const data = await res.json();
-          //  console.log('getBoardPinsThunk fetch("/api/boards/::', data)
+           console.log('getBoardPinsThunk fetch("/api/boards/::', data.board_pins)
 
-          dispatch(getBoardPins(data.boardPins));
+          dispatch(getBoardPins(data.board_pins));
           // console.log("getBoardPinsThunk data:", data);
       }
   } catch (error) {
