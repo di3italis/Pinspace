@@ -25,16 +25,20 @@ export default function Pins() {
         return <div>Pins Not Found!</div>;
     }
 
+    const myPins = pins.filter((pin) => pin.owner.id === sessionUser?.id);
     // return (
     //     <div className={styles.pins}>
     //         <p>PINS PAGE</p>
     //     </div>
     // );
+    
+    console.log("My Pins:", myPins);
+    console.log("")
 
     return (
         <div className={styles.pins}>
             {sessionUser
-                ? pins.map((pin) => (
+                ? myPins.map((pin) => (
                       <PinCard key={pin.id} pin={pin} addBoard={true} />
                   ))
                 : pins.map((pin) => (

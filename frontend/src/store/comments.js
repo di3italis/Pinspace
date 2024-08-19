@@ -55,7 +55,13 @@ export const handleError = (payload) => {
 // --------------GET COMMENTS THUNK----------------
 export const getCommentsThunk = (pinId) => async (dispatch) => {
     try {
-        const res = await fetch(`/api/pins/${pinId}/comment`);
+        const res = await fetch(`/api/pins/${pinId}/comment`, {
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": getCookie("csrf_token"),
+            },
+            method: "GET",
+        });
         // console.log("getCommentsThunk res:", res);
         if (res.ok) {
             const data = await res.json();
