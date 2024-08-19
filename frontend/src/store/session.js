@@ -1,5 +1,5 @@
 // session.js
-// import { getCookie } from "./utils";
+import { getCookieX } from "./utils";
 import { clearBoards } from "./boards";
 
 const SET_USER = "session/setUser";
@@ -18,9 +18,9 @@ export const thunkAuthenticate = () => async (dispatch) => {
     // console.log("GODDAMNIT!!!")
     // console.log("Thunk Authenticate!!!")
     const response = await fetch("/api/auth", {
-        // headers: {
-        //     "X-CSRFToken": getCookie("csrf_token"),
-        // },
+        headers: {
+            "X-CSRFToken": getCookieX("csrf_token"),
+        },
     });
     // console.log("thunkAuth res:", response)
     if (response.ok) {
@@ -35,6 +35,21 @@ export const thunkAuthenticate = () => async (dispatch) => {
         return;
     }
 };
+
+const doAuth = async () => {
+  const response2 = await fetch("/api/auth");
+
+  if (response2.ok) {
+      const data = await response2.json();
+      console.log("/api/auth successful:", data);  // Add detailed logging
+  } else if (response2.status < 500) {
+      console.log("Called /api/auth: NOT LOGGED IN");  // Add detailed logging
+  } else {
+      console.log("Server error");
+      console.log("response:", response2);
+  }
+
+}
 
 export const thunkLogin = (payload) => async (dispatch) => {
     // console.log("credential:", credential)
@@ -55,21 +70,13 @@ export const thunkLogin = (payload) => async (dispatch) => {
         body: JSON.stringify(payload),
     });
 
-    // const response2 = await fetch("/api/auth", {
-    //   headers: {
-    //       "Content-Type": "application/json",
-    //       // "X-CSRFToken": getCookie("csrf_token"),
-    //   },
-    // });
-
 
     if (response.ok) {
         const data = await response.json();
-        console.log("Login successful:", data);  // Add detailed logging
-        console.log("Login successful:", data);  // Add detailed logging
-        console.log("Login successful:", data);  // Add detailed logging
-        console.log("Login successful:", data);  // Add detailed logging
+        console.log("/api/auth/login Login successful:", data);  // Add detailed logging
         dispatch(setUser(data));
+
+        await doAuth()
     } else if (response.status < 500) {
         const errorMessages = await response.json();
         console.log("Login error:", errorMessages);  // Add detailed logging
