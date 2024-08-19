@@ -1,7 +1,7 @@
 // Pins.jsx
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { /*getPinsThunk,*/ getUserPinsThunk } from "../../store/pins";
+import { getPinsThunk, /*getUserPinsThunk*/ } from "../../store/pins";
 import { useNavigate } from "react-router-dom";
 import PinCard from "../PinCard";
 import styles from "./Pins.module.css";
@@ -17,7 +17,8 @@ export default function Pins() {
     console.log("Session User:", sessionUser);
 
     useEffect(() => {
-        sessionUser ? dispatch(getUserPinsThunk()) : navigate("/");
+        // sessionUser ? dispatch(getUserPinsThunk()) : navigate("/");
+        sessionUser ? dispatch(getPinsThunk()) : navigate("/");
     }, [dispatch, navigate, sessionUser]);
 
     if (!pins) {
