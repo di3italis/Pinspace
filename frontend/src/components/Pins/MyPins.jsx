@@ -14,6 +14,7 @@ export default function Pins() {
     const pins = useSelector((state) => Object.values(state.pins));
     // const pins = useSelector((state) => state.pins);
     console.log("Pins:", pins);
+    console.log("Session User:", sessionUser);
 
     useEffect(() => {
         sessionUser ? dispatch(getUserPinsThunk()) : navigate("/");
