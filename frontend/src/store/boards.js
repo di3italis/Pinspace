@@ -1,5 +1,5 @@
 // boards.js
-import { getCookie } from "./utils";
+// import { getCookie } from "./utils";
 // import { REMOVE_USER } from "./session";
 
 // --------------CONSTANTS----------------
@@ -75,7 +75,7 @@ export const handleError = (payload) => {
 // --------------GET BOARDS THUNK----------------
 export const getBoardsThunk = () => async (dispatch) => {
     try {
-        const res = await fetch("/api/boards/");
+        const res = await fetch("/api/boards");
 
         if (res.ok) {
             const data = await res.json();
@@ -108,10 +108,10 @@ export const getBoardDetailsThunk = (boardId) => async (dispatch) => {
 // --------------ADD BOARD THUNK----------------
 export const addBoardThunk = (board) => async (dispatch) => {
     try {
-        const res = await fetch("/api/boards/", {
+        const res = await fetch("/api/boards", {
             method: "POST",
             headers: {
-                "X-CSRFToken": getCookie("csrf_token"),
+                // "X-CSRFToken": getCookie("csrf_token"),
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(board),
@@ -134,7 +134,7 @@ export const deleteBoardThunk = (boardId) => async (dispatch) => {
     try {
         const res = await fetch(`/api/boards/${boardId}`, {
             headers: {
-                "X-CSRFToken": getCookie("csrf_token"),
+                // "X-CSRFToken": getCookie("csrf_token"),
                 "Content-Type": "application/json",
             },
             method: "DELETE",
@@ -155,7 +155,7 @@ export const editBoardThunk = (payload, boardId) => async (dispatch) => {
         const res = await fetch(`/api/boards/${boardId}`, {
             method: "PUT",
             headers: {
-                "X-CSRFToken": getCookie("csrf_token"),
+                // "X-CSRFToken": getCookie("csrf_token"),
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(payload),

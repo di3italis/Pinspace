@@ -7,10 +7,13 @@ import styles from "./PinCard.module.css";
 import { addBoardPinThunk } from "../../store/boardpins";
 
 
-export default function PinCard({ pin, addBoard }) {
+export default function PinCard({pin, addBoard }) {
     const dispatch = useDispatch();
 
-    const boards = useSelector((state) => Object.values(state.boards));
+    const sessionUser = useSelector((state) => state.session.user);
+    //const boards = useSelector((state) => Object.values(state.boards));
+    let boards = useSelector((state) => state.boards);
+    boards = Object.values(boards);
 
     const [selectedBoard, setselectedBoard] = useState("");
 
@@ -67,7 +70,7 @@ export default function PinCard({ pin, addBoard }) {
                 <h1>PinCard</h1>
             </Link>
 
-            {addBoard && (
+            {addBoard && sessionUser &&(
                 <>
                     Link to Board
                     <select

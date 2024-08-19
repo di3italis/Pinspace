@@ -9,7 +9,9 @@ export default function PinComments({ pinId }) {
     // const { pinId: pinIdStr } = useParams();
     const [comment, setComment] = useState("");
     // const pin = useSelector((state) => state.pins[pinId]);
-    const comments = useSelector((state) => Object.values(state.comments));
+    // const comments = useSelector((state) => Object.values(state.comments));
+    let comments = useSelector((state) => state.comments);
+    comments = Object.values(comments)
     const dispatch = useDispatch();
 
     // console.log("PinComments pinId:", pinId);

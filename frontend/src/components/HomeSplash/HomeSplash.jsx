@@ -14,14 +14,15 @@ export default function HomeSplash() {
                 <p className={styles.subtitle}>
                     The best place to find inspiration for your next project
                 </p>
-                {sessionUser ? (
+                        <Pins/>
+                        {sessionUser ? (
                     <>
-                        <Boards />
-                        <Pins />
+                        {/* <Boards />
+                        <Pins /> */}
                     </>
                 ) : (
                     <>
-                        <Pins />
+                        {/* <Pins key='a'/> */}
                     </>
                 )}
             </div>

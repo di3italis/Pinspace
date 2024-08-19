@@ -105,7 +105,7 @@ export default function BoardCard({ board }) {
           }
       </div>
       {boardPins.map((pin) => (
-         <PinCard key={pin} pin={pins[pin]} addBoard={false}/>
+         <PinCard key={pin.id} pin={pins[pin]} addBoard={false}/>
        ))}
 
     </>

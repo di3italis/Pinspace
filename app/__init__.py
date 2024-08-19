@@ -1,12 +1,13 @@
 # __init__.py
 import os
+import logging
 from flask import Flask, request, redirect
 
 from flask_cors import CORS
 from flask_migrate import Migrate
 
 from flask_wtf.csrf import generate_csrf
-from flask_login import LoginManager
+from flask_login import LoginManager, FlaskLoginClient
 from .models import db, User
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
@@ -17,14 +18,17 @@ from .config import Config
 
 app = Flask(__name__, static_folder="../frontend/dist", static_url_path="/")
 
+logging.getLogger('sqlalchemy.engine.Engine').disabled = True
+# log = logging.getLogger('werkzeug')
+# log.setLevel(logging.ERROR)
+
 # Setup login manager
 login = LoginManager(app)
 login.login_view = "auth.unauthorized"
 
-
 @login.user_loader
 def load_user(id):
-    return User.query.get(int(id))
+    return str(User.query.get(int(id)))
 
 
 # Tell flask about our seed commands
@@ -73,7 +77,7 @@ def api_help():
     """
     Returns all API routes and their doc strings
     """
-    acceptable_methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
+    acceptable_methods = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
     route_list = {
         rule.rule: [
             [method for method in rule.methods if method in acceptable_methods],
@@ -82,7 +86,7 @@ def api_help():
         for rule in app.url_map.iter_rules()
         if rule.endpoint != "static"
     }
-    acceptable_methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
+    acceptable_methods = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
     route_list = {
         rule.rule: [
             [method for method in rule.methods if method in acceptable_methods],

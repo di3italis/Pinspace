@@ -15,8 +15,21 @@ def boards_get():
     """
     Gets all boards for the current user
     """
-    boards = Board.query.filter_by(ownerId=current_user.id).all()
-    return jsonify({"boards": [board.to_dict() for board in boards]})
+    print('R:: boards / /current', current_user)
+    print('R:: boards / /current', current_user)
+    print('R:: boards / /current', current_user)
+    print('R:: boards / /current', current_user)
+    if current_user.is_authenticated:
+        print("getBoards", current_user)
+        print("getBoards", current_user)
+        print("getBoards", current_user)
+        print("getBoards", current_user)
+
+
+        boards = Board.query.filter_by(ownerId=current_user.id).all()
+        return jsonify({"boards": [board.to_dict() for board in boards]})
+
+    return jsonify({"errors": {"message": "Unauthorized"}}), 401
 
 
 @boards_routes.route("/", methods=["POST"])
@@ -27,6 +40,8 @@ def boards_add():
     body expected:
         description
     """
+
+
     body = request.json
     errors = {}
     validate_MustStr("description", body, errors)

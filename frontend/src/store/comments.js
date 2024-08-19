@@ -1,5 +1,5 @@
 // comments.js
-import { getCookie } from "./utils";
+// import { getCookie } from "./utils";
 
 // --------------CONSTANTS----------------
 const GET_COMMENTS = "comments/GET_COMMENTS";
@@ -76,7 +76,7 @@ export const addCommentThunk = (comment, pinId) => async (dispatch) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "X-CSRFToken": getCookie("csrf_token")
+                // "X-CSRFToken": getCookie("csrf_token")
 
             },
             body: JSON.stringify(payload),
@@ -99,7 +99,7 @@ export const deleteCommentThunk = (commentId) => async (dispatch) => {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
-              "X-CSRFToken": getCookie("csrf_token")
+              // "X-CSRFToken": getCookie("csrf_token")
             }
         });
         if (res.ok) {
@@ -137,7 +137,7 @@ export default function commentsReducer(state = initialState, action) {
     switch (action.type) {
         // --------------GET COMMENTS CASE------------
         case GET_COMMENTS: {
-            console.log("GET COMMENTS REDUCER:", action.payload);
+            // console.log("GET COMMENTS REDUCER:", action.payload);
             const newState = {};
             action.payload.forEach((comment) => {
                 newState[comment.id] = comment;

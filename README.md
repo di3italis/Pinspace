@@ -129,3 +129,26 @@ main, always keeping it up to date.
 
 [Render.com]: https://render.com/
 [Dashboard]: https://dashboard.render.com/
+
+
+#CRUD we have implemented
+##Pins
+Create
+Read        X
+Update
+Delete
+##Boards
+Create
+Read
+Update
+Delete
+##Comments
+Create
+Read
+Update
+Delete
+##PinBoards
+Create
+Read
+Update
+Delete

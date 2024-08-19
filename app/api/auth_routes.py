@@ -1,13 +1,16 @@
 from flask import Blueprint, request, jsonify
-from flask_login import current_user, login_user, logout_user  # , login_required
+from flask_login import current_user, login_user, logout_user, login_manager  # , login_required
 from app.models import User, db
+from app.forms import LoginForm
+
+# import base64
 
 # from app.forms import LoginForm
 # from app.forms import SignUpForm
 from .utils import validate_MustStr
+# from ..__init__ import app
 
 auth_routes = Blueprint("auth", __name__)
-
 
 @auth_routes.route("/")
 def authenticate():
@@ -16,9 +19,12 @@ def authenticate():
     """
     # print("current_user:", current_user)
     if current_user.is_authenticated:
+        print("current_user IS AUTH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!:", current_user)
         return jsonify(current_user.to_dict())
-    return jsonify({"errors": {"message": "Unauthorized"}}), 401
 
+
+    print("current_user IS NOT AUTH!!!!!!!!!!!!!!!!!!!!!:", current_user)
+    return jsonify({"errors": {"message": "Unauthorized"}}), 401
 
 @auth_routes.route("/login", methods=["POST"])
 def login():
@@ -28,6 +34,26 @@ def login():
         credential
         password
     """
+
+    form = LoginForm()
+    # Get the csrf_token from the request cookie and put it into the
+    # form manually to validate_on_submit can be used
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        # Add the user to the session, we are logged in!
+        # user = User.query.filter(User.email == form.data['email']).first()
+        user = User.query.filter(
+            (User.email == form.data['credential']) | (User.username == form.data['credential'])
+        ).first()
+        login_user(user, remember=True)
+        # login_user(user, remember=True)
+        print("IN LOGIN ON BACKEND After login", current_user)
+        print("IN LOGIN ON BACKEND After login", current_user)
+
+        return user.to_dict()
+    return form.errors, 401
+
+
     body = request.json
     # print("body:", body)
     errors = {}
@@ -51,7 +77,16 @@ def login():
     if not user.check_password(password):
         return jsonify({"errors": {"password": "Password was incorrect."}}), 400
 
-    login_user(user)
+    login_user(user, remember=True)
+
+    print('TESTTTTT AUTH!')
+    if current_user.is_authenticated:
+        print('TESTTTTT AUTH! VALIDATED')
+    else:
+        print('TESTTTTT AUTH! NNNNNNNOOOOOOOTTTTTTTT     VALIDATED')
+
+    # app.test_client(user=user)
+
     return jsonify(user.to_dict())
 
 
@@ -60,6 +95,7 @@ def logout():
     """
     Logs a user out
     """
+    print('logoutlogoutlogoutlogoutlogoutlogoutlogoutlogoutlogoutlogoutlogoutlogoutlogoutlogoutlogout')
     logout_user()
     return jsonify({"message": "User logged out"})
 

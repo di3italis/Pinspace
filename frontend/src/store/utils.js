@@ -1,4 +1,4 @@
-export function getCookie(name) {
+export function getCookieX(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
         const cookies = document.cookie.split(';');
@@ -12,4 +12,3 @@ export function getCookie(name) {
     }
     return cookieValue;
 }
-
