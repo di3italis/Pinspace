@@ -2,6 +2,7 @@ Render Debugging II - Database Issues
 Render Debugging II - Database Issues
 Use the tips and tools below to further troubleshoot your deployment. This article focuses on debugging details entered in the Render platform, as well as more advanced debugging of your database.
 
+
 Database Issues
 Since creating a database is a simple process with the Render GUI, most issues related to the database are not caused by the database creation phase. Instead, they may be caused by errors in configuring your application to run in the production environment (i.e., errors in the project repo) or errors in connecting your application to the Render Postgres database instance (i.e., errors setting up the Web Service in the Render GUI).
 

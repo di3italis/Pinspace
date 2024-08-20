@@ -1,3 +1,11 @@
-from .db import db
+from .db import db, environment, SCHEMA
 from .user import User
-from .db import environment, SCHEMA
+from .pin import Pin
+from .board import Board
+from .board_pin import BoardPin
+from .label import Label
+from .comment import Comment
+
+
+# new line
+__all__ = ["db", "User", "Pin", "Board", "BoardPin", "Comment", "Label"]
