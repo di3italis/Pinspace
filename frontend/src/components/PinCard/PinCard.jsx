@@ -16,7 +16,7 @@ export default function PinCard({ pin, addBoard }) {
 
     const getOptions = () => {
         if (boards.length === 0) {
-            return <option value="">Create a Board</option>;
+            return <option value="">Create a Board with button at top</option>;
         } else {
             return (
                 <>
@@ -67,7 +67,7 @@ export default function PinCard({ pin, addBoard }) {
                 <h1>PinCard</h1>
             </Link>
 
-            {addBoard && (
+            {addBoard && boards.length > 0 && (
                 <>
                     Link to Board
                     <select
