@@ -34,8 +34,9 @@ export default function PinDetail() {
         return <div>Loading...</div>;
     }
 
-    const deletePin = () => {
-        dispatch(pinActions.deletePinThunk(pin.id));
+    const deletePin = async () => {
+        await dispatch(pinActions.deletePinThunk(pin.id));
+        await dispatch(pinActions.getPinsThunk());
         navigate(`/pins`);
     };
 
