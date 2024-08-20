@@ -1,6 +1,6 @@
-form {
+/* form {
     background-color: green;
-}
+} */
 .loginWrapper{
   display: flex;
   flex-direction: column;

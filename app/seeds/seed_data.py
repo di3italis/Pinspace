@@ -25,6 +25,14 @@ users_list = [
         "last_name": "bie",
         "profile_image": "none",
     },
+    {
+        "username": "a",
+        "email": "a",
+        "password": "a",
+        "first_name": "Afirst",
+        "last_name": "ALast",
+        "profile_image": "none",
+    },
 ]
 
 
