@@ -75,7 +75,13 @@ export const handleError = (payload) => {
 // --------------GET BOARDS THUNK----------------
 export const getBoardsThunk = () => async (dispatch) => {
     try {
-        const res = await fetch("/api/boards/");
+        const res = await fetch("/api/boards/", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": getCookie("csrf_token"),
+            },
+        });
 
         if (res.ok) {
             const data = await res.json();
@@ -92,7 +98,14 @@ export const getBoardsThunk = () => async (dispatch) => {
 // CHECK THIS!!!
 export const getBoardDetailsThunk = (boardId) => async (dispatch) => {
     try {
-        const res = await fetch(`/api/boards/${boardId}`);
+        const res = await fetch(`/api/boards/${boardId}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": getCookie("csrf_token"),
+            },
+            method: "GET",
+        
+        });
 
         if (res.ok) {
             const data = await res.json();
@@ -108,7 +121,7 @@ export const getBoardDetailsThunk = (boardId) => async (dispatch) => {
 // --------------ADD BOARD THUNK----------------
 export const addBoardThunk = (board) => async (dispatch) => {
     try {
-        const res = await fetch("/api/boards", {
+        const res = await fetch("/api/boards/", {
             method: "POST",
             headers: {
                 "X-CSRFToken": getCookie("csrf_token"),

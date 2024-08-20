@@ -134,7 +134,7 @@ export const getPinDetailsThunk = (pinId) => async (dispatch) => {
 export const addPinThunk = (payload) => async (dispatch) => {
     try {
         // console.log("addPinThunk payload:", payload);
-        const res = await fetch("/api/pins", {
+        const res = await fetch("/api/pins/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
