@@ -106,7 +106,7 @@ def pins_1pin_edit(id):
     validate_MustStr("description", body, errors)
 
     if errors:
-        return {"errors": errors}, 400  # if errors else {}
+        return {"errors": {"generic error"}}, 400  # if errors else {}
 
     pin = Pin.query.filter_by(id=id).first()
     if not pin:
