@@ -46,7 +46,7 @@ export default function UpdatePin() {
             navigate(`/pins/${pinId}`);
         }
         else {  // if there is no res or res.pin
-            navigate(`/pins`);
+            navigate(`/pins/`);
         }
     };
 
