@@ -139,9 +139,9 @@ def pins_1pin_delete(id):
     if pin.ownerId != current_user.id:
         return {"errors": {"ownerId": "does not own pin"}}, 403
 
-    pin = Pin.query.filter_by(id=id).delete()
+    # pin = Pin.query.filter_by(id=id).delete()
 
-    # db.session.delete(pin)
+    db.session.delete(pin)
     db.session.commit()
 
     return {"message": "Pin deleted successfully"}, 200
