@@ -9,7 +9,7 @@ export default function Pins() {
     const dispatch = useDispatch();
     // const sessionUser = useSelector((state) => state.session.user);
     // should i use Object.values or just grab state.pins?
-    const pins = useSelector((state) => Object.values(state.pins));
+    const pins = useSelector((state) => Object.values(state.pins) || []);
     // const pins = useSelector((state) => state.pins);
     // console.log("Pins:", pins);
 
@@ -17,7 +17,7 @@ export default function Pins() {
         dispatch(getPinsThunk());
     }, [dispatch]);
 
-    if (!pins) {
+    if (!pins.length) {
         return <div>Pins Not Found!</div>;
     }
 
