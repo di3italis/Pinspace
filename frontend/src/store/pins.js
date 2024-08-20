@@ -82,12 +82,12 @@ export const getPinsThunk = () => async (dispatch) => {
         });
         if (res.ok) {
             const data = await res.json();
-            // console.log("getPinsThunk data.Pins:", data.pins);
+            console.log("Fetched data.Pins:", data.pins);
             // dispatch(getPins(data.Pins));
             dispatch(getPins(data.pins));
         }
     } catch (error) {
-        // console.log("ERROR IN GET PINS", error);
+        console.log("ERROR IN GET PINS", error);
         dispatch(handleError(error));
     }
 };

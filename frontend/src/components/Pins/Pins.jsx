@@ -10,27 +10,33 @@ export default function Pins() {
     const [loading, setLoading] = useState(true);
     // const sessionUser = useSelector((state) => state.session.user);
     // should i use Object.values or just grab state.pins?
-    const pins = useSelector((state) => Object.values(state.pins) || []);
+    const pins = useSelector((state) => {
+        console.log("Current state.pins:", state.pins);
+        return Object.values(state.pins) || [];
+    });
     // const pins = useSelector((state) => state.pins);
     // console.log("Pins:", pins);
 
     useEffect(() => {
         const loadPins = async () => {
             await dispatch(getPinsThunk());
+            console.log("Data fetched, Redux state updated"); // Debugging logsetLoading(false);
             setLoading(false);
         }
         loadPins();
     }, [dispatch]);
 
+    if (loading) {
+        console.log("Loading...");
+        return <div>Loading...</div>;
+    }
+
     if (!pins.length) {
+        console.log("Pins Not Found!");
         return <div>Pins Not Found!</div>;
     }
 
-    // return (
-    //     <div className={styles.pins}>
-    //         <p>PINS PAGE</p>
-    //     </div>
-    // );
+
 
     return (
         <div className={styles.pins}>
