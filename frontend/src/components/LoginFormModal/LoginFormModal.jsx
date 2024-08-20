@@ -33,7 +33,7 @@ function LoginFormModal() {
     };
 
     const handleDemoLogin = async () => {
-        e.preventDefault();
+        preventDefault();
 
         const serverResponse = await dispatch(
             thunkLogin({
