@@ -17,6 +17,7 @@ export default function PinDetail() {
     // const pins = useSelector((state) => state.pins);
     // console.log("PinDetail pins", pins);
     const pin = useSelector((state) => state.pins[pinId]);
+    const currentUser = useSelector((state) => state.session.user);
 
     useEffect(() => {
         const loadPin = async () => {
@@ -53,8 +54,12 @@ export default function PinDetail() {
             <div className={styles.comments}>
                 <PinComments key={pinId} pinId={pinId} />
             </div>
-            <button onClick={deletePin}>Delete Pin</button>
-            <button onClick={updatePin}>Update Pin</button>
+            {pin.owner.id === currentUser.id && (
+                <div>
+                    <button onClick={deletePin}>Delete Pin</button>
+                    <button onClick={updatePin}>Update Pin</button>
+                </div>
+            )}
         </div>
     );
 }
