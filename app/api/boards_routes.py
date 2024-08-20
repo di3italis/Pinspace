@@ -89,9 +89,7 @@ def board_delete(id):
     if not board.ownerId == current_user.id:
         return jsonify({"errors": {"ownerId": "does not own board"}}), 400
 
-    board = Board.query.filter_by(id=id).delete()
-
-    # db.session.delete(board)
+    db.session.delete(board)
     db.session.commit()
 
     return jsonify({})
@@ -142,9 +140,9 @@ def boards_delete_pin(id, pid):
     if not board.ownerId == current_user.id:
         return jsonify({"errors": {"ownerId": "does not own board"}}), 400
 
-    boardPin = BoardPin.query.filter_by(pinId=pid, boardId=id).delete()
+    boardPin = BoardPin.query.filter_by(pinId=pid, boardId=id).first()
 
-    # db.session.delete(boardPin)
+    db.session.delete(boardPin)
     db.session.commit()
 
     return jsonify({})
