@@ -75,7 +75,7 @@ export const handleError = (payload) => {
 // --------------GET BOARDS THUNK----------------
 export const getBoardsThunk = () => async (dispatch) => {
     try {
-        const res = await fetch("/api/boards");
+        const res = await fetch("/api/boards/");
 
         if (res.ok) {
             const data = await res.json();
