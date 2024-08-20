@@ -41,8 +41,12 @@ export default function UpdatePin() {
         );
         if (res && res.errors) {
             setErrors(res.errors["message"]);
-        } else {
+        } 
+        if (res && res.pin) {
             navigate(`/pins/${pinId}`);
+        }
+        else {  // if there is no res or res.pin
+            navigate(`/pins`);
         }
     };
 
