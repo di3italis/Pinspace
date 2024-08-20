@@ -39,7 +39,7 @@ export default function UpdatePin() {
         const res = await dispatch(
             pinActions.updatePinThunk(updatedPin, pinId)
         );
-        if (res.errors) {
+        if (res && res.errors) {
             setErrors(res.errors["message"]);
         } else {
             navigate(`/pins/${pinId}`);

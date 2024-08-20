@@ -17,7 +17,7 @@ const removeUser = () => ({
 export const thunkAuthenticate = () => async (dispatch) => {
     // console.log("GODDAMNIT!!!")
     // console.log("Thunk Authenticate!!!")
-    const response = await fetch("/api/auth/", {
+    const response = await fetch("/api/auth", {
         headers: {
             "X-CSRFToken": getCookie("csrf_token"),
         },

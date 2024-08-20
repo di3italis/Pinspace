@@ -20,7 +20,7 @@ export default function Pins() {
     useEffect(() => {
         const loadPins = async () => {
             await dispatch(getPinsThunk());
-            console.log("Data fetched, Redux state updated"); // Debugging logsetLoading(false);
+            console.log("Data fetched, Redux state updated"); // Debugging log
             setLoading(false);
         }
         loadPins();

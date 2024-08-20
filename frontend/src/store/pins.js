@@ -74,7 +74,7 @@ export const handleError = (payload) => {
 // --------------GET PINS THUNK----------------
 export const getPinsThunk = () => async (dispatch) => {
     try {
-        const res = await fetch("/api/pins/", {
+        const res = await fetch("/api/pins", {
             headers: {
                 "Content-Type": "application/json",
                 "X-CSRFToken": getCookie("csrf_token"),
@@ -95,7 +95,7 @@ export const getPinsThunk = () => async (dispatch) => {
 // --------------GET USER PINS THUNK----------------
 export const getUserPinsThunk = () => async (dispatch) => {
     try {
-        const res = await fetch("/api/pins/current/", {
+        const res = await fetch("/api/pins/current", {
             headers: {
                 "Content-Type": "application/json",
                 "X-CSRFToken": getCookie("csrf_token"),
@@ -113,7 +113,7 @@ export const getUserPinsThunk = () => async (dispatch) => {
 // --------------GET PIN DETAILS THUNK----------------
 export const getPinDetailsThunk = (pinId) => async (dispatch) => {
     try {
-        const res = await fetch(`/api/pins/${pinId}/`, {
+        const res = await fetch(`/api/pins/${pinId}`, {
             headers: {
                 "Content-Type": "application/json",
                 "X-CSRFToken": getCookie("csrf_token"),
@@ -134,7 +134,7 @@ export const getPinDetailsThunk = (pinId) => async (dispatch) => {
 export const addPinThunk = (payload) => async (dispatch) => {
     try {
         // console.log("addPinThunk payload:", payload);
-        const res = await fetch("/api/pins/", {
+        const res = await fetch("/api/pins", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -156,7 +156,7 @@ export const addPinThunk = (payload) => async (dispatch) => {
 // --------------DELETE PIN THUNK----------------
 export const deletePinThunk = (pinId) => async (dispatch) => {
     try {
-        const res = await fetch(`/api/pins/${pinId}/`, {
+        const res = await fetch(`/api/pins/${pinId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -179,7 +179,9 @@ export const deletePinThunk = (pinId) => async (dispatch) => {
 // --------------UPDATE PIN THUNK----------------
 export const updatePinThunk = (payload, pinId) => async (dispatch) => {
     try {
-        const res = await fetch(`/api/pins/${pinId}/`, {
+        console.log("updatePinThunk payload:", payload);
+        console.log("updatePinThunk pinId:", pinId);
+        const res = await fetch(`/api/pins/${pinId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -243,7 +245,8 @@ export default function pinsReducer(state = initialState, action) {
         case UPDATE_PIN: {
             // structured clone to avoid mutating state. Creates deep copy of an object
             const newState = structuredClone(state);
-            newState[action.payload.id] = action.payload;
+            // newState[action.payload.id] = action.payload;
+            newState[action.pinId] = action.payload;
             return newState;
         }
         case REMOVE_USER:

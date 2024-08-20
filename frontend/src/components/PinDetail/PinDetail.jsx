@@ -1,5 +1,5 @@
 // PinDetail.jsx
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import * as pinActions from "../../store/pins";
@@ -11,6 +11,7 @@ export default function PinDetail() {
     const { pinId: pinIdStr } = useParams();
     const pinId = parseInt(pinIdStr, 10);
     const dispatch = useDispatch();
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     // const pins = useSelector((state) => Object.values(state.pins));
     // const pins = useSelector((state) => state.pins);
@@ -18,9 +19,19 @@ export default function PinDetail() {
     const pin = useSelector((state) => state.pins[pinId]);
 
     useEffect(() => {
-        dispatch(pinActions.getPinDetailsThunk(pinId));
+        const loadPin = async () => {
+            await dispatch(pinActions.getPinDetailsThunk(pinId));
+            console.log("Data fetched, Redux state updated"); // Debugging 
+            setLoading(false);
+        };
+        loadPin();
         // console.log(`PinDetail pin ${pinId}`, pin);
     }, [dispatch, pinId]);
+
+    if (loading) {
+        console.log("Loading...");
+        return <div>Loading...</div>;
+    }
 
     const deletePin = () => {
         dispatch(pinActions.deletePinThunk(pin.id));
