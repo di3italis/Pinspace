@@ -33,7 +33,6 @@ function LoginFormModal() {
     };
 
     const handleDemoLogin = async () => {
-        e.preventDefault();
 
         const serverResponse = await dispatch(
             thunkLogin({
@@ -73,10 +72,10 @@ function LoginFormModal() {
                 </label>
                 {errors.password && <p>{errors.password}</p>}
                 <button type="submit">Log In</button>
+            </form>
                 <button className="demo-login" onClick={handleDemoLogin}>
                     Demo Login
                 </button>
-            </form>
             </div>
         </>
     );
