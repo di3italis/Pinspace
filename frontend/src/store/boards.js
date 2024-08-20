@@ -121,7 +121,7 @@ export const getBoardDetailsThunk = (boardId) => async (dispatch) => {
 // --------------ADD BOARD THUNK----------------
 export const addBoardThunk = (board) => async (dispatch) => {
     try {
-        const res = await fetch("/api/boards", {
+        const res = await fetch("/api/boards/", {
             method: "POST",
             headers: {
                 "X-CSRFToken": getCookie("csrf_token"),
