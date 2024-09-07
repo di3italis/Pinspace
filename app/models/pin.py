@@ -19,8 +19,8 @@ class Pin(db.Model):
     description = db.Column(db.String(500), nullable=False)
 
     ownerId = db.Column(db.Integer, ForeignKey(add_prefix_for_prod("users.id")))
-    owner = relationship("User", back_populates="pins")
 
+    owner = relationship("User", back_populates="pins")
     comments = relationship("Comment", back_populates="pin")
     labels = relationship("Label", back_populates="pin")
 
